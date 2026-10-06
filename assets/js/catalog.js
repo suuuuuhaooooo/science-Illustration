@@ -1,6 +1,6 @@
 // assets/js/catalog.js
 
-const scienceCatalog = [
+var catalog = [
   {
     book: "第三冊",
     chapters: [
