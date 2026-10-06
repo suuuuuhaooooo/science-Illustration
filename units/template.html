@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>單元 X-X：【單元名稱】 - 見微理畫</title>
+    
+    <!-- 引入核心 CSS (繼承數學小鎮的字體與底層變數) -->
+    <link rel="stylesheet" href="../assets/css/storybook.css">
+    
+    <!-- 引入 KaTeX 數學與物理公式渲染引擎 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+    <style>
+        /* 防拷貝機制 */
+        body {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            
+            /* 模擬數學小鎮的溫暖色調與字體 */
+            background-color: #fdfaf6; /* 溫暖的米白色底 */
+            color: #4a4542; /* 柔和的深褐色文字，取代生硬的純黑 */
+            font-family: "Nunito", "TsukuARdGothic-Regular", "SetoFont", "Microsoft JhengHei", sans-serif;
+            line-height: 1.8;
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        /* 頁面主要容器：圓潤、柔和陰影 */
+        .unit-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 50px 60px;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(150, 140, 130, 0.08);
+            border: 2px solid #f2ece4;
+        }
+
+        /* 標題設計 */
+        h1 {
+            font-size: 2.2rem;
+            color: #5c4d43;
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: bold;
+        }
+        
+        h2 {
+            font-size: 1.3rem;
+            color: #5c4d43;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        /* 標題前的小裝飾色塊，模擬數學小鎮的粉彩風格 */
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background-color: #f6c8b9; /* 蜜桃粉 */
+            border-radius: 50%;
+            margin-right: 12px;
+        }
+
+        h2:nth-of-type(2)::before { background-color: #c0e0d8; } /* 薄荷綠 */
+        h2:nth-of-type(3)::before { background-color: #f3e5ab; } /* 柔和黃 */
+
+        /* 內容區塊模組化設計：模擬紙卡質感 */
+        .scenario-box {
+            background-color: #faf7f2;
+            border: 2px solid #eee7dd;
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            font-size: 1.05rem;
+        }
+
+        .interactive-panel {
+            border: 2px solid #eee7dd;
+            border-radius: 16px;
+            padding: 40px;
+            background-color: #ffffff;
+            margin-bottom: 30px;
+        }
+
+        .formula-box {
+            background-color: #f4f8f7; /* 帶有一點點綠的淺灰白 */
+            border: 2px solid #e2ecea;
+            padding: 30px;
+            border-radius: 16px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .formula-display {
+            font-size: 1.8rem;
+            margin: 20px 0;
+            color: #3b5952;
+        }
+
+        .example-box {
+            background-color: #ffffff;
+            border: 2px dashed #dcd5ce;
+            padding: 30px;
+            border-radius: 16px;
+        }
+
+        /* 頁尾 CC 授權區塊 */
+        .cc-footer {
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 2px solid #f2ece4;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #9c928a;
+        }
+        .cc-footer a {
+            color: #8caba4;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .cc-footer a:hover {
+            color: #5c7b74;
+        }
+        .cc-footer img {
+            margin-bottom: 10px;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+
+<div class="unit-container">
+    <h1>單元 X-X：【單元名稱】</h1>
+
+    <div class="scenario-box">
+        <strong>生活情境探討</strong>
+        <p style="margin-top: 10px; margin-bottom: 0;">在這裡輸入引發學生好奇心的生活現象或提問，用平易近人的口吻敘述。</p>
+    </div>
+
+    <h2>見微圖解：【觀察重點】</h2>
+    <div class="interactive-panel">
+        <p style="text-align: center; color: #7a7069; margin-top: 0;">請拖曳下方的滑桿，觀察畫面的變化：</p>
+        
+        <!-- 動畫圖解保留區 -->
+        <div id="visual-canvas-area" style="min-height: 250px; background: #fdfaf6; border-radius: 12px; border: 2px solid #f2ece4; display: flex; align-items: center; justify-content: center; color: #bbaea6; margin-top: 30px;">
+            此處保留給 JavaScript 生成動畫與畫布
+        </div>
+    </div>
+
+    <h2>概念與公式解析</h2>
+    <div class="formula-box">
+        <p style="color: #7a7069; margin-top: 0;">將觀察到的現象轉換為科學語言</p>
+        <div class="formula-display">
+            $$ P = \frac{F}{A} $$
+        </div>
+    </div>
+
+    <h2>觀念驗證</h2>
+    <div class="example-box">
+        <p><strong>範例試題：</strong><br>在這裡輸入題目內容與後續的引導式解析步驟。</p>
+    </div>
+
+    <footer class="cc-footer">
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+            <img alt="創用 CC 授權條款" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" />
+        </a><br />
+        本網站「<strong>見微理畫</strong>」內容採用 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">創用 CC 姓名標示-非商業性-相同方式分享 4.0 國際 授權條款</a>。<br>
+        未經授權，禁止將內容複製、擷取或用於商業補教用途。
+    </footer>
+</div>
+
+<!-- 引入共用邏輯與防護腳本 -->
+<script src="../assets/js/core.js"></script>
+
+<!-- 該單元的專屬互動腳本 -->
+<!-- <script src="volX-X-X-name.js"></script> -->
+
+</body>
+</html>
