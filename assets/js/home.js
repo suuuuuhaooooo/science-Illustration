@@ -32,11 +32,15 @@
         hero.appendChild(heroVisual);
         main.appendChild(hero);
       
-        var catSec = SK.h("section", { id: "catalog", class: "wrap", style: "max-width:1050px; margin:80px auto; padding:0 20px 80px;" });
+        // 目錄區塊
+        var catSec = SK.h("section", { id: "catalog", class: "wrap", style: "max-width:900px; margin:80px auto; padding:0 20px 80px;" });
         catSec.innerHTML = "<h2 style='font-family:\"LXGW WenKai TC\", serif; color:#4A3F37; border-bottom:2px dashed #D3C9BE; padding-bottom:10px; margin-bottom:40px; display:flex; align-items:center; gap:10px; font-size:1.5rem;'>" +
-          SK.icon("map").replace("<svg", "<svg style='width:28px;height:28px;'") + " 理化總覽 / Curriculum</h2>";
+          SK.icon("map").replace("<svg", "<svg style='width:28px;height:28px;'") + " 理化學習軌跡 / Learning Path</h2>";
       
-        var grid = SK.h("div", { style: "display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:30px;" });
+        // 建立學習軌跡的容器與中心線
+        var pathWrapper = SK.h("div", { style: "position:relative; padding-left: 45px;" });
+        var spine = SK.h("div", { style: "position:absolute; top:20px; bottom:20px; left:14px; width:4px; background-color:#EBE4D8; border-radius:2px;" });
+        pathWrapper.appendChild(spine);
       
         var themes = [
           { bg: "#F8F5EE", border: "#E3D4AC", text: "#9C8038", dark: "#B8A369", iconId: 1 }, 
@@ -55,6 +59,13 @@
                 var t = themes[colorIdx % themes.length];
                 colorIdx++;
           
+                // 學習節點 (Node)
+                var node = SK.h("div", { style: "position:relative; margin-bottom: 50px;" });
+                
+                // 軌跡上的連接點 (Dot)
+                var dot = SK.h("div", { style: "position:absolute; left:-40px; top:25px; width:18px; height:18px; border-radius:50%; background-color:" + t.bg + "; border:4px solid " + t.dark + "; z-index:2; box-shadow: 0 0 0 5px #FDFBF6;" });
+                node.appendChild(dot);
+
                 var card = SK.h("div", {
                   class: "sk-card",
                   style: "position:relative; overflow:hidden; background:#ffffff; border:2px solid " + t.border + "; border-radius:16px; padding:25px; transition:transform 0.2s, box-shadow 0.2s;"
@@ -103,20 +114,21 @@
                 card.appendChild(ul);
                 
                 card.addEventListener("mouseover", function() { 
-                    card.style.transform = "translateY(-4px)"; 
+                    card.style.transform = "translateX(5px)"; 
                     card.style.boxShadow = "0 8px 24px rgba(74,63,55,0.06)"; 
                 });
                 card.addEventListener("mouseout", function() { 
-                    card.style.transform = "translateY(0)"; 
+                    card.style.transform = "translateX(0)"; 
                     card.style.boxShadow = "none"; 
                 });
                 
-                grid.appendChild(card);
+                node.appendChild(card);
+                pathWrapper.appendChild(node);
               });
             });
         }
       
-        catSec.appendChild(grid);
+        catSec.appendChild(pathWrapper);
         main.appendChild(catSec);
       
         document.body.appendChild(SK.footer());
@@ -124,7 +136,7 @@
     } catch (err) {
         var errorBox = document.createElement("div");
         errorBox.style.cssText = "background:#fee2e2; color:#991b1b; padding:20px; margin:40px auto; max-width:800px; border:2px solid #ef4444; border-radius:8px; font-family:sans-serif;";
-        errorBox.innerHTML = "<h2>[警告] 首頁載入發生錯誤</h2><p>錯誤訊息：" + err.message + "</p><p>請按 F12 開啟 Console 查看詳細狀況，或將此畫面截圖回報。</p>";
+        errorBox.innerHTML = "<h2>[警告] 首頁載入發生錯誤</h2><p>錯誤訊息：" + err.message + "</p><p>請按 F12 開啟 Console 查看詳細狀況。</p>";
         document.body.appendChild(errorBox);
         console.error(err);
     }
