@@ -6,26 +6,25 @@
     var SK = (window.SK = {});
     var NS = "http://www.w3.org/2000/svg";
   
-    /* ---------- 科學顏色 ---------- */
+    /* ---------- 顏色 (莫蘭迪理化色系) ---------- */
     SK.C = {
-      blue:    { s: "#2563EB", f: "rgba(37,99,235,.12)" },
-      cyan:    { s: "#0891B2", f: "rgba(8,145,178,.12)" },
-      emerald: { s: "#059669", f: "rgba(5,150,105,.12)" },
-      rose:    { s: "#E11D48", f: "rgba(225,29,72,.12)" }, 
-      amber:   { s: "#D97706", f: "rgba(217,119,6,.12)" }, 
-      violet:  { s: "#7C3AED", f: "rgba(124,58,237,.12)" }, 
-      slate:   { s: "#475569", f: "rgba(71,85,105,.12)" },  
-      ink: "#0F172A", soft: "#64748B", line: "#CBD5E1", paper: "#F8FAFC", dark: "#1E293B"
+      blue:   { s: "#5B778C", f: "rgba(164,185,200,.5)" },    // 莫蘭迪藍 (流體/電學)
+      green:  { s: "#7A8B76", f: "rgba(189,203,184,.5)" },    // 鼠尾草綠 (化學/反應)
+      orange: { s: "#C28C6E", f: "rgba(224,189,173,.6)" },    // 陶土橘 (力學/熱學)
+      pink:   { s: "#B57E83", f: "rgba(217,175,180,.5)" },    // 藕粉色 (光學/波動)
+      gold:   { s: "#B8A369", f: "rgba(227,212,172,.6)" },    // 芥末黃 (能量/測量)
+      purple: { s: "#847C96", f: "rgba(196,189,207,.5)" },    // 丁香紫 (原子/磁學)
+      ink: "#3A302A", soft: "#6F645A", line: "#BBAE9E", paper: "#FDFBF6", cocoa: "#4A3F37"
     };
   
-    /* ---------- KaTeX：巨集指令對應新的科學色彩 ---------- */
+    /* ---------- KaTeX：對應莫蘭迪色系的巨集 ---------- */
     var MACROS = {
-      "\\cb": "\\textcolor{2563EB}{#1}", // blue
-      "\\cc": "\\textcolor{0891B2}{#1}", // cyan
-      "\\ce": "\\textcolor{059669}{#1}", // emerald
-      "\\cr": "\\textcolor{E11D48}{#1}", // rose
-      "\\ca": "\\textcolor{D97706}{#1}", // amber
-      "\\cv": "\\textcolor{7C3AED}{#1}"  // violet
+      "\\cb": "\\textcolor{5B778C}{#1}", // blue
+      "\\cg": "\\textcolor{7A8B76}{#1}", // green
+      "\\co": "\\textcolor{C28C6E}{#1}", // orange
+      "\\cp": "\\textcolor{B57E83}{#1}", // pink
+      "\\cy": "\\textcolor{B8A369}{#1}", // gold
+      "\\cv": "\\textcolor{847C96}{#1}"  // purple
     };
     
     SK.tex = function (src, display) {
