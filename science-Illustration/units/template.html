@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>【單元標題】 - 見微理畫</title>
+    
+    <!-- 1. 引入樣式 -->
+    <!-- 沿用原專案的基礎 UI 樣式[cite: 3] -->
+    <link rel="stylesheet" href="../assets/css/storybook.css">
+    <!-- 引入 KaTeX 樣式[cite: 3] -->
+    <link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+    
+    <style>
+        /* 頁面防選取保護 (輔助 core.js) */
+        body { user-select: none; -webkit-user-select: none; }
+        
+        /* 可以在這裡放該單元專屬的特例 CSS，例如特定畫布的大小 */
+        .visual-canvas-area { min-height: 250px; }
+    </style>
+</head>
+<body>
+
+<div class="unit-container">
+    <h1>單元 X-X：【單元名稱】</h1>
+
+    <!-- 情境區 -->
+    <div class="scenario-box">
+        <strong>💡 生活情境探討</strong>
+        <p>【情境描述...】</p>
+    </div>
+
+    <!-- 互動圖解區 -->
+    <h2>🔍 見微圖解：【觀察重點】</h2>
+    <div class="interactive-panel">
+        <div class="controls-wrapper">
+            <!-- 放置 input range 滑桿 -->
+        </div>
+        <div id="visual-canvas" class="visual-canvas-area">
+            <!-- JS 動畫將渲染於此 -->
+        </div>
+    </div>
+
+    <!-- 公式區 -->
+    <h2>📐 概念與公式解析</h2>
+    <div class="formula-box">
+        <!-- 公式內容 -->
+    </div>
+
+    <!-- 頁尾授權 -->
+    <footer class="cc-footer">
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+            <img alt="創用 CC 授權條款" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" style="border-width:0" />
+        </a><br />
+        本網站「<strong>見微理畫</strong>」內容採用 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">創用 CC 姓名標示-非商業性-相同方式分享 4.0 國際 授權條款</a>。<br>
+    </footer>
+</div>
+
+<!-- 2. 引入核心套件與腳本 -->
+<!-- KaTeX 引擎[cite: 3] -->
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/contrib/auto-render.min.js"></script>
+
+<!-- 全站共用邏輯 (防拷貝、啟動公式渲染) -->
+<script src="../assets/js/core.js"></script>
+
+<!-- ★★★ 該單元專屬的互動邏輯腳本 ★★★ -->
+<script src="volX-X-X-name.js"></script>
+
+</body>
+</html>
