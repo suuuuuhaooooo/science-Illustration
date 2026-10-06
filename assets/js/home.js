@@ -8,7 +8,7 @@
     if (SK.injectFilters) SK.injectFilters();
   
     // 1. 建立 Topbar
-    document.body.appendChild(SK.topbar(".", false));
+    document.body.appendChild(SK.topbar("", false));
     var main = SK.h("main", { id: "home-main" });
     document.body.appendChild(main);
   
