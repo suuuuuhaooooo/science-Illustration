@@ -6,78 +6,22 @@
 <title>科學方法與實驗守則｜見微理畫</title>
 <meta name="description" content="學習理化的第一步：觀察現象、提出假說，以及進入實驗室的基本安全守則。">
 
-<!-- 只保留基礎的 KaTeX 與原 CSS，我們會在下方強制覆寫成科技風 -->
+<!-- 補上分頁 Icon (與首頁相同) -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234A3F37' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='2' fill='%234A3F37'/%3E%3Cellipse cx='12' cy='12' rx='10' ry='4' transform='rotate(45 12 12)'/%3E%3Cellipse cx='12' cy='12' rx='10' ry='4' transform='rotate(-45 12 12)'/%3E%3C/svg%3E">
+
+<!-- 恢復原專案的高質感字體 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@400;600;700&family=LXGW+WenKai+TC:wght@400;700&family=Patrick+Hand&display=swap">
+
 <link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
 <link rel="stylesheet" href="../assets/css/storybook.css">
 
 <style>
-    /* =========================================
-       見微理畫 專屬品牌視覺 (純白極簡科技風)
-       ========================================= */
+    /* 保留基本的防選取，移除先前的科技風純白覆寫 */
     body {
-        background-color: #ffffff !important; /* 強制純白背景 */
-        color: #1e293b !important; /* 深灰藍字體 */
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif !important;
         -webkit-user-select: none;
         user-select: none;
-    }
-    
-    /* 去除原網站的卡片陰影與圓潤感，改為俐落的極簡邊框 */
-    .sk-card, .sk-frame, .unit-hero {
-        background-color: #ffffff !important;
-        border: 1px solid #cbd5e1 !important;
-        border-radius: 8px !important;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
-    }
-
-    h1, h2, h3, h4 {
-        color: #0f172a !important;
-        font-weight: 700 !important;
-        letter-spacing: 0.5px;
-    }
-
-    /* 按鈕改為科技藍色系 */
-    .btn {
-        background-color: #f1f5f9 !important;
-        color: #2563eb !important;
-        border: 1px solid #bfdbfe !important;
-        border-radius: 6px !important;
-        font-weight: 600 !important;
-    }
-    .btn:hover {
-        background-color: #e0e7ff !important;
-        border-color: #93c5fd !important;
-    }
-
-    /* 頂部導覽列改為純白與底線 */
-    .topbar {
-        background-color: #ffffff !important;
-        border-bottom: 1px solid #e2e8f0 !important;
-        box-shadow: none !important;
-    }
-
-    /* 隱藏原網站的裝飾性植物與錯位色塊 */
-    .corner-bot, .hero-deco {
-        display: none !important; 
-    }
-    
-    /* 步驟播放器改為俐落風格 */
-    .player-side {
-        background: #f8fafc !important;
-        border-left: 1px solid #e2e8f0 !important;
-    }
-    
-    /* 科學家名言區塊 */
-    .note {
-        background-color: #f0fdf4 !important; /* 淡綠色底 */
-        border-left: 4px solid #22c55e !important;
-        border-radius: 0 6px 6px 0 !important;
-        color: #166534 !important;
-        font-family: inherit !important;
-    }
-    .note small {
-        color: #15803d !important;
-        font-style: italic;
     }
 </style>
 </head>
@@ -86,13 +30,8 @@
 <script src="../assets/vendor/katex/katex.min.js"></script>
 <script src="../assets/js/catalog.js"></script>
 <script src="../assets/js/core.js"></script>
+
 <!-- 引入本單元專屬的互動腳本 -->
 <script src="vol3-0-1.js"></script>
-<script>
-    // 防拷貝
-    document.addEventListener('contextmenu', e => e.preventDefault());
-    document.addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && e.key === 'c') e.preventDefault(); });
-    document.addEventListener('copy', e => e.preventDefault());
-</script>
 </body>
 </html>
