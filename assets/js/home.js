@@ -10,12 +10,10 @@
       
         if (SK.injectFilters) SK.injectFilters();
       
-        // 掛載頂部導覽列
         document.body.appendChild(SK.topbar("", false));
         var main = SK.h("main", { id: "home-main" });
         document.body.appendChild(main);
       
-        // 建立首頁主視覺 (Hero Section)
         var hero = SK.h("section", { class: "unit-hero", style: "display:flex; justify-content:space-between; align-items:center; max-width:1000px; margin:60px auto; padding:0 20px;" });
         
         var heroText = SK.h("div", { style: "max-width:500px; z-index:2; position:relative;" });
@@ -34,14 +32,12 @@
         hero.appendChild(heroVisual);
         main.appendChild(hero);
       
-        // 建立章節目錄區塊 (Catalog Section)
         var catSec = SK.h("section", { id: "catalog", class: "wrap", style: "max-width:1050px; margin:80px auto; padding:0 20px 80px;" });
         catSec.innerHTML = "<h2 style='font-family:\"LXGW WenKai TC\", serif; color:#4A3F37; border-bottom:2px dashed #D3C9BE; padding-bottom:10px; margin-bottom:40px; display:flex; align-items:center; gap:10px; font-size:1.5rem;'>" +
           SK.icon("map").replace("<svg", "<svg style='width:28px;height:28px;'") + " 理化總覽 / Curriculum</h2>";
       
         var grid = SK.h("div", { style: "display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:30px;" });
       
-        // 定義莫蘭迪色卡片輪替
         var themes = [
           { bg: "#F8F5EE", border: "#E3D4AC", text: "#9C8038", dark: "#B8A369", iconId: 1 }, 
           { bg: "#F4F8F7", border: "#CDE0DB", text: "#4F7479", dark: "#5B778C", iconId: 0 }, 
@@ -64,12 +60,11 @@
                   style: "position:relative; overflow:hidden; background:#ffffff; border:2px solid " + t.border + "; border-radius:16px; padding:25px; transition:transform 0.2s, box-shadow 0.2s;"
                 });
           
-                // 處理背景浮水印，將描邊顏色動態轉為卡片專屬的深色
                 var bgDeco = SK.h("div", {
                   style: "position:absolute; right:-20px; bottom:-20px; opacity:0.1; width:140px; height:140px; pointer-events:none;"
                 });
                 var svgStr = SK.botanical(t.iconId) || "";
-                svgStr = svgStr.replace(/stroke="#4A3F37"/g, 'stroke="' + t.dark + '"');
+                svgStr = svgStr.replace(/stroke="[^"]*"/g, 'stroke="' + t.dark + '"');
                 svgStr = svgStr.replace(/fill="[^"]*"/g, 'fill="none"');
                 bgDeco.innerHTML = svgStr;
                 card.appendChild(bgDeco);
@@ -127,7 +122,6 @@
         document.body.appendChild(SK.footer());
 
     } catch (err) {
-        // 如果再遇到錯誤，會直接以紅框顯示在畫面上
         var errorBox = document.createElement("div");
         errorBox.style.cssText = "background:#fee2e2; color:#991b1b; padding:20px; margin:40px auto; max-width:800px; border:2px solid #ef4444; border-radius:8px; font-family:sans-serif;";
         errorBox.innerHTML = "<h2>[警告] 首頁載入發生錯誤</h2><p>錯誤訊息：" + err.message + "</p><p>請按 F12 開啟 Console 查看詳細狀況，或將此畫面截圖回報。</p>";
