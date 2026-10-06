@@ -168,31 +168,37 @@
     function innerSvg(svg) { return svg.replace(/^<svg[^>]*>/, "").replace(/<\/svg>$/, ""); }
     SK.innerSvg = innerSvg;
   
-    /* ---------- 植物圖騰 ---------- */
+    /* ---------- 原創科學圖騰 (見微理畫專屬) ---------- */
     SK.botanical = function (k) {
-      var L = 'stroke="' + INK + '" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"';
+      var L = 'stroke="' + INK + '" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"';
       var v = [
-        '<svg viewBox="0 0 60 60" aria-hidden="true"><g fill="#C9D4BC" transform="translate(1.4 1.2)"><path d="M30 20c-5-1-8-4-8.5-9 5 .5 8 3.6 8.5 9zM30 30c5-1 8-4 8.5-9-5 .5-8 3.6-8.5 9zM30 40c-5-1-8-4-8.5-9 5 .5 8 3.6 8.5 9z"/></g><path ' + L + ' d="M30 56C29 40 31 22 30 6M30 20c-5-1-8-4-8.5-9 5 .5 8 3.6 8.5 9zM30 30c5-1 8-4 8.5-9-5 .5-8 3.6-8.5 9zM30 40c-5-1-8-4-8.5-9 5 .5 8 3.6 8.5 9z"/></svg>',
-        '<svg viewBox="0 0 60 60" aria-hidden="true"><g fill="#F3C3A8" transform="translate(1.3 1.2)"><circle cx="20" cy="18" r="7"/><circle cx="42" cy="30" r="5.5"/></g><path ' + L + ' d="M20 25c1 10 3 20 6 31M42 35.5c-2 7-6 14-11 20.5M20 11a7 7 0 1 1-.01 0M42 24.5a5.5 5.5 0 1 1-.01 0"/><circle cx="20" cy="18" r="2" fill="' + INK + '"/><circle cx="42" cy="30" r="1.6" fill="' + INK + '"/></svg>',
-        '<svg viewBox="0 0 60 60" aria-hidden="true"><path fill="#CFE0D3" transform="translate(1.3 1.2)" d="M14 46c2-14 10-22 26-24-2 15-11 23-26 24z"/><path ' + L + ' d="M14 46c2-14 10-22 26-24-2 15-11 23-26 24zM15 45c7-6 14-13 22-20"/><circle cx="46" cy="44" r="2.2" fill="#F3C3A8"/><circle cx="50" cy="36" r="1.4" fill="' + INK + '" opacity=".5"/><circle cx="10" cy="20" r="1.8" fill="#A9B79A"/><circle cx="18" cy="12" r="1.2" fill="' + INK + '" opacity=".5"/></svg>',
-        '<svg viewBox="0 0 60 60" aria-hidden="true"><circle cx="42" cy="16" r="7" fill="#F1E2B8" transform="translate(1.3 1.2)"/><circle ' + L + ' cx="42" cy="16" r="7"/><path ' + L + ' d="M16 54c0-9-2-17-7-23M22 54c0-11 1-20 5-27M28 54c-1-7 1-13 5-17"/></svg>'
+        /* 0: 原子與軌域 */
+        '<svg viewBox="0 0 60 60" aria-hidden="true"><ellipse cx="30" cy="30" rx="22" ry="8" transform="rotate(30 30 30)" ' + L + '/><ellipse cx="30" cy="30" rx="22" ry="8" transform="rotate(150 30 30)" ' + L + '/><circle cx="30" cy="30" r="5" fill="#5B778C" ' + L + '/></svg>',
+        /* 1: 錐形瓶與化學反應 */
+        '<svg viewBox="0 0 60 60" aria-hidden="true"><path d="M26 15 v12 l-12 20 a4 4 0 0 0 4 6 h24 a4 4 0 0 0 4 -6 l-12 -20 v-12 z" fill="#7A8B76" ' + L + '/><line x1="22" y1="15" x2="38" y2="15" ' + L + '/><circle cx="27" cy="40" r="2" fill="' + INK + '"/><circle cx="33" cy="36" r="3" fill="' + INK + '"/></svg>',
+        /* 2: 磁鐵與磁力線 */
+        '<svg viewBox="0 0 60 60" aria-hidden="true"><path d="M15 45 v-15 a15 15 0 0 1 30 0 v15 m-20 0 v-15 a5 5 0 0 1 10 0 v15" ' + L + '/><rect x="10" y="45" width="10" height="10" fill="#C28C6E" ' + L + '/><rect x="40" y="45" width="10" height="10" fill="#5B778C" ' + L + '/></svg>',
+        /* 3: 波動與能量 */
+        '<svg viewBox="0 0 60 60" aria-hidden="true"><path d="M10 30 q 10 -20 20 0 t 20 0" ' + L + '/><line x1="5" y1="30" x2="55" y2="30" stroke="' + INK + '" stroke-width="1" stroke-dasharray="3 3"/><circle cx="30" cy="30" r="4" fill="#B8A369" ' + L + '/></svg>'
       ];
       return v[((k % v.length) + v.length) % v.length];
     };
   
-    /* ---------- 拱形裝飾 ---------- */
+    /* ---------- 首頁科學幾何主視覺 ---------- */
     SK.bouquet = function (tint) {
-      var cols = tint || ["#CFE0D3", "#F3D5C3", "#D9E2D2"];
+      var cols = tint || ["#5B778C", "#7A8B76", "#C28C6E"];
       var html = '<svg class="deco" viewBox="0 0 210 170" aria-hidden="true">';
-      html += '<defs><pattern id="spk-h" width="40" height="40" patternUnits="userSpaceOnUse"><circle cx="6" cy="9" r=".7" fill="#4A3F37" opacity=".3"/><circle cx="27" cy="21" r=".5" fill="#4A3F37" opacity=".25"/><circle cx="17" cy="35" r=".8" fill="#B8674A" opacity=".25"/><circle cx="35" cy="4" r=".5" fill="#4A3F37" opacity=".3"/></pattern></defs>';
-      html += '<path d="M20 170V58a32 32 0 0 1 64 0v112z" fill="' + cols[0] + '"/>';
-      html += '<path d="M92 170V34a30 30 0 0 1 60 0v136z" fill="' + cols[1] + '"/>';
-      html += '<path d="M160 170V78a22 22 0 0 1 44 0v92z" fill="' + cols[2] + '"/>';
-      html += '<rect width="210" height="170" fill="url(#spk-h)"/>';
-      html += '<g transform="translate(26 70) scale(.95)">' + innerSvg(SK.botanical(0)) + "</g>";
-      html += '<g transform="translate(96 40) scale(1.05)">' + innerSvg(SK.botanical(1)) + "</g>";
-      html += '<g transform="translate(158 92) scale(.8)">' + innerSvg(SK.botanical(3)) + "</g>";
-      html += '<path d="M8 168h196" stroke="#4A3F37" stroke-width="1.3" stroke-linecap="round"/></svg>';
+      html += '<defs><pattern id="sci-grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#4A3F37" opacity=".15"/></pattern></defs>';
+      html += '<rect width="210" height="170" fill="url(#sci-grid)"/>';
+      /* 幾何色塊 (液滴、方塊、稜鏡) */
+      html += '<circle cx="150" cy="90" r="50" fill="' + cols[0] + '" opacity="0.3"/>';
+      html += '<rect x="25" y="45" width="80" height="110" rx="15" fill="' + cols[1] + '" opacity="0.4"/>';
+      html += '<polygon points="110,40 160,140 60,140" fill="' + cols[2] + '" opacity="0.4"/>';
+      /* 掛載原創科學 SVG */
+      html += '<g transform="translate(35 60) scale(0.9)">' + innerSvg(SK.botanical(1)) + "</g>";
+      html += '<g transform="translate(120 50) scale(0.85)">' + innerSvg(SK.botanical(0)) + "</g>";
+      html += '<g transform="translate(90 100) scale(0.7)">' + innerSvg(SK.botanical(2)) + "</g>";
+      html += '<path d="M10 168h190" stroke="#4A3F37" stroke-width="1.5" stroke-linecap="round"/></svg>';
       return html;
     };
     
