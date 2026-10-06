@@ -1,5 +1,3 @@
-// assets/js/catalog.js
-
 const scienceCatalog = [
     {
         book: "第三冊 (八年級上)",
