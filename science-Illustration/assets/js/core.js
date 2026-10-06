@@ -1,5 +1,3 @@
-// assets/js/core.js
-
 document.addEventListener("DOMContentLoaded", function() {
     /* =========================================
        1. 防拷貝與保護機制
