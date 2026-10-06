@@ -460,22 +460,25 @@
     SK.mountUnit = function (cfg) {
       injectFilters();
       
-      // 自動從 URL 解析檔案名稱，並去 catalog 中尋找對應的 meta 資料
-      var pathParts = window.location.pathname.split('/');
-      var filename = pathParts[pathParts.length - 1].replace('.html', '');
       var meta = { title: "理化單元", book: "國中理化" };
       
-      // 若有引入 catalog.js 則進行查找
+      // 若有引入 catalog.js 則進行嚴格查找
       if (typeof catalog !== 'undefined') {
+          var found = false;
           for(var i=0; i<catalog.length; i++){
               for(var j=0; j<catalog[i].chapters.length; j++){
                   for(var k=0; k<catalog[i].chapters[j].sections.length; k++){
-                      if(catalog[i].chapters[j].sections[k].id === cfg.slug || filename.includes(cfg.slug)){
+                      // 只針對 slug 進行嚴格比對，找到後立刻跳出所有迴圈
+                      if(catalog[i].chapters[j].sections[k].id === cfg.slug){
                           meta.title = catalog[i].chapters[j].sections[k].title;
                           meta.book = catalog[i].book;
+                          found = true;
+                          break;
                       }
                   }
+                  if(found) break;
               }
+              if(found) break;
           }
       }
 
