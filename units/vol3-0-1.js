@@ -2,51 +2,38 @@
 (function () {
   var C = SK.C, s = SK.s;
 
-  /* 啟發區 (Hook) 視覺化：畫一個燒杯與危險標示 */
   function hookVisual(el) {
     var svg = SK.svg(el, 360, 200, "實驗室常見的燒杯與注意標示");
-    
-    // 繪製燒杯輪廓
     var beakerPath = "M 130 50 L 130 140 A 10 10 0 0 0 140 150 L 220 150 A 10 10 0 0 0 230 140 L 230 50";
     s("path", { d: beakerPath, fill: "none", stroke: C.line, "stroke-width": 3 }, svg);
-    s("line", { x1: 120, y1: 50, x2: 240, y2: 50, stroke: C.line, "stroke-width": 3 }, svg); // 杯口
+    s("line", { x1: 120, y1: 50, x2: 240, y2: 50, stroke: C.line, "stroke-width": 3 }, svg); 
     
-    // 繪製液體 (莫蘭迪藍)
     var liquidPath = "M 130 90 L 130 140 A 10 10 0 0 0 140 150 L 220 150 A 10 10 0 0 0 230 140 L 230 90 Z";
     s("path", { d: liquidPath, fill: C.blue.f, stroke: "none" }, svg);
     
-    // 刻度線
     s("line", { x1: 130, y1: 70, x2: 145, y2: 70, stroke: C.line, "stroke-width": 2 }, svg);
     s("line", { x1: 130, y1: 110, x2: 145, y2: 110, stroke: C.line, "stroke-width": 2 }, svg);
 
-    // 繪製危險警告標示 (使用莫蘭迪芥末黃 gold)
     s("polygon", { points: "290,140 320,80 350,140", fill: C.gold.f, stroke: C.gold.s, "stroke-width": 3, "stroke-linejoin": "round" }, svg);
     SK.label(svg, 320, 130, "!", { size: 30, color: C.gold.s, bold: true });
 
-    // 標籤說明
     SK.label(svg, 180, 175, "未知化學液體", { size: 15, color: C.soft });
   }
 
-  /* 錯誤解析小圖：直接聞氣體的危險性 */
   function dangerMini(el) {
     var svg = SK.svg(el, 300, 150, "錯誤的聞氣體方式");
-    
-    // 使用陶土橘 orange
     s("rect", { x: 120, y: 70, width: 60, height: 60, rx: 5, fill: C.orange.f, stroke: C.orange.s, "stroke-width": 2 }, svg);
     s("path", { d: "M 140 60 Q 150 40 140 20", fill: "none", stroke: C.orange.s, "stroke-width": 2, "stroke-dasharray": "4 4" }, svg);
     s("path", { d: "M 160 60 Q 170 30 160 10", fill: "none", stroke: C.orange.s, "stroke-width": 2, "stroke-dasharray": "4 4" }, svg);
-    
     SK.label(svg, 150, 145, "直接吸入可能中毒", { size: 13, color: C.orange.s });
   }
 
-  /* 核心推導 (Derive)：科學方法的流程圖 */
   function methodDerive(ctx) {
     var svg = SK.svg(ctx.stage, 480, 420, "科學方法步驟流程圖");
     var g = s("g", {}, svg);
     var read = SK.h("div", { class: "readout" });
     ctx.extra.appendChild(read);
 
-    // 定義步驟資料
     var steps = [
       { text: "觀察現象", desc: "發現自然界中奇特的事件" },
       { text: "提出問題", desc: "針對觀察到的現象產生疑問" },
@@ -70,16 +57,13 @@
         var on = f >= i;
         var yPos = startY + i * gapY;
         
-        // 使用鼠尾草綠 green
         var bgCol = on ? C.green.f : C.paper;
         var strokeCol = on ? C.green.s : C.line;
         s("rect", { x: startX, y: yPos, width: boxWidth, height: boxHeight, rx: 6, fill: bgCol, stroke: strokeCol, "stroke-width": 2 }, g);
         
-        // 繪製文字
         var textColor = on ? C.ink : C.line;
         SK.label(g, startX + boxWidth / 2, yPos + boxHeight / 2 + 2, steps[i].text, { size: 16, color: textColor, bold: on });
 
-        // 繪製箭頭
         if (i < steps.length - 1) {
           var arrowOn = f > i;
           var aColor = arrowOn ? C.green.s : C.line;
@@ -87,21 +71,17 @@
         }
       }
 
-      // 如果進行到結論且發現不符合，畫一條返回假說的虛線 (使用藕粉 pink)
       if (f === steps.length - 1) {
         var pathData = "M " + startX + " " + (startY + 5 * gapY + boxHeight / 2) + " L " + (startX - 50) + " " + (startY + 5 * gapY + boxHeight / 2) + " L " + (startX - 50) + " " + (startY + 2 * gapY + boxHeight / 2) + " L " + (startX - 5) + " " + (startY + 2 * gapY + boxHeight / 2);
         s("path", { d: pathData, fill: "none", stroke: C.pink.s, "stroke-width": 2, "stroke-dasharray": "6 4", "marker-end": "url(#arrow)" }, g);
         SK.label(g, startX - 70, startY + 3.5 * gapY, "假說錯誤", { size: 13, color: C.pink.s });
       }
-
-      // 下方文字說明
       read.innerHTML = "目前步驟：" + (f < steps.length ? steps[f].desc : "完成完整的科學探究循環");
     }
 
     return { show: draw };
   }
 
-  /* 組合並掛載單元 */
   SK.mountUnit({
     slug: "vol3-0-1",
     en: "Scientific Method and Lab Safety",
