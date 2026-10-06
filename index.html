@@ -3,167 +3,44 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>見微理畫</title>
-<meta name="description" content="見微理畫：從微觀的圖解看見巨觀的物理與化學邏輯。">
-
-<!-- 加入科學原子圖標的分頁 Icon (採用莫蘭迪深棕色) -->
+<title>見微理畫｜國中理化圖解與互動</title>
+<meta name="description" content="用圖解與互動一步步看懂國中理化：涵蓋國二到國三物理化學核心觀念。">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234A3F37' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='2' fill='%234A3F37'/%3E%3Cellipse cx='12' cy='12' rx='10' ry='4' transform='rotate(45 12 12)'/%3E%3Cellipse cx='12' cy='12' rx='10' ry='4' transform='rotate(-45 12 12)'/%3E%3C/svg%3E">
 
-<!-- 恢復原專案的高質感圓體與楷書字體 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@400;600;700&family=LXGW+WenKai+TC:wght@400;700&family=Patrick+Hand&display=swap">
 
-<!-- 引入原專案的核心 CSS -->
-<link rel="stylesheet" href="./assets/css/storybook.css">
+<link rel="stylesheet" href="assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="assets/css/storybook.css">
 
 <style>
-    /* 回歸溫暖手帳風格 */
+    /* 基礎背景與防拷貝設定 */
     body {
-        font-family: 'Chiron GoRound TC', 'LXGW WenKai TC', sans-serif;
-        background-color: #FDFBF6; /* 溫暖紙張底色 */
+        background-color: #FDFBF6;
         color: #3A302A;
-        margin: 0;
-        padding: 0;
-        -webkit-user-select: none;
-        user-select: none;
-    }
-    
-    header {
-        max-width: 1000px;
-        margin: 80px auto 40px auto;
-        padding: 0 20px;
-        text-align: center;
-    }
-    
-    header h1 {
-        font-size: 3.5rem;
-        color: #4A3F37;
-        margin-bottom: 15px;
-        font-family: 'LXGW WenKai TC', serif;
-        font-weight: 700;
-        letter-spacing: 2px;
-    }
-    
-    header p {
-        color: #6F645A;
-        font-size: 1.15rem;
-        line-height: 1.7;
-        max-width: 600px;
-        margin: 0 auto;
-    }
-
-    /* 章節總覽網格 */
-    .catalog-container {
-        max-width: 1100px;
-        margin: 0 auto 80px auto;
-        padding: 0 20px;
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-        gap: 30px;
-    }
-
-    .catalog-card {
-        background-color: #ffffff;
-        border: 2px solid #EBE4D8;
-        border-radius: 16px;
-        padding: 24px;
-        box-shadow: 0 4px 15px rgba(74, 63, 55, 0.04);
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .catalog-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 8px 25px rgba(74, 63, 55, 0.08);
-        border-color: #D3C9BE;
-    }
-
-    .catalog-card h3 {
-        font-size: 1.25rem;
-        color: #4A3F37;
-        margin-top: 0;
-        margin-bottom: 16px;
-        padding-bottom: 12px;
-        border-bottom: 2px dashed #EBE4D8;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .unit-list {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-
-    .unit-list li {
-        margin-bottom: 8px;
-    }
-
-    .unit-list a {
-        text-decoration: none;
-        color: #6F645A;
-        font-size: 1.05rem;
-        display: block;
-        padding: 8px 12px;
-        border-radius: 8px;
-        transition: background-color 0.2s, color 0.2s;
-    }
-
-    .unit-list a:hover {
-        background-color: #F8F5EE;
-        color: #9C8038; /* 原作的奶油黃暗色 */
-        font-weight: 600;
+        font-family: 'Chiron GoRound TC', 'LXGW WenKai TC', sans-serif;
+        margin: 0; padding: 0;
+        -webkit-user-select: none; user-select: none;
     }
 </style>
 </head>
 <body>
+<noscript><p style="padding:2em">這個網站的互動功能需要開啟 JavaScript。</p></noscript>
 
-<noscript><p style="padding:2em">這個頁面的互動功能需要開啟 JavaScript。</p></noscript>
+<!-- 依序載入核心資料與腳本 -->
+<script src="assets/vendor/katex/katex.min.js"></script>
+<script src="assets/js/catalog.js"></script>
+<script src="assets/js/core.js"></script>
 
-<header>
-    <h1>見微理畫</h1>
-    <p>每一個物理觀念與化學反應，都是一幅可以被看見的圖畫。親手拖曳變因，看著圖形一步步推導出公式。</p>
-</header>
+<!-- ★ 首頁專屬動態生成腳本 -->
+<script src="assets/js/home.js"></script>
 
-<main>
-    <div id="catalog-root" class="catalog-container">
-        <!-- 目錄卡片將由 catalog.js 動態生成於此 -->
-    </div>
-</main>
-
-<script src="./assets/js/catalog.js"></script>
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const catalogRoot = document.getElementById('catalog-root');
-        
-        // 確保 catalog.js 已正確載入
-        if (typeof catalog !== 'undefined') {
-            catalog.forEach(bookData => {
-                bookData.chapters.forEach(chapter => {
-                    const card = document.createElement('div');
-                    card.className = 'catalog-card';
-                    
-                    let listItems = '';
-                    chapter.sections.forEach(section => {
-                        listItems += `<li><a href="${section.path}">${section.title}</a></li>`;
-                    });
-
-                    card.innerHTML = `
-                        <h3>
-                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#B8A369" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
-                            ${bookData.book}：${chapter.ch}
-                        </h3>
-                        <ul class="unit-list">
-                            ${listItems}
-                        </ul>
-                    `;
-                    catalogRoot.appendChild(card);
-                });
-            });
-        }
-    });
+    // 基礎防拷貝
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && e.key === 'c') e.preventDefault(); });
+    document.addEventListener('copy', e => e.preventDefault());
 </script>
-
 </body>
 </html>
