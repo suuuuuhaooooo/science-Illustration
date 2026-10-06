@@ -141,24 +141,28 @@
       return grp;
     };
   
-    /* ---------- 線性小圖示 (全面替換為科學圖標) ---------- */
-    var INK = "#1E293B";
-    function ic(fillPath, linePath, fill, extra) {
+    /* ---------- 線性小圖示 ---------- */
+    var INK = "#334155"; // 現代深灰藍
+    function ic(linePath) {
       return '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round">' +
-        (fillPath ? '<path d="' + fillPath + '" fill="' + fill + '" stroke="none" transform="translate(1.2 1.1)"/>' : "") +
-        '<path d="' + linePath + '" fill="none" stroke="' + INK + '" stroke-width="1.35"/>' + (extra || "") + "</svg>";
+        '<path d="' + linePath + '" fill="none" stroke="' + INK + '" stroke-width="1.8"/></svg>';
     }
     
+    var P_BULB = "M12 3a6 6 0 0 0-3.5 10.9c.7.5 1.1 1.3 1.1 2.1v.8h4.8V16c0-.8.4-1.6 1.1-2.1A6 6 0 0 0 12 3zM10 19.5h4M10.8 21.5h2.4";
+    var P_MAP = "M3.5 6.5l5.5-2.2 6 2.2 5.5-2.2v13.2L15 19.7l-6-2.2-5.5 2.2zM9 4.3v13.2M15 6.5v13.2";
+    var P_TEACH = "M3.5 4.5h17v11h-17zM12 15.5v4M8 20.5h8M7 12l3-3 2.5 2 4-4";
+    var P_STOP = "M8.3 3h7.4L21 8.3v7.4L15.7 21H8.3L3 15.7V8.3zM8 12h8";
+    var P_STAR = "M12 3.4l2.5 5.3 5.6.7-4.1 3.9 1.1 5.6L12 16.2l-5.1 2.7 1.1-5.6-4.1-3.9 5.6-.7z";
+
     SK.icons = {
-      sparkle: ic("M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5Z", "M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5Z", "#FDE68A"),
-      star: ic("M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5Z", "M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5Z", "#93C5FD"),
-      bulb: ic("M12 3a6 6 0 0 0-3.5 10.9c.7.5 1.1 1.3 1.1 2.1v.8h4.8V16c0-.8.4-1.6 1.1-2.1A6 6 0 0 0 12 3z",
-        "M12 3a6 6 0 0 0-3.5 10.9c.7.5 1.1 1.3 1.1 2.1v.8h4.8V16c0-.8.4-1.6 1.1-2.1A6 6 0 0 0 12 3zM10 19.5h4M10.8 21.5h2.4", "#FEF08A"),
-      map: ic("M3.5 6.5l5.5-2.2 6 2.2 5.5-2.2v13.2L15 19.7l-6-2.2-5.5 2.2z", "M3.5 6.5l5.5-2.2 6 2.2 5.5-2.2v13.2L15 19.7l-6-2.2-5.5 2.2zM9 4.3v13.2M15 6.5v13.2", "#BAE6FD"),
-      teach: ic("M3.5 4.5h17v11h-17z", "M3.5 4.5h17v11h-17zM12 15.5v4M8 20.5h8M7 12l3-3 2.5 2 4-4", "#E2E8F0"),
-      stop: ic("M8.3 3h7.4L21 8.3v7.4L15.7 21H8.3L3 15.7V8.3z", "M8.3 3h7.4L21 8.3v7.4L15.7 21H8.3L3 15.7V8.3zM8 12h8", "#FECDD3"),
-      arrow: '<svg class="arrow" viewBox="0 0 24 14" aria-hidden="true"><path d="M1.5 7.4c6-.5 13-.3 19.5-.2M15.8 2.4c1.9 1.7 3.7 3.2 5.6 4.8-2 1.5-3.8 3-5.4 4.8" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-      arrowL: '<svg class="arrow" viewBox="0 0 24 14" aria-hidden="true" style="transform:scaleX(-1)"><path d="M1.5 7.4c6-.5 13-.3 19.5-.2M15.8 2.4c1.9 1.7 3.7 3.2 5.6 4.8-2 1.5-3.8 3-5.4 4.8" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+      sparkle: ic(P_STAR),
+      star: ic(P_STAR),
+      bulb: ic(P_BULB),
+      map: ic(P_MAP),
+      teach: ic(P_TEACH),
+      stop: ic(P_STOP),
+      arrow: '<svg class="arrow" viewBox="0 0 24 14" aria-hidden="true"><path d="M1.5 7.4c6-.5 13-.3 19.5-.2M15.8 2.4c1.9 1.7 3.7 3.2 5.6 4.8-2 1.5-3.8 3-5.4 4.8" stroke="' + INK + '" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+      arrowL: '<svg class="arrow" viewBox="0 0 24 14" aria-hidden="true" style="transform:scaleX(-1)"><path d="M1.5 7.4c6-.5 13-.3 19.5-.2M15.8 2.4c1.9 1.7 3.7 3.2 5.6 4.8-2 1.5-3.8 3-5.4 4.8" stroke="' + INK + '" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>'
     };
     SK.icon = function (name) { return SK.icons[name] || ""; };
     function innerSvg(svg) { return svg.replace(/^<svg[^>]*>/, "").replace(/<\/svg>$/, ""); }
@@ -316,14 +320,14 @@
   
     /* ---------- 科學探究思維便條 ---------- */
     SK.note = function (text, en) {
-      return '<div class="note">' + SK.icon("sparkle") + "<div>" + SK.md(text) + (en ? "<small>" + en + "</small>" : "") + "</div></div>";
+      return '<div class="note"><div>' + SK.md(text) + (en ? "<small>" + en + "</small>" : "") + "</div></div>";
     };
     var NOTES = {
-      hook: ["觀察自然現象，正是所有偉大科學發現的起點。", "Observation is the beginning of science."],
-      guess: ["實驗產生誤差完全沒關係！從錯誤中尋找變因，是科學家每天都在做的事。", "Mistakes lead to discoveries."],
-      derive: ["慢慢來，科學不是比誰背得快，是比誰看得深。每一步都可以倒回去重新觀察。", "Depth over speed."],
-      angles: ["同一個物理量換一種方式看，你對大自然的理解就會更完整。", "Many ways to see."],
-      challenge: ["卡住了嗎？控制變因、重新思考，突破盲點就是在長大。", "Struggle is where the growth is."]
+      hook: ["「我沒有特別的天賦，我只是極度的好奇。」", "— 阿爾伯特·愛因斯坦 (Albert Einstein)"],
+      guess: ["「任何未曾犯錯的人，一定不曾嘗試新事物。」", "— 阿爾伯特·愛因斯坦 (Albert Einstein)"],
+      derive: ["「科學的真理不應在蒙滿灰塵的書報上找，而應在實驗中尋找。」", "— 伽利略 (Galileo Galilei)"],
+      angles: ["「我們所知道的只是一滴水，我們不知道的是一個海洋。」", "— 艾薩克·牛頓 (Isaac Newton)"],
+      challenge: ["「第一原則是不能欺騙自己，因為自己是最容易被欺騙的人。」", "— 理查·費曼 (Richard Feynman)"]
     };
   
     /* ---------- 頁首／頁尾 ---------- */
