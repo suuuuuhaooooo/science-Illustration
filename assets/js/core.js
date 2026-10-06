@@ -1,21 +1,20 @@
 /* =========================================================
    見微理畫 — 共用元件庫 (SK) 
-   核心引擎已全面替換為「國中理化」專屬色系與科學向量圖形
    ========================================================= */
 (function () {
     "use strict";
     var SK = (window.SK = {});
     var NS = "http://www.w3.org/2000/svg";
   
-    /* ---------- 科學專屬顏色 ---------- */
+    /* ---------- 科學顏色 ---------- */
     SK.C = {
-      blue:    { s: "#2563EB", f: "rgba(37,99,235,.12)" },   // 經典科學藍 (力學/基礎)
-      cyan:    { s: "#0891B2", f: "rgba(8,145,178,.12)" },   // 電子青 (電學/流體)
-      emerald: { s: "#059669", f: "rgba(5,150,105,.12)" },   // 化學綠 (反應/物質)
-      rose:    { s: "#E11D48", f: "rgba(225,29,72,.12)" },   // 熱能紅 (熱學)
-      amber:   { s: "#D97706", f: "rgba(217,119,6,.12)" },   // 光學黃 (光學)
-      violet:  { s: "#7C3AED", f: "rgba(124,58,237,.12)" },  // 射線紫 (波動/原子)
-      slate:   { s: "#475569", f: "rgba(71,85,105,.12)" },   // 中性灰 (結構)
+      blue:    { s: "#2563EB", f: "rgba(37,99,235,.12)" },
+      cyan:    { s: "#0891B2", f: "rgba(8,145,178,.12)" },
+      emerald: { s: "#059669", f: "rgba(5,150,105,.12)" },
+      rose:    { s: "#E11D48", f: "rgba(225,29,72,.12)" }, 
+      amber:   { s: "#D97706", f: "rgba(217,119,6,.12)" }, 
+      violet:  { s: "#7C3AED", f: "rgba(124,58,237,.12)" }, 
+      slate:   { s: "#475569", f: "rgba(71,85,105,.12)" },  
       ink: "#0F172A", soft: "#64748B", line: "#CBD5E1", paper: "#F8FAFC", dark: "#1E293B"
     };
   
@@ -415,10 +414,11 @@
       var meta = { title: "理化單元", book: "國中理化", slug: cfg.slug };
       var found = false;
   
+      // 直接比對 cfg.slug
       for(var i=0; i<cat.length; i++){
           for(var j=0; j<cat[i].chapters.length; j++){
               for(var k=0; k<cat[i].chapters[j].sections.length; k++){
-                  if(cat[i].chapters[j].sections[k].id === cfg.slug){
+                  if(cat[i].chapters[j].sections[k].id === cfg.slug || cat[i].chapters[j].sections[k].slug === cfg.slug){
                       meta.title = cat[i].chapters[j].sections[k].title;
                       meta.book = cat[i].book;
                       found = true;
