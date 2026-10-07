@@ -25,12 +25,19 @@
     var read = SK.h("div", { class: "readout" });
     ctx.extra.appendChild(read);
 
-    var lenSl; // 提前宣告變數
+    // 【修正拉桿 Bug】只宣告一次，並直接綁定 onInput
+    var lenSl = SK.slider({ 
+        label: "拖曳改變物體長度", min: 3, max: 8, step: 0.05, value: 5.65, color: "blue",
+        onInput: function() { draw(); } 
+    });
+    ctx.sliders.appendChild(lenSl.el);
 
     function draw() {
       var f = ctx.frame; 
-      var L = lenSl ? lenSl.value : 5.65; // 防呆，確保一開始有預設值
-      g.innerHTML = "";
+      var L = lenSl.value;
+      
+      // 【安全防護】兼容所有瀏覽器，安全清空 SVG 畫布
+      while (g.firstChild) { g.removeChild(g.firstChild); }
       
       var unitPx = 40; 
       var startX = 50;
@@ -54,22 +61,23 @@
       var objW = L * unitPx;
       s("rect", { x: startX, y: baseY - 50, width: objW, height: 50, rx: 4, fill: C.blue.f, stroke: C.blue.s, "stroke-width": 2 }, g);
 
-      // 焦點對齊線
+      // 對齊線
       var endX = startX + objW;
       s("line", { x1: endX, y1: baseY - 60, x2: endX, y2: baseY + 40, stroke: C.orange.s, "stroke-width": 2, "stroke-dasharray": "5 4" }, g);
 
-      // 解析準確值與估計值
       var exactVal = Math.floor(L * 10) / 10; 
       var estVal = Math.round((L - exactVal) * 100); 
 
       if (f === 1 || f === 3) {
         var exX = startX + exactVal * unitPx;
         s("line", { x1: exX, y1: baseY - 10, x2: exX, y2: baseY + 20, stroke: C.green.s, "stroke-width": 3 }, g);
-        SK.label(g, exX, baseY - 25, exactVal.toFixed(1) + " (準確)", { size: 14, color: C.green.s });
+        // 【修復字體重疊】將準確值的文字往上移到 baseY - 35
+        SK.label(g, exX, baseY - 35, exactVal.toFixed(1) + " (準確)", { size: 14, color: C.green.s });
       }
 
       if (f === 2 || f === 3) {
-        SK.label(g, endX + 15, baseY - 25, "估: " + estVal, { size: 14, color: C.orange.s, bold: true });
+        // 【修復字體重疊】將估計值文字往下移到 baseY - 15，並強制往右推開 15px
+        SK.label(g, endX + 15, baseY - 15, "估: " + estVal, { size: 14, color: C.orange.s, bold: true });
         s("circle", { cx: endX, cy: baseY, r: 18, fill: "none", stroke: C.orange.s, "stroke-width": 2 }, g);
       }
 
@@ -78,13 +86,6 @@
       if (f === 2) read.innerHTML = "肉眼猜測的下一位數稱為<b style='color:#C28C6E'>估計值</b>，這裡我們估計為 " + estVal + "。";
       if (f === 3) read.innerHTML = "完整測量值 = 準確值 + 估計值 = <b>" + L.toFixed(2) + " cm</b>";
     }
-
-    // 【這裡就是修復拉桿的關鍵】直接綁定 onInput 呼叫 draw
-    lenSl = SK.slider({ 
-        label: "拖曳改變物體長度", min: 3, max: 8, step: 0.05, value: 5.65, color: "blue",
-        onInput: function() { draw(); } 
-    });
-    ctx.sliders.appendChild(lenSl.el);
 
     return { show: draw };
   }
@@ -100,30 +101,25 @@
 
     function draw() {
         var v = sl.value; 
-        svg.innerHTML = "";
+        while (svg.firstChild) { svg.removeChild(svg.firstChild); }
         
         var baseWaterY = 170;
         var stoneVol = 50; 
         var currentWaterY = baseWaterY - (v / 100) * stoneVol;
         var stoneY = 50 + (v / 100) * 140; 
 
-        // 量筒
         s("path", { d: "M 100 40 L 100 220 L 200 220 L 200 40", fill: "none", stroke: C.line, "stroke-width": 3 }, svg);
         for(var i=0; i<5; i++){
             s("line", { x1: 100, y1: 80 + i*30, x2: 115, y2: 80 + i*30, stroke: C.line, "stroke-width": 2 }, svg);
         }
         
-        // 水
         s("rect", { x: 102, y: currentWaterY, width: 96, height: 218 - currentWaterY, fill: C.blue.f }, svg);
         
-        // V1 原水位
         s("line", { x1: 80, y1: 170, x2: 100, y2: 170, stroke: C.line, "stroke-width": 2, "stroke-dasharray":"3 3" }, svg);
         SK.label(svg, 65, 170, "V1", { size: 16, color: C.soft }); 
 
-        // 石頭
         s("path", { d: "M 130 " + stoneY + " Q 150 " + (stoneY-15) + " 170 " + stoneY + " Q 180 " + (stoneY+15) + " 150 " + (stoneY+25) + " Q 120 " + (stoneY+15) + " 130 " + stoneY + " Z", fill: C.ink, stroke: "none" }, svg);
 
-        // V2 投入後水位
         if (v > 0) {
             s("line", { x1: 80, y1: currentWaterY, x2: 100, y2: currentWaterY, stroke: C.blue.s, "stroke-width": 2, "stroke-dasharray":"3 3" }, svg);
             SK.label(svg, 65, currentWaterY, "V2", { size: 16, color: C.blue.s, bold: true }); 
@@ -138,13 +134,13 @@
     el.appendChild(wrap);
     var svg = SK.svg(wrap, 300, 260, "重物沉水法示意圖");
     
-    // 兩段式滑桿 (0~50 放鐵塊，51~100 放木塊)
+    // 兩段式滑桿：前半段放鐵塊，後半段放木塊
     var sl = SK.slider({ label: "步驟：1.先放鐵塊 → 2.綁上木塊", min: 0, max: 100, step: 1, value: 0, color: "orange", onInput: function(){ draw(); } });
     wrap.appendChild(sl.el);
 
     function draw() {
         var v = sl.value; 
-        svg.innerHTML = "";
+        while (svg.firstChild) { svg.removeChild(svg.firstChild); }
         
         s("path", { d: "M 100 40 L 100 240 L 200 240 L 200 40", fill: "none", stroke: C.line, "stroke-width": 3 }, svg);
         
