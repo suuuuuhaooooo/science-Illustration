@@ -245,11 +245,41 @@
   var opt107B = '<b>(B)</b><div style="text-align:center;"><svg viewBox="0 0 40 45" width="26" height="30"><path d="M15 8 L15 35 A 5 5 0 0 0 25 35 L25 8" fill="none" stroke="#5B778C" stroke-width="2"/></svg></div>';
   var opt107C = '<b>(C)</b><div style="text-align:center;"><svg viewBox="0 0 40 45" width="26" height="30"><path d="M15 8 L15 18 L5 38 L35 38 L25 18 L25 8" fill="none" stroke="#5B778C" stroke-width="2"/></svg></div>';
   var opt107D = '<b>(D)</b><div style="text-align:center;"><svg viewBox="0 0 40 45" width="26" height="30"><path d="M5 12 L5 38 L35 38 L35 12" fill="none" stroke="#5B778C" stroke-width="2"/></svg></div>';
-  var img106Method = '<div style="display:flex; justify-content:space-around; align-items:flex-end; margin: 15px 0;">' +
-    '<div style="text-align:center;"><svg viewBox="0 0 100 120" width="70"><rect x="35" y="90" width="30" height="20" fill="#EBCDCB" /><path d="M50 70 Q55 85 50 90 Q45 85 50 70" fill="#C28C6E" /><g transform="rotate(30 50 50)"><rect x="40" y="10" width="20" height="70" rx="10" fill="none" stroke="#5B778C" stroke-width="2"/><rect x="42" y="40" width="16" height="35" fill="rgba(164,185,200,.5)"/></g></svg><br><b style="font-size:0.9rem">方法甲(加熱)</b></div>' +
-    '<div style="text-align:center;"><svg viewBox="0 0 100 120" width="70"><rect x="40" y="30" width="20" height="80" fill="none" stroke="#5B778C" stroke-width="2"/><line x1="30" y1="110" x2="70" y2="110" stroke="#5B778C" stroke-width="2"/><rect x="42" y="70" width="16" height="40" fill="rgba(189,203,184,.5)"/><line x1="60" y1="10" x2="45" y2="90" stroke="#C28C6E" stroke-width="3"/></svg><br><b style="font-size:0.9rem">方法乙(配溶液)</b></div>' +
-    '<div style="text-align:center;"><svg viewBox="0 0 100 120" width="70"><rect x="40" y="30" width="20" height="80" fill="none" stroke="#5B778C" stroke-width="2"/><line x1="30" y1="110" x2="70" y2="110" stroke="#5B778C" stroke-width="2"/><rect x="42" y="70" width="16" height="40" fill="rgba(164,185,200,.5)"/><path d="M 10 70 Q 20 60 30 70 Q 20 80 10 70" fill="none" stroke="#4A3F37" stroke-width="2"/><circle cx="20" cy="70" r="3" fill="#4A3F37"/><line x1="32" y1="70" x2="42" y2="70" stroke="#4A3F37" stroke-dasharray="2 2" stroke-width="1"/></svg><br><b style="font-size:0.9rem">方法丙(測體積)</b></div>' +
-    '</div>';
+  var img106Method = '<div style="display:flex; justify-content:space-around; align-items:flex-end; margin:15px 0;">' +
+  '<div style="text-align:center;">' +
+    '<svg viewBox="0 0 100 120" width="70">' +
+      '<rect x="35" y="90" width="30" height="20" fill="#EBCDCB"/>' +
+      '<path d="M50 70 Q55 85 50 90 Q45 85 50 70" fill="#C28C6E"/>' +
+      '<g transform="rotate(30 50 50)">' +
+        '<rect x="40" y="10" width="20" height="70" rx="10" fill="none" stroke="#5B778C" stroke-width="2"/>' +
+        '<rect x="42" y="40" width="16" height="35" fill="rgba(164,185,200,.5)"/>' +
+      '</g>' +
+    '</svg><br>' +
+    '<b>方法甲(加熱)</b>' +
+  '</div>' +
+
+  '<div style="text-align:center;">' +
+    '<svg viewBox="0 0 100 120" width="70">' +
+      '<rect x="40" y="30" width="20" height="80" fill="none" stroke="#5B778C" stroke-width="2"/>' +
+      '<line x1="30" y1="110" x2="70" y2="110" stroke="#5B778C" stroke-width="2"/>' +
+      '<rect x="42" y="70" width="16" height="40" fill="rgba(189,203,184,.5)"/>' +
+      '<line x1="60" y1="10" x2="45" y2="90" stroke="#C28C6E" stroke-width="3"/>' +
+    '</svg><br>' +
+    '<b>方法乙(配溶液)</b>' +
+  '</div>' +
+
+  '<div style="text-align:center;">' +
+    '<svg viewBox="0 0 100 120" width="70">' +
+      '<rect x="40" y="30" width="20" height="80" fill="none" stroke="#5B778C" stroke-width="2"/>' +
+      '<line x1="30" y1="110" x2="70" y2="110" stroke="#5B778C" stroke-width="2"/>' +
+      '<rect x="42" y="70" width="16" height="40" fill="rgba(164,185,200,.5)"/>' +
+      '<path d="M10 70 Q20 60 30 70 Q20 80 10 70" fill="none" stroke="#4A3F37" stroke-width="2"/>' +
+      '<circle cx="20" cy="70" r="3" fill="#4A3F37"/>' +
+      '<line x1="32" y1="70" x2="42" y2="70" stroke="#4A3F37" stroke-dasharray="2 2" stroke-width="1"/>' +
+    '</svg><br>' +
+    '<b>方法丙(測體積)</b>' +
+  '</div>' +
+'</div>';
   
   var img104Bot = imgBox(
     '<div style="display:flex; justify-content:space-around; align-items:center;">' +
