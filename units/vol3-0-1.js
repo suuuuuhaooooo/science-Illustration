@@ -1,19 +1,6 @@
-/* 單元：3冊 0.1 科學方法與實驗守則 (卡片內完美收納版) */
+/* 單元：3冊 0.1 科學方法與實驗守則 */
 (function () {
   var C = SK.C, s = SK.s;
-
-  // 注入絕對嚴格控制在卡片範圍內的防溢出 CSS
-  var style = document.createElement("style");
-  style.innerHTML = 
-    ".table-scroll-box { width: 100% !important; max-width: 100% !important; overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 10px 0; border: 1px solid #E3D4AC; border-radius: 6px; background: #FFF; box-sizing: border-box; }" +
-    ".rwd-tb { width: 100% !important; max-width: 100% !important; min-width: unset !important; border-collapse: collapse; text-align: center; font-size: 0.82rem; table-layout: auto; box-sizing: border-box; }" +
-    ".rwd-tb th { background: #F8F5EE; padding: 6px 4px; border-bottom: 2px solid #E3D4AC; color: #4A3F37; font-weight: bold; word-break: break-all; }" +
-    ".rwd-tb td { padding: 6px 4px; border-bottom: 1px solid #E3D4AC; color: #6F645A; background: #FFF; word-break: break-all; }" +
-    ".opt-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; width: 100%; box-sizing: border-box; }" +
-    ".opt-box { background: #FFF; border: 1px solid #E3D4AC; border-radius: 6px; padding: 10px 12px; font-size: 0.9rem; color: #4A3F37; width: 100%; box-sizing: border-box; text-align: left; word-break: break-word; }" +
-    ".q-img-box { text-align: center; margin: 10px 0; padding: 6px; background: #FAF7F2; border-radius: 6px; border: 1px solid #EFE6D5; width: 100%; box-sizing: border-box; overflow-x: auto; }" +
-    ".q-img-box svg { max-width: 100%; height: auto; display: inline-block; }";
-  document.head.appendChild(style);
 
   /* --- 啟發區小圖 --- */
   function hookVisual(el) {
@@ -98,7 +85,7 @@
   }
   
   function genOpts(opts) {
-    var h = '<div class="opt-list">';
+    var h = '<div style="display:flex; flex-direction:column; gap:8px; margin-top:10px; width:100%;">';
     opts.forEach(function(o){ 
       h += '<div class="opt-box">' + o + '</div>'; 
     });
@@ -271,7 +258,7 @@
       {
         lv: "107 會考 (精準量取)",
         q: "小瑩想以量筒量取 30.0 mL 的溶液，附圖虛線箭頭所指的位置為量筒中目前已量取的溶液體積。小瑩使用下列哪一種器材裝取溶液後，再加入量筒內，最能避免體積超出 30.0 mL？" + img107Cyl + genOpts([opt107A, opt107B, opt107C, opt107D]),
-        idea: "【正確解答】 (A) 滴管<br>【詳細解析】 滴管(A)為吸取少量液體、轉移至其他容器的工具，適合在接近刻度時一滴一滴精準加入，最能避免超過 30.0 mL。(B)試管、(C)錐形瓶、(D)燒杯皆可能一次倒太多。"
+        idea: "【正確解答】 (A) 滴管<br>【詳細解析】 滴管(A)為吸取少量液體，轉移至其他容器的工具，適合在接近刻度時一滴一滴精準加入，最能避免超過 30.0 mL。(B)試管、(C)錐形瓶、(D)燒杯皆可能一次倒太多。"
       },
       {
         lv: "107 會考 (假設驗證)",
