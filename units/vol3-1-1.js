@@ -25,7 +25,6 @@
     var read = SK.h("div", { class: "readout" });
     ctx.extra.appendChild(read);
 
-    // 【修正拉桿 Bug】只宣告一次，並直接綁定 onInput
     var lenSl = SK.slider({ 
         label: "拖曳改變物體長度", min: 3, max: 8, step: 0.05, value: 5.65, color: "blue",
         onInput: function() { draw(); } 
@@ -36,7 +35,6 @@
       var f = ctx.frame; 
       var L = lenSl.value;
       
-      // 【安全防護】兼容所有瀏覽器，安全清空 SVG 畫布
       while (g.firstChild) { g.removeChild(g.firstChild); }
       
       var unitPx = 40; 
@@ -65,19 +63,21 @@
       var endX = startX + objW;
       s("line", { x1: endX, y1: baseY - 60, x2: endX, y2: baseY + 40, stroke: C.orange.s, "stroke-width": 2, "stroke-dasharray": "5 4" }, g);
 
-      var exactVal = Math.floor(L * 10) / 10; 
-      var estVal = Math.round((L - exactVal) * 100); 
+      // 【修正浮點數計算】確保數值穩定擷取
+      var exactValStr = L.toFixed(2).slice(0, -1); // 取得小數點第一位為止的字串
+      var estVal = Math.round((L * 100)) % 10;     // 取得小數點第二位的數字
+      var exactVal = parseFloat(exactValStr);      // 轉回數字供計算用
 
       if (f === 1 || f === 3) {
         var exX = startX + exactVal * unitPx;
-        s("line", { x1: exX, y1: baseY - 10, x2: exX, y2: baseY + 20, stroke: C.green.s, "stroke-width": 3 }, g);
-        // 【修復字體重疊】將準確值的文字往上移到 baseY - 35
-        SK.label(g, exX, baseY - 35, exactVal.toFixed(1) + " (準確)", { size: 14, color: C.green.s });
+        s("line", { x1: exX, y1: baseY - 10, x2: exX, y2: baseY + 45, stroke: C.green.s, "stroke-width": 3 }, g);
+        // 【防重疊】準確值標示在尺的「下方」
+        SK.label(g, exX, baseY + 65, exactVal.toFixed(1) + " (準確)", { size: 14, color: C.green.s, bold: true });
       }
 
       if (f === 2 || f === 3) {
-        // 【修復字體重疊】將估計值文字往下移到 baseY - 15，並強制往右推開 15px
-        SK.label(g, endX + 15, baseY - 15, "估: " + estVal, { size: 14, color: C.orange.s, bold: true });
+        // 【防重疊】估計值標示在尺的「上方」
+        SK.label(g, endX + 10, baseY - 20, "估: " + estVal, { size: 14, color: C.orange.s, bold: true });
         s("circle", { cx: endX, cy: baseY, r: 18, fill: "none", stroke: C.orange.s, "stroke-width": 2 }, g);
       }
 
@@ -134,7 +134,6 @@
     el.appendChild(wrap);
     var svg = SK.svg(wrap, 300, 260, "重物沉水法示意圖");
     
-    // 兩段式滑桿：前半段放鐵塊，後半段放木塊
     var sl = SK.slider({ label: "步驟：1.先放鐵塊 → 2.綁上木塊", min: 0, max: 100, step: 1, value: 0, color: "orange", onInput: function(){ draw(); } });
     wrap.appendChild(sl.el);
 
@@ -166,29 +165,24 @@
 
         s("rect", { x: 102, y: waterY, width: 96, height: 238 - waterY, fill: C.blue.f }, svg);
         
-        // V1 原始水位
         s("line", { x1: 80, y1: baseWater, x2: 100, y2: baseWater, stroke: C.line, "stroke-width": 2, "stroke-dasharray":"3 3" }, svg);
         SK.label(svg, 65, baseWater, "V1", { size: 14, color: C.soft }); 
 
-        // V2 (僅有鐵塊的水位)
         if (v >= 50) {
             var v2Y = baseWater - ironVol;
             s("line", { x1: 80, y1: v2Y, x2: 100, y2: v2Y, stroke: C.line, "stroke-width": 2, "stroke-dasharray":"3 3" }, svg);
             SK.label(svg, 65, v2Y, "V2", { size: 14, color: C.soft }); 
         }
 
-        // V3 (鐵+木的水位)
         if (v > 50) {
             s("line", { x1: 80, y1: waterY, x2: 100, y2: waterY, stroke: C.orange.s, "stroke-width": 2, "stroke-dasharray":"3 3" }, svg);
             SK.label(svg, 65, waterY, "V3", { size: 14, color: C.orange.s, bold: true }); 
         }
 
-        // 綁線
         if (v > 50) {
             s("line", { x1: 150, y1: woodY+25, x2: 150, y2: ironY, stroke: C.line, "stroke-width": 2 }, svg);
         }
 
-        // 鐵塊與木塊
         s("rect", { x: 135, y: ironY, width: 30, height: 20, rx:2, fill: C.ink }, svg);
         s("rect", { x: 125, y: woodY, width: 50, height: 35, rx: 3, fill: C.orange.f, stroke: C.orange.s, "stroke-width":2 }, svg);
     }
@@ -216,7 +210,7 @@
     },
 
     derive: {
-      intro: "讓我們用一把最小刻度為 **0.1 cm (1 mm)** 的直尺來測量物體。試著拖曳上方的滑桿，改變物體的實際長度，觀察下方的紀錄規則如何跟著變化。",
+      intro: "讓我們用一把最小刻度為 0.1 cm (1 mm) 的直尺來測量物體。試著拖曳上方的滑桿，改變物體的實際長度，觀察下方的紀錄規則如何跟著變化。",
       frames: [
         { cap: "測量時，物體末端經常落在兩個刻度之間。此時不能只記錄大約值，必須遵守科學記錄規範。", tex: "\\text{尋找末端位置}" },
         { cap: "首先，讀出儀器上能清楚看見的最小刻度數字，這部分毫無爭議，我們稱為「準確值」。", tex: "\\text{準確值（到最小刻度）}" },
@@ -232,7 +226,7 @@
         render: sinkingVolume
       },
       { title: "不規則浮體怎麼測？（重捶法）",
-        html: "如果是會浮在水面上的木塊，就算丟進去也無法完全排開同體積的水。這時必須綁上一個重物（如鐵塊）把它強行拉入水中。<br><br>⚠️ 注意：這裡的測量基準是指<b>「已經放入鐵塊的水位 (V2)」</b>，所以：<br><b>木塊體積 = 鐵+木的水位 (V3) - 只有鐵塊的水位 (V2)</b>",
+        html: "如果是會浮在水面上的木塊，就算丟進去也無法完全排開同體積的水。這時必須綁上一個重物（如鐵塊）把它強行拉入水中。<br><br>注意：這裡的測量基準是指<b>「已經放入鐵塊的水位 (V2)」</b>，所以：<br><b>木塊體積 = 鐵+木的水位 (V3) - 只有鐵塊的水位 (V2)</b>",
         render: floatingVolume
       }
     ],
