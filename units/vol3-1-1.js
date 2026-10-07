@@ -5,7 +5,6 @@
   /* --- 啟發區小圖：日常測量 --- */
   function hookVisual(el) {
     var svg = SK.svg(el, 360, 200, "用尺測量鉛筆");
-    // 【RWD 適應螢幕】
     svg.style.width = "100%";
     svg.style.maxWidth = "360px";
     svg.style.height = "auto";
@@ -26,7 +25,6 @@
   /* --- 核心推導：滑桿控制測量值解析 --- */
   function measureDerive(ctx) {
     var svg = SK.svg(ctx.stage, 500, 260, "測量值動態解析圖");
-    // 【RWD 適應螢幕】確保直尺圖解在手機上不會被截斷
     svg.style.width = "100%";
     svg.style.height = "auto";
 
@@ -38,6 +36,10 @@
         label: "拖曳改變物體長度", min: 3, max: 8, step: 0.05, value: 5.65, color: "blue",
         onInput: function() { draw(); } 
     });
+    
+    // 【手機專用修復】防止滑桿被網頁滾動干擾
+    lenSl.input.style.touchAction = "none";
+    
     ctx.sliders.appendChild(lenSl.el);
 
     function draw() {
@@ -50,7 +52,6 @@
       var startX = 50;
       var baseY = 140;
 
-      // 畫尺
       s("rect", { x: startX - 10, y: baseY, width: 420, height: 60, rx: 5, fill: C.paper, stroke: C.line, "stroke-width": 2 }, g);
       for(var i=0; i<=10; i++) {
         var vx = startX + i * unitPx;
@@ -64,11 +65,9 @@
         }
       }
 
-      // 畫物體
       var objW = L * unitPx;
       s("rect", { x: startX, y: baseY - 50, width: objW, height: 50, rx: 4, fill: C.blue.f, stroke: C.blue.s, "stroke-width": 2 }, g);
 
-      // 對齊線
       var endX = startX + objW;
       s("line", { x1: endX, y1: baseY - 60, x2: endX, y2: baseY + 40, stroke: C.orange.s, "stroke-width": 2, "stroke-dasharray": "5 4" }, g);
 
@@ -98,17 +97,24 @@
 
   /* --- 換個角度看 1：互動式排水法 (沉體) --- */
   function sinkingVolume(el) {
-    var wrap = SK.h("div", { style: "text-align:center; padding: 10px 0;" });
+    var wrap = SK.h("div", { style: "text-align:center; padding: 10px 0; margin-bottom:10px;" });
     el.appendChild(wrap);
     var svg = SK.svg(wrap, 300, 250, "排水法示意圖");
     
-    // 【RWD 適應螢幕】限制最大寬度並自動等比縮放
+    svg.style.display = "block";
+    svg.style.margin = "0 auto";
     svg.style.maxWidth = "220px";
     svg.style.width = "100%";
     svg.style.height = "auto";
     
+    var slWrap = SK.h("div", { style: "margin-top: 15px; position: relative; z-index: 10;" });
     var sl = SK.slider({ label: "慢慢將石頭放入水中", min: 0, max: 100, step: 1, value: 0, color: "blue", onInput: function(){ draw(); } });
-    wrap.appendChild(sl.el);
+    
+    // 【手機專用修復】防止滑桿被網頁滾動干擾
+    sl.input.style.touchAction = "none";
+    
+    slWrap.appendChild(sl.el);
+    wrap.appendChild(slWrap);
 
     function draw() {
         var v = sl.value; 
@@ -141,17 +147,24 @@
 
   /* --- 換個角度看 2：互動式重捶法 (浮體) --- */
   function floatingVolume(el) {
-    var wrap = SK.h("div", { style: "text-align:center; padding: 10px 0;" });
+    var wrap = SK.h("div", { style: "text-align:center; padding: 10px 0; margin-bottom:15px;" });
     el.appendChild(wrap);
     var svg = SK.svg(wrap, 300, 260, "重物沉水法示意圖");
     
-    // 【RWD 適應螢幕】限制最大寬度並自動等比縮放
+    svg.style.display = "block";
+    svg.style.margin = "0 auto";
     svg.style.maxWidth = "220px";
     svg.style.width = "100%";
     svg.style.height = "auto";
     
+    var slWrap = SK.h("div", { style: "margin-top: 15px; position: relative; z-index: 10;" });
     var sl = SK.slider({ label: "步驟：1.先放鐵塊 → 2.綁上木塊", min: 0, max: 100, step: 1, value: 0, color: "orange", onInput: function(){ draw(); } });
-    wrap.appendChild(sl.el);
+    
+    // 【手機專用修復】防止滑桿被網頁滾動干擾
+    sl.input.style.touchAction = "none";
+    
+    slWrap.appendChild(sl.el);
+    wrap.appendChild(slWrap);
 
     function draw() {
         var v = sl.value; 
