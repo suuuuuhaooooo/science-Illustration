@@ -1,131 +1,18 @@
-/* 單元：3冊 0.1 科學方法與實驗守則 */
+/* 單元：3冊 0.1 科學方法與實驗守則 (卡片內完美收納版) */
 (function () {
   var C = SK.C, s = SK.s;
 
   // 注入絕對嚴格控制在卡片範圍內的防溢出 CSS
   var style = document.createElement("style");
-  style.innerHTML =
-  /* ===== 所有內容最基本的 RWD 防溢出 ===== */
-  ".unit-card, .card, .section, .content, .main, #main, article, section {" +
-    "max-width: 100%;" +
-    "min-width: 0;" +
-    "box-sizing: border-box;" +
-  "}" +
-
-  /* ===== 表格：手機可左右滑，電腦正常顯示 ===== */
-  ".table-scroll-box {" +
-    "width: 100%;" +
-    "max-width: 100%;" +
-    "min-width: 0;" +
-    "overflow-x: auto;" +
-    "overflow-y: hidden;" +
-    "-webkit-overflow-scrolling: touch;" +
-    "margin: 10px 0;" +
-    "border: 1px solid #E3D4AC;" +
-    "border-radius: 6px;" +
-    "background: #FFF;" +
-    "box-sizing: border-box;" +
-  "}" +
-
-  ".rwd-tb { width: 100%; min-width: 520px; border-collapse: collapse; text-align: center; font-size: clamp(0.78rem, 2.5vw, 0.9rem); table-layout: auto; }" +
-
-  ".rwd-tb th {" +
-    "background: #F8F5EE;" +
-    "padding: 8px 6px;" +
-    "border-bottom: 2px solid #E3D4AC;" +
-    "color: #4A3F37;" +
-    "font-weight: bold;" +
-    "white-space: nowrap;" +
-  "}" +
-
-  ".rwd-tb td {" +
-    "padding: 8px 6px;" +
-    "border-bottom: 1px solid #E3D4AC;" +
-    "color: #6F645A;" +
-    "background: #FFF;" +
-    "word-break: break-word;" +
-  "}" +
-
-  /* ===== 選項 ===== */
-  ".opt-list {" +
-    "display: flex;" +
-    "flex-direction: column;" +
-    "gap: 8px;" +
-    "margin-top: 10px;" +
-    "width: 100%;" +
-    "max-width: 100%;" +
-    "min-width: 0;" +
-    "box-sizing: border-box;" +
-  "}" +
-
-  ".opt-box {" +
-    "background: #FFF;" +
-    "border: 1px solid #E3D4AC;" +
-    "border-radius: 6px;" +
-    "padding: 10px 12px;" +
-    "font-size: clamp(0.82rem, 2.5vw, 0.95rem);" +
-    "line-height: 1.6;" +
-    "color: #4A3F37;" +
-    "width: 100%;" +
-    "max-width: 100%;" +
-    "min-width: 0;" +
-    "box-sizing: border-box;" +
-    "text-align: left;" +
-    "overflow-wrap: anywhere;" +
-    "word-break: break-word;" +
-  "}" +
-
-  /* ===== 題目圖片 ===== */
-  ".q-img-box {" +
-    "text-align: center;" +
-    "margin: 10px 0;" +
-    "padding: 6px;" +
-    "background: #FAF7F2;" +
-    "border-radius: 6px;" +
-    "border: 1px solid #EFE6D5;" +
-    "width: 100%;" +
-    "max-width: 100%;" +
-    "min-width: 0;" +
-    "box-sizing: border-box;" +
-    "overflow: hidden;" +
-  "}" +
-
-  ".q-img-box svg {" +
-    "display: block;" +
-    "width: auto;" +
-    "max-width: 100%;" +
-    "height: auto;" +
-    "margin: 0 auto;" +
-  "}" +
-
-  /* ===== 圖片裡的 flex 排版 ===== */
-  ".q-img-box > div {" +
-    "max-width: 100%;" +
-    "box-sizing: border-box;" +
-    "flex-wrap: wrap;" +
-  "}" +
-
-  /* ===== 小螢幕 ===== */
-  "@media (max-width: 600px) {" +
-
-    ".q-img-box {" +
-      "padding: 4px;" +
-      "margin: 8px 0;" +
-    "}" +
-
-    ".rwd-tb {" +
-      "font-size: 0.78rem;" +
-    "}" +
-
-    ".rwd-tb th, .rwd-tb td {" +
-      "padding: 7px 5px;" +
-    "}" +
-
-    ".opt-box {" +
-      "padding: 9px 10px;" +
-      "font-size: 0.84rem;" +
-    "}" +
-  "}";
+  style.innerHTML = 
+    ".table-scroll-box { width: 100% !important; max-width: 100% !important; overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 10px 0; border: 1px solid #E3D4AC; border-radius: 6px; background: #FFF; box-sizing: border-box; }" +
+    ".rwd-tb { width: 100% !important; max-width: 100% !important; min-width: unset !important; border-collapse: collapse; text-align: center; font-size: 0.82rem; table-layout: auto; box-sizing: border-box; }" +
+    ".rwd-tb th { background: #F8F5EE; padding: 6px 4px; border-bottom: 2px solid #E3D4AC; color: #4A3F37; font-weight: bold; word-break: break-all; }" +
+    ".rwd-tb td { padding: 6px 4px; border-bottom: 1px solid #E3D4AC; color: #6F645A; background: #FFF; word-break: break-all; }" +
+    ".opt-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; width: 100%; box-sizing: border-box; }" +
+    ".opt-box { background: #FFF; border: 1px solid #E3D4AC; border-radius: 6px; padding: 10px 12px; font-size: 0.9rem; color: #4A3F37; width: 100%; box-sizing: border-box; text-align: left; word-break: break-word; }" +
+    ".q-img-box { text-align: center; margin: 10px 0; padding: 6px; background: #FAF7F2; border-radius: 6px; border: 1px solid #EFE6D5; width: 100%; box-sizing: border-box; overflow-x: auto; }" +
+    ".q-img-box svg { max-width: 100%; height: auto; display: inline-block; }";
   document.head.appendChild(style);
 
   /* --- 啟發區小圖 --- */
@@ -144,12 +31,11 @@
   }
 
   function dangerMini(el) {
-    var svg = SK.svg(el, 300, 150, "錯誤的稀釋方式");
+    var svg = SK.svg(el, 300, 150, "錯誤的聞氣體方式");
     s("rect", { x: 120, y: 70, width: 60, height: 60, rx: 5, fill: C.orange.f, stroke: C.orange.s, "stroke-width": 2 }, svg);
-    s("circle", { cx: 150, cy: 50, r: 4, fill: C.orange.s }, svg);
-    s("circle", { cx: 130, cy: 30, r: 3, fill: C.orange.s }, svg);
-    s("circle", { cx: 170, cy: 40, r: 5, fill: C.orange.s }, svg);
-    SK.label(svg, 150, 145, "強烈放熱導致酸液沸騰飛濺", { size: 13, color: C.orange.s });
+    s("path", { d: "M 140 60 Q 150 40 140 20", fill: "none", stroke: C.orange.s, "stroke-width": 2, "stroke-dasharray": "4 4" }, svg);
+    s("path", { d: "M 160 60 Q 170 30 160 10", fill: "none", stroke: C.orange.s, "stroke-width": 2, "stroke-dasharray": "4 4" }, svg);
+    SK.label(svg, 150, 145, "直接吸入可能中毒", { size: 13, color: C.orange.s });
   }
 
   /* --- 核心推導：科學方法流程圖 --- */
@@ -198,7 +84,7 @@
     return { show: draw };
   }
 
-  // ==== 輔助產生器 (強制內縮、支援內部捲動) ====
+  // ==== 輔助產生器 ====
   function genTb(headers, rows) {
     var h = '<div class="table-scroll-box"><table class="rwd-tb"><tr>';
     headers.forEach(function(th){ h += '<th>' + th + '</th>'; });
@@ -220,31 +106,31 @@
   }
 
   // ==== 表格變數 ====
-  var t_105 = genTb(["實驗組別", "一", "二", "三", "四"], [["粉筆顏色", "白", "白", "白", "白"], ["浸泡時間(s)", "20", "40", "60", "80"], ["粉筆長度(cm)", "8", "8", "8", "8"], ["最小外力(kgw)", "", "", "", ""]]);
+  var t_105 = genTb(["實驗組別", "一", "二", "三", "四"], [["粉筆顏色", "白", "白", "白", "白"], ["浸泡時間(s)", "20", "40", "60", "80"], ["粉筆長度(cm)", "8", "8", "8", "8"], ["最小外力", "", "", "", ""]]);
   var t_115 = genTb(["組別", "拖地的水"], [["第一組", "熱水加食鹽"], ["第二組", "熱水沒加食鹽"], ["第三組", "冷水加食鹽"], ["第四組", "冷水沒加食鹽"]]);
-  var t_114_fan = genTb(["年度", "電扇樣品位置"], [["81年", "沒有規定"], ["105年", "中心距離1.5m，前緣距牆1.2m以上"], ["106年", "中心軸線平行，前緣距牆1.2m以上"]]);
-  var t_111_evap = genTb(["容器編號", "一", "二", "三", "四", "五"], [["球顏色", "不放球", "白", "紅", "藍", "黑"], ["第一天", "16.00", "16.10", "16.10", "16.10", "16.10"], ["第七天", "14.20", "15.50", "15.80", "15.90", "15.95"]]);
-  var t_111_land = genTb(["實驗編號", "夾角", "斜面長度", "石塊重量"], [["1", "20°", "100 cm", "2 kgw"], ["2", "20°", "50 cm", "2 kgw"], ["3", "40°", "100 cm", "4 kgw"], ["4", "40°", "50 cm", "4 kgw"]]);
-  var t_90_enzyme = genTb(["試管", "作用溫度", "待作用物質", "反應後生成物質"], [["甲 / 乙", "15°C", "100 g", "50 g"], ["丙 / 丁", "30°C", "100 g", "25 g"]]);
+  var t_114_fan = genTb(["年度", "電扇樣品位置"], [["81年", "沒有規定"], ["105年", "中心1.5m，前緣距牆1.2mup"], ["106年", "中心軸線平，前緣距牆1.2mup"]]);
+  var t_111_evap = genTb(["容器編號", "一", "二", "三", "四", "五"], [["球顏色", "不放", "白", "紅", "藍", "黑"], ["第一天", "16.00", "16.10", "16.10", "16.10", "16.10"], ["第七天", "14.20", "15.50", "15.80", "15.90", "15.95"]]);
+  var t_111_land = genTb(["實驗編號", "夾角", "斜面", "石塊"], [["1", "20°", "100 cm", "2 kgw"], ["2", "20°", "50 cm", "2 kgw"], ["3", "40°", "100 cm", "4 kgw"], ["4", "40°", "50 cm", "4 kgw"]]);
+  var t_90_enzyme = genTb(["試管", "溫度", "待作用", "生成物"], [["甲/乙", "15°C", "100 g", "50 g"], ["丙/丁", "30°C", "100 g", "25 g"]]);
 
   // ==== 歷屆會考題專屬素材 ====
   var imgBox = function(svgContent) {
     return '<div class="q-img-box">' + svgContent + '</div>';
   };
 
-  var img111Slope = imgBox('<svg viewBox="0 0 200 100" width="160" height="80"><path d="M20 80 L180 80" stroke="#5B778C" stroke-width="2"/><path d="M20 80 L140 20" stroke="#5B778C" stroke-width="2"/><text x="145" y="85" font-size="12" fill="#4A3F37">水平面</text><text x="70" y="35" font-size="12" fill="#4A3F37" transform="rotate(-26 70 35)">斜面</text><path d="M40 80 A 40 40 0 0 0 45 68" fill="none" stroke="#C28C6E" stroke-width="1.5"/><text x="48" y="76" font-size="12" fill="#C28C6E">θ</text><rect x="100" y="30" width="15" height="15" fill="#4A3F37" transform="rotate(-26 100 30)"/><text x="110" y="25" font-size="12" fill="#4A3F37">石塊</text><rect x="10" y="60" width="15" height="20" fill="#7A8B76"/><text x="0" y="55" font-size="10" fill="#7A8B76">模型房屋</text></svg>');
+  var img111Slope = imgBox('<svg viewBox="0 0 200 100" width="140" height="70"><path d="M20 80 L180 80" stroke="#5B778C" stroke-width="2"/><path d="M20 80 L140 20" stroke="#5B778C" stroke-width="2"/><text x="145" y="85" font-size="12" fill="#4A3F37">水平面</text><text x="70" y="35" font-size="12" fill="#4A3F37" transform="rotate(-26 70 35)">斜面</text><path d="M40 80 A 40 40 0 0 0 45 68" fill="none" stroke="#C28C6E" stroke-width="1.5"/><text x="48" y="76" font-size="12" fill="#C28C6E">θ</text><rect x="100" y="30" width="15" height="15" fill="#4A3F37" transform="rotate(-26 100 30)"/><text x="110" y="25" font-size="12" fill="#4A3F37">石塊</text><rect x="10" y="60" width="15" height="20" fill="#7A8B76"/><text x="0" y="55" font-size="10" fill="#7A8B76">模型房屋</text></svg>');
   
-  var img109Pour = imgBox('<svg viewBox="0 0 100 120" width="80" height="96"><rect x="45" y="40" width="10" height="70" fill="none" stroke="#5B778C" stroke-width="2"/><rect x="42" y="90" width="16" height="4" fill="#5B778C"/><path d="M20 10 L50 40 L50 10 Z" fill="none" stroke="#4A3F37" stroke-width="2"/><path d="M45 35 Q40 45 50 50 Q55 45 45 35" fill="rgba(164,185,200,.5)"/><text x="10" y="20" font-size="12" fill="#4A3F37">燒杯</text><text x="65" y="80" font-size="12" fill="#4A3F37">滴定管</text></svg>');
-  var opt109A = '<b>(A)</b><div style="text-align:center;"><svg viewBox="0 0 50 40" width="30" height="24"><path d="M10 5 L40 5 L28 25 L28 38" fill="none" stroke="#C28C6E" stroke-width="2"/><ellipse cx="25" cy="5" rx="15" ry="4" fill="rgba(224,189,173,.6)" stroke="#C28C6E" stroke-width="1"/></svg></div>';
-  var opt109B = '<b>(B)</b><div style="text-align:center;"><svg viewBox="0 0 50 40" width="30" height="24"><path d="M10 35 L35 10" stroke="#7A8B76" stroke-width="3"/><circle cx="37" cy="8" r="3" fill="#7A8B76"/></svg></div>';
-  var opt109C = '<b>(C)</b><div style="text-align:center;"><svg viewBox="0 0 50 40" width="30" height="24"><rect x="15" y="5" width="20" height="30" fill="none" stroke="#5B778C" stroke-width="2"/><line x1="10" y1="38" x2="40" y2="38" stroke="#5B778C" stroke-width="2"/></svg></div>';
-  var opt109D = '<b>(D)</b><div style="text-align:center;"><svg viewBox="0 0 50 40" width="30" height="24"><path d="M5 20 Q25 35 45 20" fill="rgba(196,189,207,.5)" stroke="#847C96" stroke-width="2"/></svg></div>';
+  var img109Pour = imgBox('<svg viewBox="0 0 100 120" width="70" height="84"><rect x="45" y="40" width="10" height="70" fill="none" stroke="#5B778C" stroke-width="2"/><rect x="42" y="90" width="16" height="4" fill="#5B778C"/><path d="M20 10 L50 40 L50 10 Z" fill="none" stroke="#4A3F37" stroke-width="2"/><path d="M45 35 Q40 45 50 50 Q55 45 45 35" fill="rgba(164,185,200,.5)"/><text x="10" y="20" font-size="12" fill="#4A3F37">燒杯</text><text x="65" y="80" font-size="12" fill="#4A3F37">滴定管</text></svg>');
+  var opt109A = '<b>(A)</b><div style="text-align:center;"><svg viewBox="0 0 50 40" width="26" height="20"><path d="M10 5 L40 5 L28 25 L28 38" fill="none" stroke="#C28C6E" stroke-width="2"/><ellipse cx="25" cy="5" rx="15" ry="4" fill="rgba(224,189,173,.6)" stroke="#C28C6E" stroke-width="1"/></svg></div>';
+  var opt109B = '<b>(B)</b><div style="text-align:center;"><svg viewBox="0 0 50 40" width="26" height="20"><path d="M10 35 L35 10" stroke="#7A8B76" stroke-width="3"/><circle cx="37" cy="8" r="3" fill="#7A8B76"/></svg></div>';
+  var opt109C = '<b>(C)</b><div style="text-align:center;"><svg viewBox="0 0 50 40" width="26" height="20"><rect x="15" y="5" width="20" height="30" fill="none" stroke="#5B778C" stroke-width="2"/><line x1="10" y1="38" x2="40" y2="38" stroke="#5B778C" stroke-width="2"/></svg></div>';
+  var opt109D = '<b>(D)</b><div style="text-align:center;"><svg viewBox="0 0 50 40" width="26" height="20"><path d="M5 20 Q25 35 45 20" fill="rgba(196,189,207,.5)" stroke="#847C96" stroke-width="2"/></svg></div>';
 
-  var img107Cyl = imgBox('<svg viewBox="0 0 150 130" width="120" height="104"><path d="M30 20 L30 110 L70 110 L70 20" fill="none" stroke="#5B778C" stroke-width="2"/><line x1="20" y1="110" x2="80" y2="110" stroke="#5B778C" stroke-width="2"/><text x="40" y="44" font-size="10" fill="#4A3F37">40</text><text x="40" y="74" font-size="10" fill="#4A3F37">30</text><rect x="32" y="72" width="36" height="38" fill="rgba(164,185,200,.5)"/><text x="35" y="10" font-size="12" fill="#4A3F37">再加入</text><circle cx="110" cy="70" r="22" fill="none" stroke="#C28C6E" stroke-width="2"/><text x="92" y="75" font-size="14" fill="#4A3F37">30.</text></svg>');
-  var opt107A = '<b>(A)</b><div style="text-align:center;"><svg viewBox="0 0 40 45" width="26" height="30"><path d="M15 8 L15 35 L18 38 L22 38 L25 35 L25 8 Z" fill="none" stroke="#5B778C" stroke-width="2"/><rect x="10" y="0" width="20" height="10" rx="3" fill="#EBCDCB" stroke="#B57E83" stroke-width="2"/></svg></div>';
-  var opt107B = '<b>(B)</b><div style="text-align:center;"><svg viewBox="0 0 40 45" width="26" height="30"><path d="M15 8 L15 35 A 5 5 0 0 0 25 35 L25 8" fill="none" stroke="#5B778C" stroke-width="2"/></svg></div>';
-  var opt107C = '<b>(C)</b><div style="text-align:center;"><svg viewBox="0 0 40 45" width="26" height="30"><path d="M15 8 L15 18 L5 38 L35 38 L25 18 L25 8" fill="none" stroke="#5B778C" stroke-width="2"/></svg></div>';
-  var opt107D = '<b>(D)</b><div style="text-align:center;"><svg viewBox="0 0 40 45" width="26" height="30"><path d="M5 12 L5 38 L35 38 L35 12" fill="none" stroke="#5B778C" stroke-width="2"/></svg></div>';
+  var img107Cyl = imgBox('<svg viewBox="0 0 150 130" width="100" height="86"><path d="M30 20 L30 110 L70 110 L70 20" fill="none" stroke="#5B778C" stroke-width="2"/><line x1="20" y1="110" x2="80" y2="110" stroke="#5B778C" stroke-width="2"/><text x="40" y="44" font-size="10" fill="#4A3F37">40</text><text x="40" y="74" font-size="10" fill="#4A3F37">30</text><rect x="32" y="72" width="36" height="38" fill="rgba(164,185,200,.5)"/><text x="35" y="10" font-size="12" fill="#4A3F37">再加入</text><circle cx="110" cy="70" r="22" fill="none" stroke="#C28C6E" stroke-width="2"/><text x="92" y="75" font-size="14" fill="#4A3F37">30.</text></svg>');
+  var opt107A = '<b>(A)</b><div style="text-align:center;"><svg viewBox="0 0 40 45" width="22" height="25"><path d="M15 8 L15 35 L18 38 L22 38 L25 35 L25 8 Z" fill="none" stroke="#5B778C" stroke-width="2"/><rect x="10" y="0" width="20" height="10" rx="3" fill="#EBCDCB" stroke="#B57E83" stroke-width="2"/></svg></div>';
+  var opt107B = '<b>(B)</b><div style="text-align:center;"><svg viewBox="0 0 40 45" width="22" height="25"><path d="M15 8 L15 35 A 5 5 0 0 0 25 35 L25 8" fill="none" stroke="#5B778C" stroke-width="2"/></svg></div>';
+  var opt107C = '<b>(C)</b><div style="text-align:center;"><svg viewBox="0 0 40 45" width="22" height="25"><path d="M15 8 L15 18 L5 38 L35 38 L25 18 L25 8" fill="none" stroke="#5B778C" stroke-width="2"/></svg></div>';
+  var opt107D = '<b>(D)</b><div style="text-align:center;"><svg viewBox="0 0 40 45" width="22" height="25"><path d="M5 12 L5 38 L35 38 L35 12" fill="none" stroke="#5B778C" stroke-width="2"/></svg></div>';
   var img106Method = '<div style="display:flex; justify-content:space-around; align-items:flex-end; margin:15px 0;">' +
   '<div style="text-align:center;">' +
     '<svg viewBox="0 0 100 120" width="70">' +
@@ -399,7 +285,7 @@
       },
       {
         lv: "105 會考 (變因判斷)",
-        q: "老師要求同學設計一個有關粉筆在水中浸泡時間與粉筆斷裂難易度關係的實驗，實驗方法為先將粉筆浸泡水中一段時間，再以相同的方法量出折斷粉筆所需要的最小外力。由下列選項的實驗紀錄表，推測何者的實驗設計最符合前述的實驗目的？" + genOpts(["<b>(A)</b><br>" + t_105, "<b>(B)</b><br>" + genTb(["實驗組別", "一", "二", "三", "四"], [["粉筆顏色", "白", "紅", "藍", "黃"], ["浸泡時間(s)", "20", "40", "60", "80"], ["粉筆長度(cm)", "5", "6", "7", "8"], ["最小外力(kgw)", "", "", "", ""]]), "<b>(C)</b><br>" + genTb(["實驗組別", "一", "二", "三", "四"], [["粉筆顏色", "白", "紅", "藍", "黃"], ["浸泡時間(s)", "20", "20", "20", "20"], ["粉筆長度(cm)", "8", "8", "8", "8"], ["最小外力(kgw)", "", "", "", ""]]), "<b>(D)</b><br>" + genTb(["實驗組別", "一", "二", "三", "四"], [["粉筆顏色", "紅", "紅", "紅", "紅"], ["浸泡時間(s)", "40", "40", "40", "40"], ["粉筆長度(cm)", "5", "6", "7", "8"], ["最小外力(kgw)", "", "", "", ""]])]),
+        q: "老師要求同學設計一個有關粉筆在水中浸泡時間與粉筆斷裂難易度關係的實驗，實驗方法為先將粉筆浸泡水中一段時間，再以相同的方法量出折斷粉筆所需要的最小外力。由下列選項的實驗紀錄表，推測何者的實驗設計最符合前述的實驗目的？" + genOpts(["<b>(A)</b><br>" + t_105, "<b>(B)</b><br>" + genTb(["實驗組別", "一", "二", "三", "四"], [["粉筆顏色", "白", "紅", "藍", "黃"], ["浸泡時間(s)", "20", "40", "60", "80"], ["粉筆長度(cm)", "5", "6", "7", "8"], ["最小外力", "", "", "", ""]]), "<b>(C)</b><br>" + genTb(["實驗組別", "一", "二", "三", "四"], [["粉筆顏色", "白", "紅", "藍", "黃"], ["浸泡時間(s)", "20", "20", "20", "20"], ["粉筆長度(cm)", "8", "8", "8", "8"], ["最小外力", "", "", "", ""]]), "<b>(D)</b><br>" + genTb(["實驗組別", "一", "二", "三", "四"], [["粉筆顏色", "紅", "紅", "紅", "紅"], ["浸泡時間(s)", "40", "40", "40", "40"], ["粉筆長度(cm)", "5", "6", "7", "8"], ["最小外力", "", "", "", ""]])]),
         idea: "【正確解答】 (A)<br>【詳細解析】 欲了解浸泡時間與斷裂難易度的關係，「浸泡時間」為操縱變因(每次要改變數值：20, 40, 60, 80)，其他因素(粉筆顏色、粉筆長度)皆為控制變因(必須保持一樣)，最小外力則是應變變因(實驗結果)，故只有(A)的設計符合科學方法。"
       },
       {
