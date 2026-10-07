@@ -5,6 +5,11 @@
   /* --- 啟發區小圖：日常測量 --- */
   function hookVisual(el) {
     var svg = SK.svg(el, 360, 200, "用尺測量鉛筆");
+    // 【RWD 適應螢幕】
+    svg.style.width = "100%";
+    svg.style.maxWidth = "360px";
+    svg.style.height = "auto";
+
     s("rect", { x: 40, y: 120, width: 280, height: 40, rx: 4, fill: C.paper, stroke: C.line, "stroke-width": 2 }, svg);
     for(var i=0; i<=10; i++) {
         s("line", { x1: 50 + i*25, y1: 120, x2: 50 + i*25, y2: 130, stroke: C.ink, "stroke-width": 2 }, svg);
@@ -21,6 +26,10 @@
   /* --- 核心推導：滑桿控制測量值解析 --- */
   function measureDerive(ctx) {
     var svg = SK.svg(ctx.stage, 500, 260, "測量值動態解析圖");
+    // 【RWD 適應螢幕】確保直尺圖解在手機上不會被截斷
+    svg.style.width = "100%";
+    svg.style.height = "auto";
+
     var g = s("g", {}, svg);
     var read = SK.h("div", { class: "readout" });
     ctx.extra.appendChild(read);
@@ -93,9 +102,10 @@
     el.appendChild(wrap);
     var svg = SK.svg(wrap, 300, 250, "排水法示意圖");
     
-    // 【新增限制寬度，縮小示意圖】
+    // 【RWD 適應螢幕】限制最大寬度並自動等比縮放
     svg.style.maxWidth = "220px";
     svg.style.width = "100%";
+    svg.style.height = "auto";
     
     var sl = SK.slider({ label: "慢慢將石頭放入水中", min: 0, max: 100, step: 1, value: 0, color: "blue", onInput: function(){ draw(); } });
     wrap.appendChild(sl.el);
@@ -135,9 +145,10 @@
     el.appendChild(wrap);
     var svg = SK.svg(wrap, 300, 260, "重物沉水法示意圖");
     
-    // 【新增限制寬度，縮小示意圖】
+    // 【RWD 適應螢幕】限制最大寬度並自動等比縮放
     svg.style.maxWidth = "220px";
     svg.style.width = "100%";
+    svg.style.height = "auto";
     
     var sl = SK.slider({ label: "步驟：1.先放鐵塊 → 2.綁上木塊", min: 0, max: 100, step: 1, value: 0, color: "orange", onInput: function(){ draw(); } });
     wrap.appendChild(sl.el);
@@ -215,7 +226,7 @@
     },
 
     derive: {
-      intro: "讓我們用一把最小刻度為 0.1 cm (1 mm) 的直尺來測量物體。試著拖曳上方的滑桿，改變物體的實際長度，觀察下方的紀錄規則如何跟著變化。",
+      intro: "讓我們用一把最小刻度為 **0.1 cm (1 mm)** 的直尺來測量物體。試著拖曳上方的滑桿，改變物體的實際長度，觀察下方的紀錄規則如何跟著變化。",
       frames: [
         { cap: "測量時，物體末端經常落在兩個刻度之間。此時不能只記錄大約值，必須遵守科學記錄規範。", tex: "\\text{尋找末端位置}" },
         { cap: "首先，讀出儀器上能清楚看見的最小刻度數字，這部分毫無爭議，我們稱為「準確值」。", tex: "\\text{準確值（到最小刻度）}" },
@@ -231,7 +242,7 @@
         render: sinkingVolume
       },
       { title: "不規則浮體怎麼測？（重捶法）",
-        html: "如果是會浮在水面上的木塊，就算丟進去也無法完全排開同體積的水。這時必須綁上一個重物（如鐵塊）把它強行拉入水中。<br><br>注意：這裡的測量基準是指<b>「已經放入鐵塊的水位 (V2)」</b>，所以：<br><b>木塊體積 = 鐵+木的水位 (V3) - 只有鐵塊的水位 (V2)</b>",
+        html: "如果是會浮在水面上的木塊，就算丟進去也無法完全排開同體積的水。這時必須綁上一個重物（如鐵塊）把它強行拉入水中。<br><br>⚠️ 注意：這裡的測量基準是指<b>「已經放入鐵塊的水位 (V2)」</b>，所以：<br><b>木塊體積 = 鐵+木的水位 (V3) - 只有鐵塊的水位 (V2)</b>",
         render: floatingVolume
       }
     ],
