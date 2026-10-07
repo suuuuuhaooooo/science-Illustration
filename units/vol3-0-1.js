@@ -2,13 +2,15 @@
 (function () {
   var C = SK.C, s = SK.s;
 
-  // 注入專門為手機設計的左右滑動表格樣式
+  // 注入絕對安全、絕不破版的排版 CSS
   var style = document.createElement("style");
   style.innerHTML = 
-    ".table-scroll-box { width: 100%; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 12px 0; border: 1px solid #E3D4AC; border-radius: 6px; background: #FFF; box-shadow: 0 2px 6px rgba(0,0,0,0.03); }" +
-    ".rwd-tb { width: 100%; min-width: 340px; border-collapse: collapse; text-align: center; font-size: 0.9rem; }" +
-    ".rwd-tb th { background: #F8F5EE; padding: 10px 8px; border-bottom: 2px solid #E3D4AC; color: #4A3F37; font-weight: bold; white-space: nowrap; }" +
-    ".rwd-tb td { padding: 10px 8px; border-bottom: 1px solid #E3D4AC; color: #6F645A; background: #FFF; white-space: nowrap; }" +
+    ".safe-card-table { width: 100%; margin: 12px 0; border: 1px solid #E3D4AC; border-radius: 6px; background: #FFF; overflow: hidden; box-sizing: border-box; }" +
+    ".safe-row { display: flex; width: 100%; border-bottom: 1px solid #E3D4AC; box-sizing: border-box; }" +
+    ".safe-row:last-child { border-bottom: none; }" +
+    ".safe-header { background: #F8F5EE; color: #4A3F37; font-weight: bold; }" +
+    ".safe-cell { flex: 1; padding: 8px 6px; font-size: 0.85rem; color: #6F645A; text-align: center; word-break: break-all; box-sizing: border-box; border-right: 1px solid #E3D4AC; display: flex; align-items: center; justify-content: center; }" +
+    ".safe-cell:last-child { border-right: none; }" +
     ".opt-list { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; width: 100%; box-sizing: border-box; }" +
     ".opt-box { background: #FFF; border: 1px solid #E3D4AC; border-radius: 6px; padding: 10px 14px; font-size: 0.95rem; color: #4A3F37; width: 100%; box-sizing: border-box; text-align: left; }" +
     ".q-img-box { text-align: center; margin: 12px 0; padding: 8px; background: #FAF7F2; border-radius: 6px; border: 1px solid #EFE6D5; width: 100%; box-sizing: border-box; overflow-x: auto; }" +
@@ -81,17 +83,20 @@
     return { show: draw };
   }
 
-  // ==== 輔助產生器 (強制使用左右滑動容器) ====
+  // ==== 採用純 Flexbox 結構取代 HTML 傳統表格，保證絕不破版 ====
   function genTb(headers, rows) {
-    var h = '<div class="table-scroll-box"><table class="rwd-tb"><tr>';
-    headers.forEach(function(th){ h += '<th>' + th + '</th>'; });
-    h += '</tr>';
+    var h = '<div class="safe-card-table">';
+    // 標題列
+    h += '<div class="safe-row safe-header">';
+    headers.forEach(function(th){ h += '<div class="safe-cell">' + th + '</div>'; });
+    h += '</div>';
+    // 內容列
     rows.forEach(function(row){
-      h += '<tr>';
-      row.forEach(function(td){ h += '<td>' + td + '</td>'; });
-      h += '</tr>';
+      h += '<div class="safe-row">';
+      row.forEach(function(td){ h += '<div class="safe-cell">' + td + '</div>'; });
+      h += '</div>';
     });
-    return h + '</table></div>';
+    return h + '</div>';
   }
   
   function genOpts(opts) {
