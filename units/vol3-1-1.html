@@ -9,7 +9,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@400;600;700&family=LXGW+WenKai+TC:wght@400;700&family=Patrick+Hand&display=swap">
-<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+
+<!-- 改用 CDN 載入 KaTeX，徹底解決字體 404 找不到的問題 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
 <link rel="stylesheet" href="../assets/css/storybook.css">
 <style>
     body { -webkit-user-select: none; user-select: none; }
@@ -17,9 +19,11 @@
 </head>
 <body>
 <noscript><p style="padding:2em">這個頁面的互動圖需要開啟 JavaScript。</p></noscript>
-<script src="../assets/vendor/katex/katex.min.js"></script>
-<script src="../assets/js/catalog.js?v=5"></script>
-<script src="../assets/js/core.js?v=5"></script>
-<script src="vol3-1-1.js?v=5"></script>
+
+<!-- 改用 CDN 載入 KaTeX JS -->
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+<script src="../assets/js/catalog.js?v=6"></script>
+<script src="../assets/js/core.js?v=6"></script>
+<script src="vol3-1-1.js?v=6"></script>
 </body>
 </html>
