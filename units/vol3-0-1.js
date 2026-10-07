@@ -1,6 +1,20 @@
-/* 單元：3冊 0.1 科學方法與實驗守則 */
+/* 單元：3冊 0.1 科學方法與實驗守則*/
 (function () {
   var C = SK.C, s = SK.s;
+
+  // 手機專用排版 CSS (強制防止表格撐破容器)
+  var style = document.createElement("style");
+  style.innerHTML = 
+    ".rwd-tb-container { width: 100%; margin: 10px 0; background: #FFF; border: 1px solid #E3D4AC; border-radius: 6px; overflow: hidden; box-sizing: border-box; }" +
+    ".rwd-tb-scroll { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }" +
+    ".rwd-tb { width: 100%; border-collapse: collapse; text-align: center; font-size: 0.85rem; table-layout: auto; }" +
+    ".rwd-tb th { background: #F8F5EE; padding: 6px 4px; border-bottom: 2px solid #E3D4AC; color: #4A3F37; font-weight: bold; word-break: break-all; }" +
+    ".rwd-tb td { padding: 6px 4px; border-bottom: 1px solid #E3D4AC; color: #6F645A; background: #FFF; word-break: break-all; }" +
+    ".opt-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; width: 100%; box-sizing: border-box; }" +
+    ".opt-box { background: #FFF; border: 1px solid #E3D4AC; border-radius: 6px; padding: 10px 12px; font-size: 0.9rem; color: #4A3F37; width: 100%; box-sizing: border-box; text-align: left; }" +
+    ".q-img-box { text-align: center; margin: 10px 0; padding: 6px; background: #FAF7F2; border-radius: 6px; border: 1px solid #EFE6D5; width: 100%; box-sizing: border-box; overflow-x: auto; }" +
+    ".q-img-box svg { max-width: 100%; height: auto; display: inline-block; }";
+  document.head.appendChild(style);
 
   /* --- 啟發區小圖 --- */
   function hookVisual(el) {
@@ -68,24 +82,23 @@
     return { show: draw };
   }
 
-  // ==== 輔助產生器 (強制 100% 行內樣式，徹底解決手機跑版) ====
+  // ==== 輔助產生器 (加入防破版捲軸容器) ====
   function genTb(headers, rows) {
-    var h = '<div style="width:100%; overflow-x:auto; margin:12px 0; border:1px solid #E3D4AC; border-radius:6px; background:#FFF;"><table style="width:100%; min-width:280px; border-collapse:collapse; text-align:center; font-size:0.9rem;">';
-    h += '<tr style="background:#F8F5EE; border-bottom:2px solid #E3D4AC; color:#4A3F37; font-weight:bold;">';
-    headers.forEach(function(th){ h += '<th style="padding:8px; white-space:nowrap;">' + th + '</th>'; });
+    var h = '<div class="rwd-tb-container"><div class="rwd-tb-scroll"><table class="rwd-tb"><tr>';
+    headers.forEach(function(th){ h += '<th>' + th + '</th>'; });
     h += '</tr>';
     rows.forEach(function(row){
-      h += '<tr style="border-bottom:1px solid #E3D4AC; color:#6F645A; background:#FFF;">';
-      row.forEach(function(td){ h += '<td style="padding:8px; white-space:nowrap;">' + td + '</td>'; });
+      h += '<tr>';
+      row.forEach(function(td){ h += '<td>' + td + '</td>'; });
       h += '</tr>';
     });
-    return h + '</table></div>';
+    return h + '</table></div></div>';
   }
   
   function genOpts(opts) {
-    var h = '<div style="display:flex; flex-direction:column; gap:8px; margin-top:12px; width:100%;">';
+    var h = '<div class="opt-list">';
     opts.forEach(function(o){ 
-      h += '<div style="background:#FFF; border:1px solid #E3D4AC; border-radius:6px; padding:10px 14px; font-size:0.95rem; color:#4A3F37; width:100%; box-sizing:border-box;">' + o + '</div>'; 
+      h += '<div class="opt-box">' + o + '</div>'; 
     });
     return h + '</div>';
   }
@@ -98,28 +111,28 @@
   var t_111_land = genTb(["實驗編號", "夾角", "斜面長度", "石塊重量"], [["1", "20°", "100 cm", "2 kgw"], ["2", "20°", "50 cm", "2 kgw"], ["3", "40°", "100 cm", "4 kgw"], ["4", "40°", "50 cm", "4 kgw"]]);
   var t_90_enzyme = genTb(["試管", "作用溫度", "待作用物質", "反應後生成物質"], [["甲 / 乙", "15°C", "100 g", "50 g"], ["丙 / 丁", "30°C", "100 g", "25 g"]]);
 
-  // ==== 歷屆會考題專屬素材 (手機專用置中圖框) ====
+  // ==== 歷屆會考題專屬素材 ====
   var imgBox = function(svgContent) {
-    return '<div style="text-align:center; margin:12px 0; padding:8px; background:#FAF7F2; border-radius:6px; border:1px solid #EFE6D5; width:100%; box-sizing:border-box;">' + svgContent + '</div>';
+    return '<div class="q-img-box">' + svgContent + '</div>';
   };
 
-  var img111Slope = imgBox('<svg viewBox="0 0 200 100" width="100%" style="max-width:180px; height:auto;"><path d="M20 80 L180 80" stroke="#5B778C" stroke-width="2"/><path d="M20 80 L140 20" stroke="#5B778C" stroke-width="2"/><text x="145" y="85" font-size="12" fill="#4A3F37">水平面</text><text x="70" y="35" font-size="12" fill="#4A3F37" transform="rotate(-26 70 35)">斜面</text><path d="M40 80 A 40 40 0 0 0 45 68" fill="none" stroke="#C28C6E" stroke-width="1.5"/><text x="48" y="76" font-size="12" fill="#C28C6E">θ</text><rect x="100" y="30" width="15" height="15" fill="#4A3F37" transform="rotate(-26 100 30)"/><text x="110" y="25" font-size="12" fill="#4A3F37">石塊</text><rect x="10" y="60" width="15" height="20" fill="#7A8B76"/><text x="0" y="55" font-size="10" fill="#7A8B76">模型房屋</text></svg>');
+  var img111Slope = imgBox('<svg viewBox="0 0 200 100" width="160" height="80"><path d="M20 80 L180 80" stroke="#5B778C" stroke-width="2"/><path d="M20 80 L140 20" stroke="#5B778C" stroke-width="2"/><text x="145" y="85" font-size="12" fill="#4A3F37">水平面</text><text x="70" y="35" font-size="12" fill="#4A3F37" transform="rotate(-26 70 35)">斜面</text><path d="M40 80 A 40 40 0 0 0 45 68" fill="none" stroke="#C28C6E" stroke-width="1.5"/><text x="48" y="76" font-size="12" fill="#C28C6E">θ</text><rect x="100" y="30" width="15" height="15" fill="#4A3F37" transform="rotate(-26 100 30)"/><text x="110" y="25" font-size="12" fill="#4A3F37">石塊</text><rect x="10" y="60" width="15" height="20" fill="#7A8B76"/><text x="0" y="55" font-size="10" fill="#7A8B76">模型房屋</text></svg>');
   
-  var img109Pour = imgBox('<svg viewBox="0 0 100 120" width="100%" style="max-width:90px; height:auto;"><rect x="45" y="40" width="10" height="70" fill="none" stroke="#5B778C" stroke-width="2"/><rect x="42" y="90" width="16" height="4" fill="#5B778C"/><path d="M20 10 L50 40 L50 10 Z" fill="none" stroke="#4A3F37" stroke-width="2"/><path d="M45 35 Q40 45 50 50 Q55 45 45 35" fill="rgba(164,185,200,.5)"/><text x="10" y="20" font-size="12" fill="#4A3F37">燒杯</text><text x="65" y="80" font-size="12" fill="#4A3F37">滴定管</text></svg>');
-  var opt109A = '<b>(A)</b><div style="text-align:center; margin-top:4px;"><svg viewBox="0 0 50 50" width="35" height="35"><path d="M10 10 L40 10 L28 30 L28 45" fill="none" stroke="#C28C6E" stroke-width="2"/><ellipse cx="25" cy="10" rx="15" ry="4" fill="rgba(224,189,173,.6)" stroke="#C28C6E" stroke-width="1"/></svg></div>';
-  var opt109B = '<b>(B)</b><div style="text-align:center; margin-top:4px;"><svg viewBox="0 0 50 50" width="35" height="35"><path d="M10 40 L35 15" stroke="#7A8B76" stroke-width="3"/><circle cx="37" cy="13" r="3" fill="#7A8B76"/></svg></div>';
-  var opt109C = '<b>(C)</b><div style="text-align:center; margin-top:4px;"><svg viewBox="0 0 50 50" width="35" height="35"><rect x="15" y="10" width="20" height="35" fill="none" stroke="#5B778C" stroke-width="2"/><line x1="10" y1="45" x2="40" y2="45" stroke="#5B778C" stroke-width="2"/></svg></div>';
-  var opt109D = '<b>(D)</b><div style="text-align:center; margin-top:4px;"><svg viewBox="0 0 50 50" width="35" height="35"><path d="M5 25 Q25 45 45 25" fill="rgba(196,189,207,.5)" stroke="#847C96" stroke-width="2"/></svg></div>';
+  var img109Pour = imgBox('<svg viewBox="0 0 100 120" width="80" height="96"><rect x="45" y="40" width="10" height="70" fill="none" stroke="#5B778C" stroke-width="2"/><rect x="42" y="90" width="16" height="4" fill="#5B778C"/><path d="M20 10 L50 40 L50 10 Z" fill="none" stroke="#4A3F37" stroke-width="2"/><path d="M45 35 Q40 45 50 50 Q55 45 45 35" fill="rgba(164,185,200,.5)"/><text x="10" y="20" font-size="12" fill="#4A3F37">燒杯</text><text x="65" y="80" font-size="12" fill="#4A3F37">滴定管</text></svg>');
+  var opt109A = '<b>(A)</b><div style="text-align:center;"><svg viewBox="0 0 50 40" width="30" height="24"><path d="M10 5 L40 5 L28 25 L28 38" fill="none" stroke="#C28C6E" stroke-width="2"/><ellipse cx="25" cy="5" rx="15" ry="4" fill="rgba(224,189,173,.6)" stroke="#C28C6E" stroke-width="1"/></svg></div>';
+  var opt109B = '<b>(B)</b><div style="text-align:center;"><svg viewBox="0 0 50 40" width="30" height="24"><path d="M10 35 L35 10" stroke="#7A8B76" stroke-width="3"/><circle cx="37" cy="8" r="3" fill="#7A8B76"/></svg></div>';
+  var opt109C = '<b>(C)</b><div style="text-align:center;"><svg viewBox="0 0 50 40" width="30" height="24"><rect x="15" y="5" width="20" height="30" fill="none" stroke="#5B778C" stroke-width="2"/><line x1="10" y1="38" x2="40" y2="38" stroke="#5B778C" stroke-width="2"/></svg></div>';
+  var opt109D = '<b>(D)</b><div style="text-align:center;"><svg viewBox="0 0 50 40" width="30" height="24"><path d="M5 20 Q25 35 45 20" fill="rgba(196,189,207,.5)" stroke="#847C96" stroke-width="2"/></svg></div>';
 
-  var img107Cyl = imgBox('<svg viewBox="0 0 150 140" width="100%" style="max-width:130px; height:auto;"><path d="M30 20 L30 120 L70 120 L70 20" fill="none" stroke="#5B778C" stroke-width="2"/><line x1="20" y1="120" x2="80" y2="120" stroke="#5B778C" stroke-width="2"/><text x="40" y="44" font-size="10" fill="#4A3F37">40</text><text x="40" y="74" font-size="10" fill="#4A3F37">30</text><rect x="32" y="72" width="36" height="48" fill="rgba(164,185,200,.5)"/><text x="35" y="10" font-size="12" fill="#4A3F37">再加入</text><circle cx="110" cy="70" r="25" fill="none" stroke="#C28C6E" stroke-width="2"/><text x="90" y="75" font-size="14" fill="#4A3F37">30.</text></svg>');
-  var opt107A = '<b>(A)</b><div style="text-align:center; margin-top:4px;"><svg viewBox="0 0 40 50" width="28" height="35"><path d="M15 10 L15 40 L18 43 L22 43 L25 40 L25 10 Z" fill="none" stroke="#5B778C" stroke-width="2"/><rect x="10" y="0" width="20" height="12" rx="4" fill="#EBCDCB" stroke="#B57E83" stroke-width="2"/></svg></div>';
-  var opt107B = '<b>(B)</b><div style="text-align:center; margin-top:4px;"><svg viewBox="0 0 40 50" width="28" height="35"><path d="M15 10 L15 40 A 5 5 0 0 0 25 40 L25 10" fill="none" stroke="#5B778C" stroke-width="2"/></svg></div>';
-  var opt107C = '<b>(C)</b><div style="text-align:center; margin-top:4px;"><svg viewBox="0 0 40 50" width="28" height="35"><path d="M15 10 L15 20 L5 40 L35 40 L25 20 L25 10" fill="none" stroke="#5B778C" stroke-width="2"/></svg></div>';
-  var opt107D = '<b>(D)</b><div style="text-align:center; margin-top:4px;"><svg viewBox="0 0 40 50" width="28" height="35"><path d="M5 15 L5 40 L35 40 L35 15" fill="none" stroke="#5B778C" stroke-width="2"/></svg></div>';
+  var img107Cyl = imgBox('<svg viewBox="0 0 150 130" width="120" height="104"><path d="M30 20 L30 110 L70 110 L70 20" fill="none" stroke="#5B778C" stroke-width="2"/><line x1="20" y1="110" x2="80" y2="110" stroke="#5B778C" stroke-width="2"/><text x="40" y="44" font-size="10" fill="#4A3F37">40</text><text x="40" y="74" font-size="10" fill="#4A3F37">30</text><rect x="32" y="72" width="36" height="38" fill="rgba(164,185,200,.5)"/><text x="35" y="10" font-size="12" fill="#4A3F37">再加入</text><circle cx="110" cy="70" r="22" fill="none" stroke="#C28C6E" stroke-width="2"/><text x="92" y="75" font-size="14" fill="#4A3F37">30.</text></svg>');
+  var opt107A = '<b>(A)</b><div style="text-align:center;"><svg viewBox="0 0 40 45" width="26" height="30"><path d="M15 8 L15 35 L18 38 L22 38 L25 35 L25 8 Z" fill="none" stroke="#5B778C" stroke-width="2"/><rect x="10" y="0" width="20" height="10" rx="3" fill="#EBCDCB" stroke="#B57E83" stroke-width="2"/></svg></div>';
+  var opt107B = '<b>(B)</b><div style="text-align:center;"><svg viewBox="0 0 40 45" width="26" height="30"><path d="M15 8 L15 35 A 5 5 0 0 0 25 35 L25 8" fill="none" stroke="#5B778C" stroke-width="2"/></svg></div>';
+  var opt107C = '<b>(C)</b><div style="text-align:center;"><svg viewBox="0 0 40 45" width="26" height="30"><path d="M15 8 L15 18 L5 38 L35 38 L25 18 L25 8" fill="none" stroke="#5B778C" stroke-width="2"/></svg></div>';
+  var opt107D = '<b>(D)</b><div style="text-align:center;"><svg viewBox="0 0 40 45" width="26" height="30"><path d="M5 12 L5 38 L35 38 L35 12" fill="none" stroke="#5B778C" stroke-width="2"/></svg></div>';
 
-  var img106Method = imgBox('<div style="display:flex; justify-content:space-around; align-items:flex-end; gap:5px;"><div style="text-align:center;"><svg viewBox="0 0 70 90" width="50"><rect x="25" y="60" width="25" height="20" fill="#EBCDCB" /><rect x="30" y="10" width="12" height="50" rx="4" fill="none" stroke="#5B778C" stroke-width="2"/></svg><br><b style="font-size:0.8rem">方法甲</b></div><div style="text-align:center;"><svg viewBox="0 0 70 90" width="50"><rect x="25" y="15" width="20" height="65" fill="none" stroke="#5B778C" stroke-width="2"/><line x1="40" y1="5" x2="30" y2="70" stroke="#C28C6E" stroke-width="2"/></svg><br><b style="font-size:0.8rem">方法乙</b></div><div style="text-align:center;"><svg viewBox="0 0 70 90" width="50"><rect x="10" y="15" width="15" height="65" fill="none" stroke="#5B778C" stroke-width="2"/><rect x="45" y="15" width="15" height="65" fill="none" stroke="#5B778C" stroke-width="2"/><circle cx="52" cy="60" r="5" fill="#4A3F37"/></svg><br><b style="font-size:0.8rem">方法丙</b></div></div>');
+  var img106Method = imgBox('<div style="display:flex; justify-content:space-around; align-items:flex-end; gap:5px;"><div style="text-align:center;"><svg viewBox="0 0 60 80" width="40"><rect x="20" y="55" width="20" height="15" fill="#EBCDCB" /><rect x="24" y="10" width="12" height="45" rx="3" fill="none" stroke="#5B778C" stroke-width="2"/></svg><br><b style="font-size:0.75rem">方法甲</b></div><div style="text-align:center;"><svg viewBox="0 0 60 80" width="40"><rect x="20" y="15" width="20" height="55" fill="none" stroke="#5B778C" stroke-width="2"/><line x1="35" y1="5" x2="25" y2="60" stroke="#C28C6E" stroke-width="2"/></svg><br><b style="font-size:0.75rem">方法乙</b></div><div style="text-align:center;"><svg viewBox="0 0 60 80" width="40"><rect x="8" y="15" width="12" height="55" fill="none" stroke="#5B778C" stroke-width="2"/><rect x="40" y="15" width="12" height="55" fill="none" stroke="#5B778C" stroke-width="2"/><circle cx="46" cy="50" r="4" fill="#4A3F37"/></svg><br><b style="font-size:0.75rem">方法丙</b></div></div>');
 
-  var img104Bot = imgBox('<div style="display:flex; justify-content:space-around; align-items:center;"><div><b>甲：碳酸鈣</b><br><svg viewBox="0 0 50 50" width="40" height="40"><rect x="10" y="10" width="30" height="30" fill="none" stroke="#5B778C" stroke-width="2"/></svg></div><div><b>乙：鹽酸</b><br><svg viewBox="0 0 50 50" width="40" height="40"><path d="M15 10 L35 10 L40 20 L40 45 L10 45 L10 20 Z" fill="none" stroke="#5B778C" stroke-width="2"/></svg></div></div>');
+  var img104Bot = imgBox('<div style="display:flex; justify-content:space-around; align-items:center;"><div><b>甲：碳酸鈣</b><br><svg viewBox="0 0 40 40" width="30" height="30"><rect x="8" y="8" width="24" height="24" fill="none" stroke="#5B778C" stroke-width="2"/></svg></div><div><b>乙：鹽酸</b><br><svg viewBox="0 0 40 40" width="30" height="30"><path d="M12 8 L28 8 L32 16 L32 32 L8 32 L8 16 Z" fill="none" stroke="#5B778C" stroke-width="2"/></svg></div></div>');
   var opt104A = '<b>(A)</b> 甲乙皆用滴管';
   var opt104B = '<b>(B)</b> 甲乙皆用刮勺';
   var opt104C = '<b>(C)</b> 甲用刮勺、乙用滴管';
