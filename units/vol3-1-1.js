@@ -5,18 +5,15 @@
   /* --- 啟發區小圖：日常測量 --- */
   function hookVisual(el) {
     var svg = SK.svg(el, 360, 200, "用尺測量鉛筆");
-    // 畫一把尺
     s("rect", { x: 40, y: 120, width: 280, height: 40, rx: 4, fill: C.paper, stroke: C.line, "stroke-width": 2 }, svg);
     for(var i=0; i<=10; i++) {
         s("line", { x1: 50 + i*25, y1: 120, x2: 50 + i*25, y2: 130, stroke: C.ink, "stroke-width": 2 }, svg);
     }
-    // 畫鉛筆
     var penPath = "M 50 80 L 220 80 L 250 95 L 220 110 L 50 110 Z";
     s("path", { d: penPath, fill: C.gold.f, stroke: C.gold.s, "stroke-width": 2 }, svg);
-    s("path", { d: "M 220 80 L 220 110", stroke: C.gold.s, "stroke-width": 2 }, svg); // 筆頭分隔線
-    s("circle", { cx: 250, cy: 95, r: 3, fill: C.ink }, svg); // 筆尖
+    s("path", { d: "M 220 80 L 220 110", stroke: C.gold.s, "stroke-width": 2 }, svg); 
+    s("circle", { cx: 250, cy: 95, r: 3, fill: C.ink }, svg); 
     
-    // 虛線對齊標示
     s("line", { x1: 250, y1: 95, x2: 250, y2: 150, stroke: C.orange.s, "stroke-width": 2, "stroke-dasharray": "4 4" }, svg);
     SK.label(svg, 250, 170, "?", { size: 24, color: C.orange.s, bold: true });
   }
@@ -28,20 +25,18 @@
     var read = SK.h("div", { class: "readout" });
     ctx.extra.appendChild(read);
 
-    // 建立滑桿讓學生拖曳物體長度 (範圍 3.00 ~ 8.00 cm)
     var lenSl = SK.slider({ label: "拖曳改變物體長度", min: 3, max: 8, step: 0.05, value: 5.65, color: "blue" });
     ctx.sliders.appendChild(lenSl.el);
 
     function draw() {
-      var f = ctx.frame; // 0=測量本質, 1=準確值, 2=估計值, 3=完整紀錄
+      var f = ctx.frame; 
       var L = lenSl.value;
       g.innerHTML = "";
       
-      var unitPx = 40; // 1cm = 40px
+      var unitPx = 40; 
       var startX = 50;
       var baseY = 140;
 
-      // 1. 繪製尺 (最小刻度 0.1cm)
       s("rect", { x: startX - 10, y: baseY, width: 420, height: 60, rx: 5, fill: C.paper, stroke: C.line, "stroke-width": 2 }, g);
       for(var i=0; i<=10; i++) {
         var vx = startX + i * unitPx;
@@ -55,32 +50,26 @@
         }
       }
 
-      // 2. 繪製物體 (藍色區塊)
       var objW = L * unitPx;
       s("rect", { x: startX, y: baseY - 50, width: objW, height: 50, rx: 4, fill: C.blue.f, stroke: C.blue.s, "stroke-width": 2 }, g);
 
-      // 3. 焦點虛線
       var endX = startX + objW;
       s("line", { x1: endX, y1: baseY - 60, x2: endX, y2: baseY + 40, stroke: C.orange.s, "stroke-width": 2, "stroke-dasharray": "5 4" }, g);
 
-      // --- 依據不同步驟，顯示不同的解析 ---
-      var exactVal = Math.floor(L * 10) / 10; // 取到小數點第一位 (最小刻度)
-      var estVal = Math.round((L - exactVal) * 100); // 估計值 (小數點第二位)
+      var exactVal = Math.floor(L * 10) / 10; 
+      var estVal = Math.round((L - exactVal) * 100); 
 
       if (f === 1 || f === 3) {
-        // 標示準確值範圍 (綠色)
         var exX = startX + exactVal * unitPx;
         s("line", { x1: exX, y1: baseY - 10, x2: exX, y2: baseY + 20, stroke: C.green.s, "stroke-width": 3 }, g);
         SK.label(g, exX, baseY - 25, exactVal.toFixed(1) + " (準確)", { size: 14, color: C.green.s });
       }
 
       if (f === 2 || f === 3) {
-        // 標示估計值區域 (橘色放大)
         SK.label(g, endX + 15, baseY - 25, "估: " + estVal, { size: 14, color: C.orange.s, bold: true });
         s("circle", { cx: endX, cy: baseY, r: 18, fill: "none", stroke: C.orange.s, "stroke-width": 2 }, g);
       }
 
-      // 底部狀態列
       if (f === 0) read.innerHTML = "目前長度落在 " + exactVal.toFixed(1) + " 到 " + (exactVal + 0.1).toFixed(1) + " 之間。";
       if (f === 1) read.innerHTML = "儀器能確實讀出的數字稱為<b style='color:#7A8B76'>準確值</b>：" + exactVal.toFixed(1) + " cm。";
       if (f === 2) read.innerHTML = "肉眼猜測的下一位數稱為<b style='color:#C28C6E'>估計值</b>，這裡我們估計為 " + estVal + "。";
@@ -96,24 +85,19 @@
     var svg = SK.svg(el, 300, 250, "排水法示意圖");
     var C = SK.C, s = SK.s;
     
-    // 畫量筒
     s("path", { d: "M 100 40 L 100 220 L 200 220 L 200 40", fill: "none", stroke: C.line, "stroke-width": 3 }, svg);
     for(var i=0; i<5; i++){
         s("line", { x1: 100, y1: 80 + i*30, x2: 115, y2: 80 + i*30, stroke: C.line, "stroke-width": 2 }, svg);
     }
     
-    // 畫水 (加上半透明濾鏡)
     s("rect", { x: 102, y: 110, width: 96, height: 108, fill: C.blue.f }, svg);
-    SK.label(svg, 65, 110, "V2", { size: 16, color: C.blue.s, bold: true }); // 投入後水位
+    SK.label(svg, 65, 110, "V2", { size: 16, color: C.blue.s, bold: true }); 
     s("line", { x1: 80, y1: 110, x2: 100, y2: 110, stroke: C.blue.s, "stroke-width": 2, "stroke-dasharray":"3 3" }, svg);
     
-    SK.label(svg, 65, 170, "V1", { size: 16, color: C.soft }); // 原水位
+    SK.label(svg, 65, 170, "V1", { size: 16, color: C.soft }); 
     s("line", { x1: 80, y1: 170, x2: 100, y2: 170, stroke: C.line, "stroke-width": 2, "stroke-dasharray":"3 3" }, svg);
 
-    // 畫石頭 (沉體)
     s("path", { d: "M 130 180 Q 150 160 170 180 Q 180 200 150 210 Q 120 200 130 180 Z", fill: C.ink, stroke: "none" }, svg);
-    
-    // 標示公式
     SK.label(svg, 150, 20, "物體體積 = V2 - V1", { size: 16, color: C.ink, bold: true });
   }
 
