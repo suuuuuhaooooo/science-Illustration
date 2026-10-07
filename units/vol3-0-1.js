@@ -1,21 +1,6 @@
-/* 單元：3冊 0.1 科學方法與實驗守則 (手機完美相容版) */
+/* 單元：3冊 0.1 科學方法與實驗守則 */
 (function () {
   var C = SK.C, s = SK.s;
-
-  // 手機專用排版 CSS (完全屏棄複雜網格，改用最穩定的區塊流式佈局)
-  var style = document.createElement("style");
-  style.innerHTML = 
-    ".rwd-tb-wrap { width: 100%; overflow-x: auto; margin: 12px 0; -webkit-overflow-scrolling: touch; border: 1px solid #E3D4AC; border-radius: 6px; background: #FFF; }" +
-    ".rwd-tb { width: 100%; min-width: 280px; border-collapse: collapse; text-align: center; font-size: 0.9rem; }" +
-    ".rwd-tb th { background: #F8F5EE; padding: 8px; border-bottom: 2px solid #E3D4AC; color: #4A3F37; font-weight: bold; white-space: nowrap; }" +
-    ".rwd-tb td { padding: 8px; border-bottom: 1px solid #E3D4AC; color: #6F645A; background: #FFF; white-space: nowrap; }" +
-    ".opt-list { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; width: 100%; }" +
-    ".opt-box { background: #FFF; border: 1px solid #E3D4AC; border-radius: 6px; padding: 10px 14px; font-size: 0.95rem; color: #4A3F37; display: block; text-align: left; }" +
-    ".opt-box:active { background: #FDF9F6; }" +
-    ".q-img-box { text-align: center; margin: 12px 0; overflow-x: auto; padding: 5px; background: #FAF7F2; border-radius: 6px; border: 1px solid #EFE6D5; }" +
-    ".q-img-box svg { max-width: 100%; height: auto; display: inline-block; }" +
-    ".opt-svg-row { display: flex; justify-content: space-around; align-items: center; gap: 5px; margin-top: 6px; flex-wrap: wrap; }";
-  document.head.appendChild(style);
 
   /* --- 啟發區小圖 --- */
   function hookVisual(el) {
@@ -83,21 +68,25 @@
     return { show: draw };
   }
 
-  // ==== 輔助產生器 ====
+  // ==== 輔助產生器 (強制 100% 行內樣式，徹底解決手機跑版) ====
   function genTb(headers, rows) {
-    var h = '<div class="rwd-tb-wrap"><table class="rwd-tb"><tr>';
-    headers.forEach(function(th){ h += '<th>' + th + '</th>'; });
+    var h = '<div style="width:100%; overflow-x:auto; margin:12px 0; border:1px solid #E3D4AC; border-radius:6px; background:#FFF;"><table style="width:100%; min-width:280px; border-collapse:collapse; text-align:center; font-size:0.9rem;">';
+    h += '<tr style="background:#F8F5EE; border-bottom:2px solid #E3D4AC; color:#4A3F37; font-weight:bold;">';
+    headers.forEach(function(th){ h += '<th style="padding:8px; white-space:nowrap;">' + th + '</th>'; });
     h += '</tr>';
     rows.forEach(function(row){
-      h += '<tr>';
-      row.forEach(function(td){ h += '<td>' + td + '</td>'; });
+      h += '<tr style="border-bottom:1px solid #E3D4AC; color:#6F645A; background:#FFF;">';
+      row.forEach(function(td){ h += '<td style="padding:8px; white-space:nowrap;">' + td + '</td>'; });
       h += '</tr>';
     });
     return h + '</table></div>';
   }
+  
   function genOpts(opts) {
-    var h = '<div class="opt-list">';
-    opts.forEach(function(o){ h += '<div class="opt-box">' + o + '</div>'; });
+    var h = '<div style="display:flex; flex-direction:column; gap:8px; margin-top:12px; width:100%;">';
+    opts.forEach(function(o){ 
+      h += '<div style="background:#FFF; border:1px solid #E3D4AC; border-radius:6px; padding:10px 14px; font-size:0.95rem; color:#4A3F37; width:100%; box-sizing:border-box;">' + o + '</div>'; 
+    });
     return h + '</div>';
   }
 
@@ -109,37 +98,36 @@
   var t_111_land = genTb(["實驗編號", "夾角", "斜面長度", "石塊重量"], [["1", "20°", "100 cm", "2 kgw"], ["2", "20°", "50 cm", "2 kgw"], ["3", "40°", "100 cm", "4 kgw"], ["4", "40°", "50 cm", "4 kgw"]]);
   var t_90_enzyme = genTb(["試管", "作用溫度", "待作用物質", "反應後生成物質"], [["甲 / 乙", "15°C", "100 g", "50 g"], ["丙 / 丁", "30°C", "100 g", "25 g"]]);
 
-  // ==== 歷屆會考題專屬素材 (手機專用圖表) ====
-  var img111Slope = '<div class="q-img-box"><svg viewBox="0 0 200 100" width="180"><path d="M20 80 L180 80" stroke="#5B778C" stroke-width="2"/><path d="M20 80 L140 20" stroke="#5B778C" stroke-width="2"/><text x="145" y="85" font-size="12" fill="#4A3F37">水平面</text><text x="70" y="35" font-size="12" fill="#4A3F37" transform="rotate(-26 70 35)">斜面</text><path d="M40 80 A 40 40 0 0 0 45 68" fill="none" stroke="#C28C6E" stroke-width="1.5"/><text x="48" y="76" font-size="12" fill="#C28C6E">θ</text><rect x="100" y="30" width="15" height="15" fill="#4A3F37" transform="rotate(-26 100 30)"/><text x="110" y="25" font-size="12" fill="#4A3F37">石塊</text><rect x="10" y="60" width="15" height="20" fill="#7A8B76"/><text x="0" y="55" font-size="10" fill="#7A8B76">模型房屋</text></svg></div>';
+  // ==== 歷屆會考題專屬素材 (手機專用置中圖框) ====
+  var imgBox = function(svgContent) {
+    return '<div style="text-align:center; margin:12px 0; padding:8px; background:#FAF7F2; border-radius:6px; border:1px solid #EFE6D5; width:100%; box-sizing:border-box;">' + svgContent + '</div>';
+  };
+
+  var img111Slope = imgBox('<svg viewBox="0 0 200 100" width="100%" style="max-width:180px; height:auto;"><path d="M20 80 L180 80" stroke="#5B778C" stroke-width="2"/><path d="M20 80 L140 20" stroke="#5B778C" stroke-width="2"/><text x="145" y="85" font-size="12" fill="#4A3F37">水平面</text><text x="70" y="35" font-size="12" fill="#4A3F37" transform="rotate(-26 70 35)">斜面</text><path d="M40 80 A 40 40 0 0 0 45 68" fill="none" stroke="#C28C6E" stroke-width="1.5"/><text x="48" y="76" font-size="12" fill="#C28C6E">θ</text><rect x="100" y="30" width="15" height="15" fill="#4A3F37" transform="rotate(-26 100 30)"/><text x="110" y="25" font-size="12" fill="#4A3F37">石塊</text><rect x="10" y="60" width="15" height="20" fill="#7A8B76"/><text x="0" y="55" font-size="10" fill="#7A8B76">模型房屋</text></svg>');
   
-  var img109Pour = '<div class="q-img-box"><svg viewBox="0 0 100 120" width="90"><rect x="45" y="40" width="10" height="70" fill="none" stroke="#5B778C" stroke-width="2"/><rect x="42" y="90" width="16" height="4" fill="#5B778C"/><path d="M20 10 L50 40 L50 10 Z" fill="none" stroke="#4A3F37" stroke-width="2"/><path d="M45 35 Q40 45 50 50 Q55 45 45 35" fill="rgba(164,185,200,.5)"/><text x="10" y="20" font-size="12" fill="#4A3F37">燒杯</text><text x="65" y="80" font-size="12" fill="#4A3F37">滴定管</text></svg></div>';
-  var opt109A = '<b>(A)</b> <div class="opt-svg-row"><svg viewBox="0 0 50 50" width="35"><path d="M10 10 L40 10 L28 30 L28 45" fill="none" stroke="#C28C6E" stroke-width="2"/><ellipse cx="25" cy="10" rx="15" ry="4" fill="rgba(224,189,173,.6)" stroke="#C28C6E" stroke-width="1"/></svg></div>';
-  var opt109B = '<b>(B)</b> <div class="opt-svg-row"><svg viewBox="0 0 50 50" width="35"><path d="M10 40 L35 15" stroke="#7A8B76" stroke-width="3"/><circle cx="37" cy="13" r="3" fill="#7A8B76"/></svg></div>';
-  var opt109C = '<b>(C)</b> <div class="opt-svg-row"><svg viewBox="0 0 50 50" width="35"><rect x="15" y="10" width="20" height="35" fill="none" stroke="#5B778C" stroke-width="2"/><line x1="10" y1="45" x2="40" y2="45" stroke="#5B778C" stroke-width="2"/></svg></div>';
-  var opt109D = '<b>(D)</b> <div class="opt-svg-row"><svg viewBox="0 0 50 50" width="35"><path d="M5 25 Q25 45 45 25" fill="rgba(196,189,207,.5)" stroke="#847C96" stroke-width="2"/></svg></div>';
+  var img109Pour = imgBox('<svg viewBox="0 0 100 120" width="100%" style="max-width:90px; height:auto;"><rect x="45" y="40" width="10" height="70" fill="none" stroke="#5B778C" stroke-width="2"/><rect x="42" y="90" width="16" height="4" fill="#5B778C"/><path d="M20 10 L50 40 L50 10 Z" fill="none" stroke="#4A3F37" stroke-width="2"/><path d="M45 35 Q40 45 50 50 Q55 45 45 35" fill="rgba(164,185,200,.5)"/><text x="10" y="20" font-size="12" fill="#4A3F37">燒杯</text><text x="65" y="80" font-size="12" fill="#4A3F37">滴定管</text></svg>');
+  var opt109A = '<b>(A)</b><div style="text-align:center; margin-top:4px;"><svg viewBox="0 0 50 50" width="35" height="35"><path d="M10 10 L40 10 L28 30 L28 45" fill="none" stroke="#C28C6E" stroke-width="2"/><ellipse cx="25" cy="10" rx="15" ry="4" fill="rgba(224,189,173,.6)" stroke="#C28C6E" stroke-width="1"/></svg></div>';
+  var opt109B = '<b>(B)</b><div style="text-align:center; margin-top:4px;"><svg viewBox="0 0 50 50" width="35" height="35"><path d="M10 40 L35 15" stroke="#7A8B76" stroke-width="3"/><circle cx="37" cy="13" r="3" fill="#7A8B76"/></svg></div>';
+  var opt109C = '<b>(C)</b><div style="text-align:center; margin-top:4px;"><svg viewBox="0 0 50 50" width="35" height="35"><rect x="15" y="10" width="20" height="35" fill="none" stroke="#5B778C" stroke-width="2"/><line x1="10" y1="45" x2="40" y2="45" stroke="#5B778C" stroke-width="2"/></svg></div>';
+  var opt109D = '<b>(D)</b><div style="text-align:center; margin-top:4px;"><svg viewBox="0 0 50 50" width="35" height="35"><path d="M5 25 Q25 45 45 25" fill="rgba(196,189,207,.5)" stroke="#847C96" stroke-width="2"/></svg></div>';
 
-  var img107Cyl = '<div class="q-img-box"><svg viewBox="0 0 150 140" width="130"><path d="M30 20 L30 120 L70 120 L70 20" fill="none" stroke="#5B778C" stroke-width="2"/><line x1="20" y1="120" x2="80" y2="120" stroke="#5B778C" stroke-width="2"/><text x="40" y="44" font-size="10" fill="#4A3F37">40</text><text x="40" y="74" font-size="10" fill="#4A3F37">30</text><rect x="32" y="72" width="36" height="48" fill="rgba(164,185,200,.5)"/><text x="35" y="10" font-size="12" fill="#4A3F37">再加入</text><circle cx="110" cy="70" r="25" fill="none" stroke="#C28C6E" stroke-width="2"/><text x="90" y="75" font-size="14" fill="#4A3F37">30.</text></svg></div>';
-  var opt107A = '<b>(A)</b> <div class="opt-svg-row"><svg viewBox="0 0 40 50" width="30"><path d="M15 10 L15 40 L18 45 L22 45 L25 40 L25 10 Z" fill="none" stroke="#5B778C" stroke-width="2"/><rect x="10" y="0" width="20" height="12" rx="4" fill="#EBCDCB" stroke="#B57E83" stroke-width="2"/></svg></div>';
-  var opt107B = '<b>(B)</b> <div class="opt-svg-row"><svg viewBox="0 0 40 50" width="30"><path d="M15 10 L15 40 A 5 5 0 0 0 25 40 L25 10" fill="none" stroke="#5B778C" stroke-width="2"/></svg></div>';
-  var opt107C = '<b>(C)</b> <div class="opt-svg-row"><svg viewBox="0 0 40 50" width="30"><path d="M15 10 L15 20 L5 40 L35 40 L25 20 L25 10" fill="none" stroke="#5B778C" stroke-width="2"/></svg></div>';
-  var opt107D = '<b>(D)</b> <div class="opt-svg-row"><svg viewBox="0 0 40 50" width="30"><path d="M5 15 L5 40 L35 40 L35 15" fill="none" stroke="#5B778C" stroke-width="2"/></svg></div>';
+  var img107Cyl = imgBox('<svg viewBox="0 0 150 140" width="100%" style="max-width:130px; height:auto;"><path d="M30 20 L30 120 L70 120 L70 20" fill="none" stroke="#5B778C" stroke-width="2"/><line x1="20" y1="120" x2="80" y2="120" stroke="#5B778C" stroke-width="2"/><text x="40" y="44" font-size="10" fill="#4A3F37">40</text><text x="40" y="74" font-size="10" fill="#4A3F37">30</text><rect x="32" y="72" width="36" height="48" fill="rgba(164,185,200,.5)"/><text x="35" y="10" font-size="12" fill="#4A3F37">再加入</text><circle cx="110" cy="70" r="25" fill="none" stroke="#C28C6E" stroke-width="2"/><text x="90" y="75" font-size="14" fill="#4A3F37">30.</text></svg>');
+  var opt107A = '<b>(A)</b><div style="text-align:center; margin-top:4px;"><svg viewBox="0 0 40 50" width="28" height="35"><path d="M15 10 L15 40 L18 43 L22 43 L25 40 L25 10 Z" fill="none" stroke="#5B778C" stroke-width="2"/><rect x="10" y="0" width="20" height="12" rx="4" fill="#EBCDCB" stroke="#B57E83" stroke-width="2"/></svg></div>';
+  var opt107B = '<b>(B)</b><div style="text-align:center; margin-top:4px;"><svg viewBox="0 0 40 50" width="28" height="35"><path d="M15 10 L15 40 A 5 5 0 0 0 25 40 L25 10" fill="none" stroke="#5B778C" stroke-width="2"/></svg></div>';
+  var opt107C = '<b>(C)</b><div style="text-align:center; margin-top:4px;"><svg viewBox="0 0 40 50" width="28" height="35"><path d="M15 10 L15 20 L5 40 L35 40 L25 20 L25 10" fill="none" stroke="#5B778C" stroke-width="2"/></svg></div>';
+  var opt107D = '<b>(D)</b><div style="text-align:center; margin-top:4px;"><svg viewBox="0 0 40 50" width="28" height="35"><path d="M5 15 L5 40 L35 40 L35 15" fill="none" stroke="#5B778C" stroke-width="2"/></svg></div>';
 
-  var img106Method = '<div class="q-img-box"><div class="opt-svg-row">' +
-    '<div><svg viewBox="0 0 80 100" width="60"><rect x="25" y="70" width="30" height="20" fill="#EBCDCB" /><path d="M40 50 Q45 65 40 70 Q35 65 40 50" fill="C28C6E"/><rect x="35" y="10" width="15" height="55" rx="5" fill="none" stroke="#5B778C" stroke-width="2"/></svg><br><b>方法甲</b></div>' +
-    '<div><svg viewBox="0 0 80 100" width="60"><rect x="30" y="20" width="20" height="70" fill="none" stroke="#5B778C" stroke-width="2"/><line x1="50" y1="10" x2="35" y2="70" stroke="#C28C6E" stroke-width="3"/></svg><br><b>方法乙</b></div>' +
-    '<div><svg viewBox="0 0 80 100" width="60"><rect x="10" y="20" width="15" height="70" fill="none" stroke="#5B778C" stroke-width="2"/><rect x="55" y="20" width="15" height="70" fill="none" stroke="#5B778C" stroke-width="2"/><circle cx="62" cy="70" r="6" fill="#4A3F37"/></svg><br><b>方法丙</b></div>' +
-    '</div></div>';
+  var img106Method = imgBox('<div style="display:flex; justify-content:space-around; align-items:flex-end; gap:5px;"><div style="text-align:center;"><svg viewBox="0 0 70 90" width="50"><rect x="25" y="60" width="25" height="20" fill="#EBCDCB" /><rect x="30" y="10" width="12" height="50" rx="4" fill="none" stroke="#5B778C" stroke-width="2"/></svg><br><b style="font-size:0.8rem">方法甲</b></div><div style="text-align:center;"><svg viewBox="0 0 70 90" width="50"><rect x="25" y="15" width="20" height="65" fill="none" stroke="#5B778C" stroke-width="2"/><line x1="40" y1="5" x2="30" y2="70" stroke="#C28C6E" stroke-width="2"/></svg><br><b style="font-size:0.8rem">方法乙</b></div><div style="text-align:center;"><svg viewBox="0 0 70 90" width="50"><rect x="10" y="15" width="15" height="65" fill="none" stroke="#5B778C" stroke-width="2"/><rect x="45" y="15" width="15" height="65" fill="none" stroke="#5B778C" stroke-width="2"/><circle cx="52" cy="60" r="5" fill="#4A3F37"/></svg><br><b style="font-size:0.8rem">方法丙</b></div></div>');
 
-  var img104Bot = '<div class="q-img-box"><div class="opt-svg-row"><div><b>甲：碳酸鈣</b><svg viewBox="0 0 50 60" width="40"><rect x="10" y="15" width="30" height="35" fill="none" stroke="#5B778C" stroke-width="2"/><rect x="15" y="5" width="20" height="10" fill="none" stroke="#5B778C" stroke-width="2"/></svg></div><div><b>乙：鹽酸</b><svg viewBox="0 0 50 60" width="40"><path d="M15 15 L35 15 L40 25 L40 50 L10 50 L10 25 Z" fill="none" stroke="#5B778C" stroke-width="2"/><rect x="20" y="5" width="10" height="10" fill="none" stroke="#5B778C" stroke-width="2"/></svg></div></div></div>';
-  
+  var img104Bot = imgBox('<div style="display:flex; justify-content:space-around; align-items:center;"><div><b>甲：碳酸鈣</b><br><svg viewBox="0 0 50 50" width="40" height="40"><rect x="10" y="10" width="30" height="30" fill="none" stroke="#5B778C" stroke-width="2"/></svg></div><div><b>乙：鹽酸</b><br><svg viewBox="0 0 50 50" width="40" height="40"><path d="M15 10 L35 10 L40 20 L40 45 L10 45 L10 20 Z" fill="none" stroke="#5B778C" stroke-width="2"/></svg></div></div>');
   var opt104A = '<b>(A)</b> 甲乙皆用滴管';
   var opt104B = '<b>(B)</b> 甲乙皆用刮勺';
   var opt104C = '<b>(C)</b> 甲用刮勺、乙用滴管';
   var opt104D = '<b>(D)</b> 甲用滴管、乙用刮勺';
 
-  var opt60A = '<b>(A)</b> 水直接倒入濃硫酸中（燒杯內裝硫酸）';
+  var opt60A = '<b>(A)</b> 水直接倒入濃硫酸中';
   var opt60B = '<b>(B)</b> 水沿玻璃棒倒入濃硫酸中';
-  var opt60C = '<b>(C)</b> 濃硫酸沿玻璃棒緩緩倒入水中（燒杯內裝水）';
+  var opt60C = '<b>(C)</b> 濃硫酸沿玻璃棒緩緩倒入水中';
   var opt60D = '<b>(D)</b> 濃硫酸直接倒入水中';
 
   // ============================================
@@ -201,7 +189,7 @@
       },
       {
         lv: "113 會考 (表格判讀)",
-        q: "在自來水中加入氯氣雖然可以消毒，但氯氣可能會進一步反應產生致癌物。下列實驗，想知道將自來水靜置一段時間或加熱能否降低餘氯量，實驗結果如表(一)和表(二)：<br><b style='font-size:0.9rem'>表(一) 溫度皆為 25°C</b>" + genTb(["時間(分)", "0", "3", "5", "10", "30", "60", "120", "240"], [["餘氣量(ppm)", "0.39", "0.33", "0.28", "0.22", "0.18", "0.15", "0.13", "0.09"]]) + "<b style='font-size:0.9rem'>表(二) 加熱過程</b>" + genTb(["時間(分)", "0", "3", "5", "10"], [["溫度(°C)", "25", "27", "31", "沸騰"], ["餘氣量(ppm)", "0.39", "0.30", "0.20", "0.00"]]) + "依據表中結果判斷，下列說明何者最合理？" + genOpts(["(A) 僅由表(一)的結果，可以判斷溫度高低與能否降低餘氯量有關", "(B) 僅由表(二)的結果，可以判斷靜置時間長短與能否降低餘氯量有關", "(C) 由表(一)結果可以做出在 10°C 時，餘氯量也會隨靜置時間增加而下降的結論", "(D) 以表(一)數據做為參照，可使用表(二)的結果來判斷加熱能否降低餘氯量。"]),
+        q: "在自來水中加入氯氣雖然可以消毒，但氯氣可能會進一步反應產生致癌物。下列實驗，想知道將自來水靜置一段時間或加熱能否降低餘氯量，實驗結果如表(一)和表(二)：<br><b style='font-size:0.9rem'>表(一) 溫度皆為 25°C</b>" + genTb(["時間(分)", "0", "3", "5", "10", "30", "60", "120", "240"], [["餘氣量", "0.39", "0.33", "0.28", "0.22", "0.18", "0.15", "0.13", "0.09"]]) + "<b style='font-size:0.9rem'>表(二) 加熱過程</b>" + genTb(["時間(分)", "0", "3", "5", "10"], [["溫度(°C)", "25", "27", "31", "沸騰"], ["餘氣量", "0.39", "0.30", "0.20", "0.00"]]) + "依據表中結果判斷，下列說明何者最合理？" + genOpts(["(A) 僅由表(一)的結果，可以判斷溫度高低與能否降低餘氯量有關", "(B) 僅由表(二)的結果，可以判斷靜置時間長短與能否降低餘氯量有關", "(C) 由表(一)結果可以做出在 10°C 時，餘氯量也會隨靜置時間增加而下降的結論", "(D) 以表(一)數據做為參照，可使用表(二)的結果來判斷加熱能否降低餘氯量。"]),
         idea: "【正確解答】 (D)<br>【詳細解析】 表(一)的溫度固定在 25°C (控制變因)，探討的是時間；表(二)則探討加熱(溫度上升)的影響。以表(一)不加熱的情況做為對照組參照，對比表(二)，即可判斷「加熱」這個操縱變因能否降低餘氯量。"
       },
       {
