@@ -6,10 +6,8 @@
 <title>科學方法與實驗守則｜見微理畫</title>
 <meta name="description" content="學習理化的第一步：觀察現象、提出假說，以及進入實驗室的基本安全守則。">
 
-<!-- 補上分頁 Icon (與首頁相同) -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234A3F37' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='2' fill='%234A3F37'/%3E%3Cellipse cx='12' cy='12' rx='10' ry='4' transform='rotate(45 12 12)'/%3E%3Cellipse cx='12' cy='12' rx='10' ry='4' transform='rotate(-45 12 12)'/%3E%3C/svg%3E">
 
-<!-- 恢復原專案的高質感字體 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@400;600;700&family=LXGW+WenKai+TC:wght@400;700&family=Patrick+Hand&display=swap">
@@ -18,10 +16,76 @@
 <link rel="stylesheet" href="../assets/css/storybook.css">
 
 <style>
-    /* 保留基本的防選取，移除先前的科技風純白覆寫 */
     body {
         -webkit-user-select: none;
         user-select: none;
+    }
+    /* 【全域強制防破版樣式】直接寫在 HTML 確保不被框架覆蓋 */
+    .unit-content, .card, .challenge-card, #main {
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    .table-scroll-box {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+        margin: 10px 0;
+        border: 1px solid #E3D4AC;
+        border-radius: 6px;
+        background: #FFF;
+        box-sizing: border-box;
+    }
+    .rwd-tb {
+        width: 100% !important;
+        max-width: 100% !important;
+        border-collapse: collapse;
+        text-align: center;
+        font-size: 0.82rem;
+        table-layout: auto;
+    }
+    .rwd-tb th, .rwd-tb td {
+        padding: 6px 4px;
+        border-bottom: 1px solid #E3D4AC;
+        word-break: break-all;
+    }
+    .rwd-tb th {
+        background: #F8F5EE;
+        color: #4A3F37;
+        font-weight: bold;
+    }
+    .rwd-tb td {
+        color: #6F645A;
+        background: #FFF;
+    }
+    .opt-box {
+        background: #FFF;
+        border: 1px solid #E3D4AC;
+        border-radius: 6px;
+        padding: 10px 12px;
+        font-size: 0.9rem;
+        color: #4A3F37;
+        width: 100%;
+        box-sizing: border-box;
+        text-align: left;
+        word-break: break-word;
+        margin-top: 8px;
+    }
+    .q-img-box {
+        text-align: center;
+        margin: 10px 0;
+        padding: 6px;
+        background: #FAF7F2;
+        border-radius: 6px;
+        border: 1px solid #EFE6D5;
+        width: 100%;
+        box-sizing: border-box;
+        overflow-x: auto;
+    }
+    .q-img-box svg {
+        max-width: 100%;
+        height: auto;
+        display: inline-block;
     }
 </style>
 </head>
@@ -30,8 +94,6 @@
 <script src="../assets/vendor/katex/katex.min.js"></script>
 <script src="../assets/js/catalog.js"></script>
 <script src="../assets/js/core.js"></script>
-
-<!-- 引入本單元專屬的互動腳本 -->
 <script src="vol3-0-1.js"></script>
 </body>
 </html>
