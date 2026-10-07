@@ -25,17 +25,18 @@
     var read = SK.h("div", { class: "readout" });
     ctx.extra.appendChild(read);
 
-    var lenSl; // 先宣告
+    var lenSl; // 提前宣告變數
 
     function draw() {
       var f = ctx.frame; 
-      var L = lenSl ? lenSl.value : 5.65; // 防呆
+      var L = lenSl ? lenSl.value : 5.65; // 防呆，確保一開始有預設值
       g.innerHTML = "";
       
       var unitPx = 40; 
       var startX = 50;
       var baseY = 140;
 
+      // 畫尺
       s("rect", { x: startX - 10, y: baseY, width: 420, height: 60, rx: 5, fill: C.paper, stroke: C.line, "stroke-width": 2 }, g);
       for(var i=0; i<=10; i++) {
         var vx = startX + i * unitPx;
@@ -49,12 +50,15 @@
         }
       }
 
+      // 畫物體
       var objW = L * unitPx;
       s("rect", { x: startX, y: baseY - 50, width: objW, height: 50, rx: 4, fill: C.blue.f, stroke: C.blue.s, "stroke-width": 2 }, g);
 
+      // 焦點對齊線
       var endX = startX + objW;
       s("line", { x1: endX, y1: baseY - 60, x2: endX, y2: baseY + 40, stroke: C.orange.s, "stroke-width": 2, "stroke-dasharray": "5 4" }, g);
 
+      // 解析準確值與估計值
       var exactVal = Math.floor(L * 10) / 10; 
       var estVal = Math.round((L - exactVal) * 100); 
 
@@ -75,10 +79,10 @@
       if (f === 3) read.innerHTML = "完整測量值 = 準確值 + 估計值 = <b>" + L.toFixed(2) + " cm</b>";
     }
 
-    // 【修復拉桿】在建立時直接綁定 onInput 執行 draw
+    // 【這裡就是修復拉桿的關鍵】直接綁定 onInput 呼叫 draw
     lenSl = SK.slider({ 
         label: "拖曳改變物體長度", min: 3, max: 8, step: 0.05, value: 5.65, color: "blue",
-        onInput: function() { draw(); }
+        onInput: function() { draw(); } 
     });
     ctx.sliders.appendChild(lenSl.el);
 
@@ -91,7 +95,6 @@
     el.appendChild(wrap);
     var svg = SK.svg(wrap, 300, 250, "排水法示意圖");
     
-    // 建立獨立滑桿
     var sl = SK.slider({ label: "慢慢將石頭放入水中", min: 0, max: 100, step: 1, value: 0, color: "blue", onInput: function(){ draw(); } });
     wrap.appendChild(sl.el);
 
@@ -100,7 +103,7 @@
         svg.innerHTML = "";
         
         var baseWaterY = 170;
-        var stoneVol = 50; // 水位上升幅度
+        var stoneVol = 50; 
         var currentWaterY = baseWaterY - (v / 100) * stoneVol;
         var stoneY = 50 + (v / 100) * 140; 
 
@@ -113,28 +116,29 @@
         // 水
         s("rect", { x: 102, y: currentWaterY, width: 96, height: 218 - currentWaterY, fill: C.blue.f }, svg);
         
-        // 原水位
+        // V1 原水位
         s("line", { x1: 80, y1: 170, x2: 100, y2: 170, stroke: C.line, "stroke-width": 2, "stroke-dasharray":"3 3" }, svg);
         SK.label(svg, 65, 170, "V1", { size: 16, color: C.soft }); 
 
-        // 石頭 (帶有一點不規則形狀)
+        // 石頭
         s("path", { d: "M 130 " + stoneY + " Q 150 " + (stoneY-15) + " 170 " + stoneY + " Q 180 " + (stoneY+15) + " 150 " + (stoneY+25) + " Q 120 " + (stoneY+15) + " 130 " + stoneY + " Z", fill: C.ink, stroke: "none" }, svg);
 
+        // V2 投入後水位
         if (v > 0) {
             s("line", { x1: 80, y1: currentWaterY, x2: 100, y2: currentWaterY, stroke: C.blue.s, "stroke-width": 2, "stroke-dasharray":"3 3" }, svg);
             SK.label(svg, 65, currentWaterY, "V2", { size: 16, color: C.blue.s, bold: true }); 
         }
     }
-    draw(); // 初始化
+    draw(); 
   }
 
-  /* --- 換個角度看 2：互動式重物沉水法 (浮體) --- */
+  /* --- 換個角度看 2：互動式重捶法 (浮體) --- */
   function floatingVolume(el) {
     var wrap = SK.h("div", { style: "text-align:center; padding: 10px 0;" });
     el.appendChild(wrap);
-    var svg = SK.svg(wrap, 300, 250, "重物沉水法示意圖");
+    var svg = SK.svg(wrap, 300, 260, "重物沉水法示意圖");
     
-    // 建立兩段式滑桿
+    // 兩段式滑桿 (0~50 放鐵塊，51~100 放木塊)
     var sl = SK.slider({ label: "步驟：1.先放鐵塊 → 2.綁上木塊", min: 0, max: 100, step: 1, value: 0, color: "orange", onInput: function(){ draw(); } });
     wrap.appendChild(sl.el);
 
@@ -142,10 +146,9 @@
         var v = sl.value; 
         svg.innerHTML = "";
         
-        // 量筒
-        s("path", { d: "M 100 40 L 100 220 L 200 220 L 200 40", fill: "none", stroke: C.line, "stroke-width": 3 }, svg);
+        s("path", { d: "M 100 40 L 100 240 L 200 240 L 200 40", fill: "none", stroke: C.line, "stroke-width": 3 }, svg);
         
-        var baseWater = 180;
+        var baseWater = 190;
         var ironVol = 25; 
         var woodVol = 45; 
         
@@ -154,48 +157,43 @@
         var woodY = 20;
 
         if (v <= 50) {
-            // 0~50: 鐵塊掉入
             var p = v / 50;
             waterY = baseWater - p * ironVol;
-            ironY = 50 + p * 140;
+            ironY = 50 + p * 150;
             woodY = 20; 
         } else {
-            // 50~100: 木塊被拉進去
             var p = (v - 50) / 50;
             waterY = baseWater - ironVol - p * woodVol;
-            ironY = 190;
+            ironY = 200;
             woodY = 20 + p * 140; 
         }
 
-        // 水
-        s("rect", { x: 102, y: waterY, width: 96, height: 218 - waterY, fill: C.blue.f }, svg);
+        s("rect", { x: 102, y: waterY, width: 96, height: 238 - waterY, fill: C.blue.f }, svg);
         
-        // V1 原水位
+        // V1 原始水位
         s("line", { x1: 80, y1: baseWater, x2: 100, y2: baseWater, stroke: C.line, "stroke-width": 2, "stroke-dasharray":"3 3" }, svg);
         SK.label(svg, 65, baseWater, "V1", { size: 14, color: C.soft }); 
 
-        // V2 (鐵塊水位)
+        // V2 (僅有鐵塊的水位)
         if (v >= 50) {
             var v2Y = baseWater - ironVol;
             s("line", { x1: 80, y1: v2Y, x2: 100, y2: v2Y, stroke: C.line, "stroke-width": 2, "stroke-dasharray":"3 3" }, svg);
             SK.label(svg, 65, v2Y, "V2", { size: 14, color: C.soft }); 
         }
 
-        // V3 (鐵+木水位)
+        // V3 (鐵+木的水位)
         if (v > 50) {
             s("line", { x1: 80, y1: waterY, x2: 100, y2: waterY, stroke: C.orange.s, "stroke-width": 2, "stroke-dasharray":"3 3" }, svg);
             SK.label(svg, 65, waterY, "V3", { size: 14, color: C.orange.s, bold: true }); 
         }
 
-        // 繩子
+        // 綁線
         if (v > 50) {
             s("line", { x1: 150, y1: woodY+25, x2: 150, y2: ironY, stroke: C.line, "stroke-width": 2 }, svg);
         }
 
-        // 鐵塊 (深色方塊)
+        // 鐵塊與木塊
         s("rect", { x: 135, y: ironY, width: 30, height: 20, rx:2, fill: C.ink }, svg);
-        
-        // 木塊 (橘色方塊)
         s("rect", { x: 125, y: woodY, width: 50, height: 35, rx: 3, fill: C.orange.f, stroke: C.orange.s, "stroke-width":2 }, svg);
     }
     draw(); 
@@ -237,8 +235,8 @@
         html: "直尺只能測量規則物體。如果是一塊不規則的石頭（會沉入水中），我們必須利用「排水法」。<br><br><b>石頭體積 = 投入後水位 (V2) - 原本水位 (V1)</b>",
         render: sinkingVolume
       },
-      { title: "不規則浮體怎麼測？（重物沉水法）",
-        html: "如果是會浮在水面上的木塊，就算丟進去也無法完全排開同體積的水。這時必須綁上一個重物（如鐵塊）把它強行拉入水中。<br><br>⚠️ 注意：這裡的原水位是指<b>「已經放入鐵塊的水位 (V2)」</b>，所以：<br><b>木塊體積 = 鐵+木的水位 (V3) - 只有鐵塊的水位 (V2)</b>",
+      { title: "不規則浮體怎麼測？（重捶法）",
+        html: "如果是會浮在水面上的木塊，就算丟進去也無法完全排開同體積的水。這時必須綁上一個重物（如鐵塊）把它強行拉入水中。<br><br>⚠️ 注意：這裡的測量基準是指<b>「已經放入鐵塊的水位 (V2)」</b>，所以：<br><b>木塊體積 = 鐵+木的水位 (V3) - 只有鐵塊的水位 (V2)</b>",
         render: floatingVolume
       }
     ],
