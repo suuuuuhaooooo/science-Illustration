@@ -33,13 +33,11 @@
     ctx.extra.appendChild(read);
 
     var lenSl = SK.slider({ 
-        label: "拖曳改變物體長度", min: 3, max: 8, step: 0.05, value: 5.65, color: "blue",
+        label: "拖曳改變長度", min: 3, max: 8, step: 0.05, value: 5.65, color: "blue",
         onInput: function() { draw(); } 
     });
     
-    // 【手機專用修復】防止滑桿被網頁滾動干擾
     lenSl.input.style.touchAction = "none";
-    
     ctx.sliders.appendChild(lenSl.el);
 
     function draw() {
@@ -108,9 +106,13 @@
     svg.style.height = "auto";
     
     var slWrap = SK.h("div", { style: "margin-top: 15px; position: relative; z-index: 10;" });
-    var sl = SK.slider({ label: "慢慢將石頭放入水中", min: 0, max: 100, step: 1, value: 0, color: "blue", onInput: function(){ draw(); } });
     
-    // 【手機專用修復】防止滑桿被網頁滾動干擾
+    // 【優化排版】將長說明獨立出來，不擠在滑桿標籤上
+    var info = SK.h("div", { style: "font-size: 0.95rem; color: #6F645A; margin-bottom: 12px; text-align: left; background: #F8F5EE; padding: 10px; border-radius: 8px;" });
+    info.innerHTML = "<b>操作：</b>拖曳滑桿，將石頭完全沉入水中。";
+    slWrap.appendChild(info);
+
+    var sl = SK.slider({ label: "放石頭", min: 0, max: 100, step: 1, value: 0, color: "blue", onInput: function(){ draw(); } });
     sl.input.style.touchAction = "none";
     
     slWrap.appendChild(sl.el);
@@ -158,9 +160,13 @@
     svg.style.height = "auto";
     
     var slWrap = SK.h("div", { style: "margin-top: 15px; position: relative; z-index: 10;" });
-    var sl = SK.slider({ label: "步驟：1.先放鐵塊 → 2.綁上木塊", min: 0, max: 100, step: 1, value: 0, color: "orange", onInput: function(){ draw(); } });
     
-    // 【手機專用修復】防止滑桿被網頁滾動干擾
+    // 【優化排版】將長說明獨立出來，解決滑桿文字過長擠壓的問題
+    var info = SK.h("div", { style: "font-size: 0.95rem; color: #6F645A; margin-bottom: 12px; text-align: left; background: #F8F5EE; padding: 10px; border-radius: 8px;" });
+    info.innerHTML = "<b>操作步驟：</b><br>1. 先讓鐵塊完全沉入水中<br>2. 繼續拖曳，將木塊也拉入水中";
+    slWrap.appendChild(info);
+
+    var sl = SK.slider({ label: "拖曳重物", min: 0, max: 100, step: 1, value: 0, color: "orange", onInput: function(){ draw(); } });
     sl.input.style.touchAction = "none";
     
     slWrap.appendChild(sl.el);
