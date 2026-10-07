@@ -1,18 +1,17 @@
-/* 單元：3冊 0.1 科學方法與實驗守則*/
+/* 單元：3冊 0.1 科學方法與實驗守則 */
 (function () {
   var C = SK.C, s = SK.s;
 
-  // 手機專用排版 CSS (強制防止表格撐破容器)
+  // 注入專門為手機設計的左右滑動表格樣式
   var style = document.createElement("style");
   style.innerHTML = 
-    ".rwd-tb-container { width: 100%; margin: 10px 0; background: #FFF; border: 1px solid #E3D4AC; border-radius: 6px; overflow: hidden; box-sizing: border-box; }" +
-    ".rwd-tb-scroll { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }" +
-    ".rwd-tb { width: 100%; border-collapse: collapse; text-align: center; font-size: 0.85rem; table-layout: auto; }" +
-    ".rwd-tb th { background: #F8F5EE; padding: 6px 4px; border-bottom: 2px solid #E3D4AC; color: #4A3F37; font-weight: bold; word-break: break-all; }" +
-    ".rwd-tb td { padding: 6px 4px; border-bottom: 1px solid #E3D4AC; color: #6F645A; background: #FFF; word-break: break-all; }" +
-    ".opt-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; width: 100%; box-sizing: border-box; }" +
-    ".opt-box { background: #FFF; border: 1px solid #E3D4AC; border-radius: 6px; padding: 10px 12px; font-size: 0.9rem; color: #4A3F37; width: 100%; box-sizing: border-box; text-align: left; }" +
-    ".q-img-box { text-align: center; margin: 10px 0; padding: 6px; background: #FAF7F2; border-radius: 6px; border: 1px solid #EFE6D5; width: 100%; box-sizing: border-box; overflow-x: auto; }" +
+    ".table-scroll-box { width: 100%; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 12px 0; border: 1px solid #E3D4AC; border-radius: 6px; background: #FFF; box-shadow: 0 2px 6px rgba(0,0,0,0.03); }" +
+    ".rwd-tb { width: 100%; min-width: 340px; border-collapse: collapse; text-align: center; font-size: 0.9rem; }" +
+    ".rwd-tb th { background: #F8F5EE; padding: 10px 8px; border-bottom: 2px solid #E3D4AC; color: #4A3F37; font-weight: bold; white-space: nowrap; }" +
+    ".rwd-tb td { padding: 10px 8px; border-bottom: 1px solid #E3D4AC; color: #6F645A; background: #FFF; white-space: nowrap; }" +
+    ".opt-list { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; width: 100%; box-sizing: border-box; }" +
+    ".opt-box { background: #FFF; border: 1px solid #E3D4AC; border-radius: 6px; padding: 10px 14px; font-size: 0.95rem; color: #4A3F37; width: 100%; box-sizing: border-box; text-align: left; }" +
+    ".q-img-box { text-align: center; margin: 12px 0; padding: 8px; background: #FAF7F2; border-radius: 6px; border: 1px solid #EFE6D5; width: 100%; box-sizing: border-box; overflow-x: auto; }" +
     ".q-img-box svg { max-width: 100%; height: auto; display: inline-block; }";
   document.head.appendChild(style);
 
@@ -82,9 +81,9 @@
     return { show: draw };
   }
 
-  // ==== 輔助產生器 (加入防破版捲軸容器) ====
+  // ==== 輔助產生器 (強制使用左右滑動容器) ====
   function genTb(headers, rows) {
-    var h = '<div class="rwd-tb-container"><div class="rwd-tb-scroll"><table class="rwd-tb"><tr>';
+    var h = '<div class="table-scroll-box"><table class="rwd-tb"><tr>';
     headers.forEach(function(th){ h += '<th>' + th + '</th>'; });
     h += '</tr>';
     rows.forEach(function(row){
@@ -92,7 +91,7 @@
       row.forEach(function(td){ h += '<td>' + td + '</td>'; });
       h += '</tr>';
     });
-    return h + '</table></div></div>';
+    return h + '</table></div>';
   }
   
   function genOpts(opts) {
