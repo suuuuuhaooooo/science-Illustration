@@ -63,20 +63,17 @@
       var endX = startX + objW;
       s("line", { x1: endX, y1: baseY - 60, x2: endX, y2: baseY + 40, stroke: C.orange.s, "stroke-width": 2, "stroke-dasharray": "5 4" }, g);
 
-      // 【修正浮點數計算】確保數值穩定擷取
-      var exactValStr = L.toFixed(2).slice(0, -1); // 取得小數點第一位為止的字串
-      var estVal = Math.round((L * 100)) % 10;     // 取得小數點第二位的數字
-      var exactVal = parseFloat(exactValStr);      // 轉回數字供計算用
+      var exactValStr = L.toFixed(2).slice(0, -1); 
+      var estVal = Math.round((L * 100)) % 10;     
+      var exactVal = parseFloat(exactValStr);      
 
       if (f === 1 || f === 3) {
         var exX = startX + exactVal * unitPx;
         s("line", { x1: exX, y1: baseY - 10, x2: exX, y2: baseY + 45, stroke: C.green.s, "stroke-width": 3 }, g);
-        // 【防重疊】準確值標示在尺的「下方」
         SK.label(g, exX, baseY + 65, exactVal.toFixed(1) + " (準確)", { size: 14, color: C.green.s, bold: true });
       }
 
       if (f === 2 || f === 3) {
-        // 【防重疊】估計值標示在尺的「上方」
         SK.label(g, endX + 10, baseY - 20, "估: " + estVal, { size: 14, color: C.orange.s, bold: true });
         s("circle", { cx: endX, cy: baseY, r: 18, fill: "none", stroke: C.orange.s, "stroke-width": 2 }, g);
       }
@@ -95,6 +92,10 @@
     var wrap = SK.h("div", { style: "text-align:center; padding: 10px 0;" });
     el.appendChild(wrap);
     var svg = SK.svg(wrap, 300, 250, "排水法示意圖");
+    
+    // 【新增限制寬度，縮小示意圖】
+    svg.style.maxWidth = "220px";
+    svg.style.width = "100%";
     
     var sl = SK.slider({ label: "慢慢將石頭放入水中", min: 0, max: 100, step: 1, value: 0, color: "blue", onInput: function(){ draw(); } });
     wrap.appendChild(sl.el);
@@ -133,6 +134,10 @@
     var wrap = SK.h("div", { style: "text-align:center; padding: 10px 0;" });
     el.appendChild(wrap);
     var svg = SK.svg(wrap, 300, 260, "重物沉水法示意圖");
+    
+    // 【新增限制寬度，縮小示意圖】
+    svg.style.maxWidth = "220px";
+    svg.style.width = "100%";
     
     var sl = SK.slider({ label: "步驟：1.先放鐵塊 → 2.綁上木塊", min: 0, max: 100, step: 1, value: 0, color: "orange", onInput: function(){ draw(); } });
     wrap.appendChild(sl.el);
