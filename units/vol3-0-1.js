@@ -2,17 +2,16 @@
 (function () {
   var C = SK.C, s = SK.s;
 
-  // 注入強制卡片與表格不破版的全域 CSS
+  // 注入絕對嚴格控制在卡片範圍內的防溢出 CSS
   var style = document.createElement("style");
   style.innerHTML = 
-    "body, #main, .challenge-card, .unit-content { max-width: 100% !important; box-sizing: border-box !important; overflow-x: hidden !important; }" +
-    ".table-scroll-box { width: 100%; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 12px 0; border: 1px solid #E3D4AC; border-radius: 6px; background: #FFF; box-shadow: 0 2px 6px rgba(0,0,0,0.03); box-sizing: border-box; }" +
-    ".rwd-tb { width: 100%; min-width: 320px; border-collapse: collapse; text-align: center; font-size: 0.9rem; }" +
-    ".rwd-tb th { background: #F8F5EE; padding: 10px 8px; border-bottom: 2px solid #E3D4AC; color: #4A3F37; font-weight: bold; white-space: nowrap; }" +
-    ".rwd-tb td { padding: 10px 8px; border-bottom: 1px solid #E3D4AC; color: #6F645A; background: #FFF; white-space: nowrap; }" +
-    ".opt-list { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; width: 100%; box-sizing: border-box; }" +
-    ".opt-box { background: #FFF; border: 1px solid #E3D4AC; border-radius: 6px; padding: 10px 14px; font-size: 0.95rem; color: #4A3F37; width: 100%; box-sizing: border-box; text-align: left; word-break: break-word; }" +
-    ".q-img-box { text-align: center; margin: 12px 0; padding: 8px; background: #FAF7F2; border-radius: 6px; border: 1px solid #EFE6D5; width: 100%; box-sizing: border-box; overflow-x: auto; }" +
+    ".table-scroll-box { width: 100%; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 10px 0; border: 1px solid #E3D4AC; border-radius: 6px; background: #FFF; box-sizing: border-box; }" +
+    ".rwd-tb { width: 100%; max-width: 100%; border-collapse: collapse; text-align: center; font-size: 0.85rem; table-layout: fixed; }" +
+    ".rwd-tb th { background: #F8F5EE; padding: 8px 4px; border-bottom: 2px solid #E3D4AC; color: #4A3F37; font-weight: bold; word-break: break-all; }" +
+    ".rwd-tb td { padding: 8px 4px; border-bottom: 1px solid #E3D4AC; color: #6F645A; background: #FFF; word-break: break-all; }" +
+    ".opt-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; width: 100%; box-sizing: border-box; }" +
+    ".opt-box { background: #FFF; border: 1px solid #E3D4AC; border-radius: 6px; padding: 10px 12px; font-size: 0.9rem; color: #4A3F37; width: 100%; box-sizing: border-box; text-align: left; word-break: break-word; }" +
+    ".q-img-box { text-align: center; margin: 10px 0; padding: 6px; background: #FAF7F2; border-radius: 6px; border: 1px solid #EFE6D5; width: 100%; box-sizing: border-box; overflow-x: auto; }" +
     ".q-img-box svg { max-width: 100%; height: auto; display: inline-block; }";
   document.head.appendChild(style);
 
@@ -82,7 +81,7 @@
     return { show: draw };
   }
 
-  // ==== 輔助產生器 ====
+  // ==== 輔助產生器 (強制內縮、支援內部捲動) ====
   function genTb(headers, rows) {
     var h = '<div class="table-scroll-box"><table class="rwd-tb"><tr>';
     headers.forEach(function(th){ h += '<th>' + th + '</th>'; });
@@ -213,7 +212,7 @@
       {
         lv: "111 會考補考 (蒸發實驗)",
         q: "阿璇想要探究水面上放置遮蔽物如何影響水量的蒸發。一號不放球，二~五號分別以不同顏色、相同大小的乒乓球鋪滿整個水面。持續照射 7 天後測量水面高度，測量結果如附表所示。根據附表記錄的結果所提出的推論，下列哪一個最合理？" + t_111_evap + genOpts(["(A) 水面上鋪滿乒乓球對水的蒸發沒有影響", "(B) 水面上乒乓球的數量越多，減少水蒸發的效果越好", "(C) 水面上乒乓球的顏色越深，減少水蒸發的效果越好", "(D) 水面上鋪滿乒乓球可以減少水的蒸發，但是乒乓球的顏色對水的蒸發完全沒有影響。"]),
-        idea: "【正確解答】 (C) 水面上乒乓球的顏色越深，減少水蒸發的效果越好<br>【詳細解析】 容器剩餘的水面高度越高，代表蒸發掉的水越少。由數據可知：黑球 (15.95) > 藍球 (15.90) > 紅球 (15.80) > 白球 (15.50),證明顏色越深，減少水蒸發的效果越好。"
+        idea: "【正確解答】 (C) 水面上乒乓球的顏色越深，減少水蒸發的效果越好<br>【詳細解析】 容器剩餘的水面高度越高，代表蒸發掉的水越少。由數據可知：黑球 (15.95) > 藍球 (15.90) > 紅球 (15.80) > 白球 (15.50)，證明顏色越深，減少水蒸發的效果越好。"
       },
       {
         lv: "109 會考 (器材搭配)",
