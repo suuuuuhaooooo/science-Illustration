@@ -4,15 +4,128 @@
 
   // 注入絕對嚴格控制在卡片範圍內的防溢出 CSS
   var style = document.createElement("style");
-  style.innerHTML = 
-    ".table-scroll-box { width: 100%; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 10px 0; border: 1px solid #E3D4AC; border-radius: 6px; background: #FFF; box-sizing: border-box; }" +
-    ".rwd-tb { width: 100%; max-width: 100%; border-collapse: collapse; text-align: center; font-size: 0.85rem; table-layout: fixed; }" +
-    ".rwd-tb th { background: #F8F5EE; padding: 8px 4px; border-bottom: 2px solid #E3D4AC; color: #4A3F37; font-weight: bold; word-break: break-all; }" +
-    ".rwd-tb td { padding: 8px 4px; border-bottom: 1px solid #E3D4AC; color: #6F645A; background: #FFF; word-break: break-all; }" +
-    ".opt-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; width: 100%; box-sizing: border-box; }" +
-    ".opt-box { background: #FFF; border: 1px solid #E3D4AC; border-radius: 6px; padding: 10px 12px; font-size: 0.9rem; color: #4A3F37; width: 100%; box-sizing: border-box; text-align: left; word-break: break-word; }" +
-    ".q-img-box { text-align: center; margin: 10px 0; padding: 6px; background: #FAF7F2; border-radius: 6px; border: 1px solid #EFE6D5; width: 100%; box-sizing: border-box; overflow-x: auto; }" +
-    ".q-img-box svg { max-width: 100%; height: auto; display: inline-block; }";
+  style.innerHTML =
+  /* ===== 所有內容最基本的 RWD 防溢出 ===== */
+  ".unit-card, .card, .section, .content, .main, #main, article, section {" +
+    "max-width: 100%;" +
+    "min-width: 0;" +
+    "box-sizing: border-box;" +
+  "}" +
+
+  /* ===== 表格：手機可左右滑，電腦正常顯示 ===== */
+  ".table-scroll-box {" +
+    "width: 100%;" +
+    "max-width: 100%;" +
+    "min-width: 0;" +
+    "overflow-x: auto;" +
+    "overflow-y: hidden;" +
+    "-webkit-overflow-scrolling: touch;" +
+    "margin: 10px 0;" +
+    "border: 1px solid #E3D4AC;" +
+    "border-radius: 6px;" +
+    "background: #FFF;" +
+    "box-sizing: border-box;" +
+  "}" +
+
+  ".rwd-tb { width: 100%; min-width: 520px; border-collapse: collapse; text-align: center; font-size: clamp(0.78rem, 2.5vw, 0.9rem); table-layout: auto; }" +
+
+  ".rwd-tb th {" +
+    "background: #F8F5EE;" +
+    "padding: 8px 6px;" +
+    "border-bottom: 2px solid #E3D4AC;" +
+    "color: #4A3F37;" +
+    "font-weight: bold;" +
+    "white-space: nowrap;" +
+  "}" +
+
+  ".rwd-tb td {" +
+    "padding: 8px 6px;" +
+    "border-bottom: 1px solid #E3D4AC;" +
+    "color: #6F645A;" +
+    "background: #FFF;" +
+    "word-break: break-word;" +
+  "}" +
+
+  /* ===== 選項 ===== */
+  ".opt-list {" +
+    "display: flex;" +
+    "flex-direction: column;" +
+    "gap: 8px;" +
+    "margin-top: 10px;" +
+    "width: 100%;" +
+    "max-width: 100%;" +
+    "min-width: 0;" +
+    "box-sizing: border-box;" +
+  "}" +
+
+  ".opt-box {" +
+    "background: #FFF;" +
+    "border: 1px solid #E3D4AC;" +
+    "border-radius: 6px;" +
+    "padding: 10px 12px;" +
+    "font-size: clamp(0.82rem, 2.5vw, 0.95rem);" +
+    "line-height: 1.6;" +
+    "color: #4A3F37;" +
+    "width: 100%;" +
+    "max-width: 100%;" +
+    "min-width: 0;" +
+    "box-sizing: border-box;" +
+    "text-align: left;" +
+    "overflow-wrap: anywhere;" +
+    "word-break: break-word;" +
+  "}" +
+
+  /* ===== 題目圖片 ===== */
+  ".q-img-box {" +
+    "text-align: center;" +
+    "margin: 10px 0;" +
+    "padding: 6px;" +
+    "background: #FAF7F2;" +
+    "border-radius: 6px;" +
+    "border: 1px solid #EFE6D5;" +
+    "width: 100%;" +
+    "max-width: 100%;" +
+    "min-width: 0;" +
+    "box-sizing: border-box;" +
+    "overflow: hidden;" +
+  "}" +
+
+  ".q-img-box svg {" +
+    "display: block;" +
+    "width: auto;" +
+    "max-width: 100%;" +
+    "height: auto;" +
+    "margin: 0 auto;" +
+  "}" +
+
+  /* ===== 圖片裡的 flex 排版 ===== */
+  ".q-img-box > div {" +
+    "max-width: 100%;" +
+    "box-sizing: border-box;" +
+    "flex-wrap: wrap;" +
+  "}" +
+
+  /* ===== 小螢幕 ===== */
+  "@media (max-width: 600px) {" +
+
+    ".q-img-box {" +
+      "padding: 4px;" +
+      "margin: 8px 0;" +
+    "}" +
+
+    ".rwd-tb {" +
+      "font-size: 0.78rem;" +
+    "}" +
+
+    ".rwd-tb th, .rwd-tb td {" +
+      "padding: 7px 5px;" +
+    "}" +
+
+    ".opt-box {" +
+      "padding: 9px 10px;" +
+      "font-size: 0.84rem;" +
+    "}" +
+  "}";
   document.head.appendChild(style);
 
   /* --- 啟發區小圖 --- */
@@ -42,8 +155,12 @@
   /* --- 核心推導：科學方法流程圖 --- */
   function methodDerive(ctx) {
     var svg = SK.svg(ctx.stage, 480, 420, "科學方法步驟流程圖");
+    svg.style.display = "block";
     svg.style.width = "100%";
+    svg.style.maxWidth = "480px";
     svg.style.height = "auto";
+    svg.style.margin = "0 auto";
+    svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
     var g = s("g", {}, svg);
     var read = SK.h("div", { class: "readout" });
     ctx.extra.appendChild(read);
@@ -129,7 +246,8 @@
   var opt107C = '<b>(C)</b><div style="text-align:center;"><svg viewBox="0 0 40 45" width="26" height="30"><path d="M15 8 L15 18 L5 38 L35 38 L25 18 L25 8" fill="none" stroke="#5B778C" stroke-width="2"/></svg></div>';
   var opt107D = '<b>(D)</b><div style="text-align:center;"><svg viewBox="0 0 40 45" width="26" height="30"><path d="M5 12 L5 38 L35 38 L35 12" fill="none" stroke="#5B778C" stroke-width="2"/></svg></div>';
 
-  var img106Method = imgBox('<div style="display:flex; justify-content:space-around; align-items:flex-end; gap:5px;"><div style="text-align:center;"><svg viewBox="0 0 60 80" width="40"><rect x="20" y="55" width="20" height="15" fill="#EBCDCB" /><rect x="24" y="10" width="12" height="45" rx="3" fill="none" stroke="#5B778C" stroke-width="2"/></svg><br><b style="font-size:0.75rem">方法甲</b></div><div style="text-align:center;"><svg viewBox="0 0 60 80" width="40"><rect x="20" y="15" width="20" height="55" fill="none" stroke="#5B778C" stroke-width="2"/><line x1="35" y1="5" x2="25" y2="60" stroke="#C28C6E" stroke-width="2"/></svg><br><b style="font-size:0.75rem">方法乙</b></div><div style="text-align:center;"><svg viewBox="0 0 60 80" width="40"><rect x="8" y="15" width="12" height="55" fill="none" stroke="#5B778C" stroke-width="2"/><rect x="40" y="15" width="12" height="55" fill="none" stroke="#5B778C" stroke-width="2"/><circle cx="46" cy="50" r="4" fill="#4A3F37"/></svg><br><b style="font-size:0.75rem">方法丙</b></div></div>');
+  var img106Method = imgBox(
+  '<div style="display:flex; justify-content:space-around; align-items:flex-end; gap:10px; flex-wrap:wrap; width:100%; box-sizing:border-box;">' +
 
   var img104Bot = imgBox('<div style="display:flex; justify-content:space-around; align-items:center;"><div><b>甲：碳酸鈣</b><br><svg viewBox="0 0 40 40" width="30" height="30"><rect x="8" y="8" width="24" height="24" fill="none" stroke="#5B778C" stroke-width="2"/></svg></div><div><b>乙：鹽酸</b><br><svg viewBox="0 0 40 40" width="30" height="30"><path d="M12 8 L28 8 L32 16 L32 32 L8 32 L8 16 Z" fill="none" stroke="#5B778C" stroke-width="2"/></svg></div></div>');
   var opt104A = '<b>(A)</b> 甲乙皆用滴管';
