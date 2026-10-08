@@ -1,8 +1,8 @@
-/* 單元：3冊 0.1 科學方法與實驗守則 (終極物理防破版・17題全收錄) */
+/* 單元：3冊 0.1 科學方法與實驗守則 */
 (function () {
   var C = SK.C, s = SK.s;
 
-  // ===== 物理鎖定螢幕寬度 RWD CSS =====
+  // ===== 鎖定螢幕寬度 RWD CSS =====
   var style = document.createElement("style");
   style.innerHTML =
   /* ===== 強制所有卡片與外部框架不得超過螢幕 ===== */
