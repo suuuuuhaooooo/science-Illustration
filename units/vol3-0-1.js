@@ -2,14 +2,17 @@
 (function () {
   var C = SK.C, s = SK.s;
 
-  // ===== 破圖 CSS  =====
+  // ===== RWD CSS =====
   var style = document.createElement("style");
   style.innerHTML =
+  /* ===== 所有內容最基本的 RWD 防溢出 ===== */
   ".unit-card, .card, .section, .content, .main, #main, article, section {" +
     "max-width: 100%;" +
     "min-width: 0;" +
     "box-sizing: border-box;" +
   "}" +
+
+  /* ===== 表格：手機可左右滑，電腦正常顯示 ===== */
   ".table-scroll-box {" +
     "width: 100%;" +
     "max-width: 100%;" +
@@ -23,7 +26,9 @@
     "background: #FFF;" +
     "box-sizing: border-box;" +
   "}" +
+
   ".rwd-tb { width: 100%; min-width: 520px; border-collapse: collapse; text-align: center; font-size: clamp(0.78rem, 2.5vw, 0.9rem); table-layout: auto; }" +
+
   ".rwd-tb th {" +
     "background: #F8F5EE;" +
     "padding: 8px 6px;" +
@@ -32,6 +37,7 @@
     "font-weight: bold;" +
     "white-space: nowrap;" +
   "}" +
+
   ".rwd-tb td {" +
     "padding: 8px 6px;" +
     "border-bottom: 1px solid #E3D4AC;" +
@@ -39,6 +45,8 @@
     "background: #FFF;" +
     "word-break: break-word;" +
   "}" +
+
+  /* ===== 選項 ===== */
   ".opt-list {" +
     "display: flex;" +
     "flex-direction: column;" +
@@ -49,6 +57,7 @@
     "min-width: 0;" +
     "box-sizing: border-box;" +
   "}" +
+
   ".opt-box {" +
     "background: #FFF;" +
     "border: 1px solid #E3D4AC;" +
@@ -65,6 +74,8 @@
     "overflow-wrap: anywhere;" +
     "word-break: break-word;" +
   "}" +
+
+  /* ===== 題目圖片 ===== */
   ".q-img-box {" +
     "text-align: center;" +
     "margin: 10px 0;" +
@@ -78,6 +89,7 @@
     "box-sizing: border-box;" +
     "overflow: hidden;" +
   "}" +
+
   ".q-img-box svg {" +
     "display: block;" +
     "width: auto;" +
@@ -85,16 +97,32 @@
     "height: auto;" +
     "margin: 0 auto;" +
   "}" +
+
+  /* ===== 圖片裡的 flex 排版 (強制允許換行防破出) ===== */
   ".q-img-box > div {" +
     "max-width: 100%;" +
     "box-sizing: border-box;" +
-    "flex-wrap: wrap;" +
+    "display: flex;" +
+    "justify-content: center;" +
+    "flex-wrap: wrap;" + 
   "}" +
+
+  /* ===== 小螢幕 ===== */
   "@media (max-width: 600px) {" +
-    ".q-img-box { padding: 4px; margin: 8px 0; }" +
-    ".rwd-tb { font-size: 0.78rem; }" +
-    ".rwd-tb th, .rwd-tb td { padding: 7px 5px; }" +
-    ".opt-box { padding: 9px 10px; font-size: 0.84rem; }" +
+    ".q-img-box {" +
+      "padding: 4px;" +
+      "margin: 8px 0;" +
+    "}" +
+    ".rwd-tb {" +
+      "font-size: 0.78rem;" +
+    "}" +
+    ".rwd-tb th, .rwd-tb td {" +
+      "padding: 7px 5px;" +
+    "}" +
+    ".opt-box {" +
+      "padding: 9px 10px;" +
+      "font-size: 0.84rem;" +
+    "}" +
   "}";
   document.head.appendChild(style);
 
@@ -187,7 +215,7 @@
   }
 
   var imgBox = function(svgContent, maxWidth) {
-    return '<div class="q-img-box"><div style="margin:0 auto; max-width:' + (maxWidth || 300) + 'px;">' + svgContent + '</div></div>';
+    return '<div class="q-img-box"><div style="margin:0 auto; max-width:' + (maxWidth || 300) + 'px; gap:10px;">' + svgContent + '</div></div>';
   };
 
   // ============================================
@@ -209,58 +237,48 @@
   // ============================================
   // 圖片變數宣告區 (依原題精細重繪)
   // ============================================
-  var svgDropper = '<svg viewBox="0 0 30 100" style="width:100%; max-width:20px; height:auto;"><path d="M12 30 L12 85 L14 95 L16 95 L18 85 L18 30 Z" fill="#FFF" stroke="#4A3F37" stroke-width="2"/><rect x="8" y="5" width="14" height="25" rx="5" fill="#888"/></svg>';
-  var svgGradCyl = '<svg viewBox="0 0 60 120" style="width:100%; max-width:35px; height:auto;"><path d="M15 20 L15 110 L45 110 L45 20" fill="none" stroke="#4A3F37" stroke-width="2"/><line x1="5" y1="110" x2="55" y2="110" stroke="#4A3F37" stroke-width="2"/><line x1="15" y1="40" x2="25" y2="40" stroke="#4A3F37" stroke-width="1"/><text x="28" y="44" font-size="12" fill="#4A3F37">50</text><line x1="15" y1="60" x2="20" y2="60" stroke="#4A3F37" stroke-width="1"/><line x1="15" y1="80" x2="20" y2="80" stroke="#4A3F37" stroke-width="1"/><rect x="17" y="60" width="26" height="48" fill="rgba(164,185,200,.5)"/></svg>';
-  var svgSpatula = '<svg viewBox="0 0 20 80" style="width:100%; max-width:15px; height:auto;"><path d="M8 5 L12 5 L11 65 L14 72 C 15 76 13 78 10 78 C 7 78 5 76 6 72 L9 65 Z" fill="#4A3F37"/></svg>';
+  var svgDropper = '<svg viewBox="0 0 30 100" style="width:100%; max-width:20px; height:auto; display:block; margin:0 auto;"><path d="M12 30 L12 85 L14 95 L16 95 L18 85 L18 30 Z" fill="#FFF" stroke="#4A3F37" stroke-width="2"/><rect x="8" y="5" width="14" height="25" rx="5" fill="#888"/></svg>';
+  var svgGradCyl = '<svg viewBox="0 0 60 120" style="width:100%; max-width:35px; height:auto; display:block; margin:0 auto;"><path d="M15 20 L15 110 L45 110 L45 20" fill="none" stroke="#4A3F37" stroke-width="2"/><line x1="5" y1="110" x2="55" y2="110" stroke="#4A3F37" stroke-width="2"/><line x1="15" y1="40" x2="25" y2="40" stroke="#4A3F37" stroke-width="1"/><text x="28" y="44" font-size="12" fill="#4A3F37">50</text><line x1="15" y1="60" x2="20" y2="60" stroke="#4A3F37" stroke-width="1"/><line x1="15" y1="80" x2="20" y2="80" stroke="#4A3F37" stroke-width="1"/><rect x="17" y="60" width="26" height="48" fill="rgba(164,185,200,.5)"/></svg>';
+  var svgSpatula = '<svg viewBox="0 0 20 80" style="width:100%; max-width:15px; height:auto; display:block; margin:0 auto;"><path d="M8 5 L12 5 L11 65 L14 72 C 15 76 13 78 10 78 C 7 78 5 76 6 72 L9 65 Z" fill="#4A3F37"/></svg>';
 
-  // 103會考
-  var img103Tools = imgBox('<div style="display:flex; justify-content:center; gap:30px; align-items:flex-end;">' +
-    '<div style="text-align:center; padding:10px; border:1px solid #CCC; background:#FFF;">' + svgDropper + '<br><b style="font-size:0.8rem">器材一</b></div>' +
-    '<div style="text-align:center; padding:10px; border:1px solid #CCC; background:#FFF;">' + svgGradCyl + '<br><b style="font-size:0.8rem">器材二</b></div>' +
-    '</div>', 250);
+  // 103會考 
+  var img103Tools = imgBox('<div style="text-align:center; padding:10px; border:1px solid #CCC; background:#FFF; min-width:80px;">' + svgDropper + '<br><b style="font-size:0.8rem">器材一</b></div><div style="text-align:center; padding:10px; border:1px solid #CCC; background:#FFF; min-width:80px;">' + svgGradCyl + '<br><b style="font-size:0.8rem">器材二</b></div>', 250);
 
   // 104會考 (甲廣口瓶、乙細頸瓶)
-  var img104Bot = imgBox('<div style="display:flex; justify-content:space-around; align-items:flex-end;">' +
-    '<div style="text-align:center;"><b>甲</b><br><svg viewBox="0 0 60 80" style="width:100%; max-width:45px; height:auto;"><rect x="12" y="25" width="36" height="50" rx="2" fill="#FFF" stroke="#333" stroke-width="2"/><rect x="18" y="15" width="24" height="10" fill="#FFF" stroke="#333" stroke-width="2"/><rect x="16" y="8" width="28" height="7" rx="1" fill="#CCC" stroke="#333" stroke-width="2"/><rect x="12" y="45" width="36" height="15" fill="#EEE" stroke="#333" stroke-width="1"/><text x="30" y="55" font-size="10" text-anchor="middle" fill="#333" font-weight="bold">碳酸鈣</text></svg></div>' +
-    '<div style="text-align:center;"><b>乙</b><br><svg viewBox="0 0 60 80" style="width:100%; max-width:45px; height:auto;"><path d="M15 35 L15 75 A 3 3 0 0 0 18 78 L42 78 A 3 3 0 0 0 45 75 L45 35 C 45 25 35 20 35 15 L35 10 L25 10 L25 15 C 25 20 15 25 15 35 Z" fill="#999" stroke="#333" stroke-width="2"/><rect x="23" y="4" width="14" height="6" rx="1" fill="#333"/><rect x="15" y="45" width="30" height="15" fill="#FFF" stroke="#333" stroke-width="1"/><text x="30" y="55" font-size="10" text-anchor="middle" fill="#333" font-weight="bold">鹽酸</text></svg></div>' +
-    '</div>', 200);
+  var img104Bot = imgBox('<div style="text-align:center; min-width:60px;"><b>甲</b><br><svg viewBox="0 0 60 80" style="width:100%; max-width:45px; height:auto; display:block; margin:0 auto;"><rect x="12" y="25" width="36" height="50" rx="2" fill="#FFF" stroke="#333" stroke-width="2"/><rect x="18" y="15" width="24" height="10" fill="#FFF" stroke="#333" stroke-width="2"/><rect x="16" y="8" width="28" height="7" rx="1" fill="#CCC" stroke="#333" stroke-width="2"/><rect x="12" y="45" width="36" height="15" fill="#EEE" stroke="#333" stroke-width="1"/><text x="30" y="55" font-size="10" text-anchor="middle" fill="#333" font-weight="bold">碳酸鈣</text></svg></div><div style="text-align:center; min-width:60px;"><b>乙</b><br><svg viewBox="0 0 60 80" style="width:100%; max-width:45px; height:auto; display:block; margin:0 auto;"><path d="M15 35 L15 75 A 3 3 0 0 0 18 78 L42 78 A 3 3 0 0 0 45 75 L45 35 C 45 25 35 20 35 15 L35 10 L25 10 L25 15 C 25 20 15 25 15 35 Z" fill="#999" stroke="#333" stroke-width="2"/><rect x="23" y="4" width="14" height="6" rx="1" fill="#333"/><rect x="15" y="45" width="30" height="15" fill="#FFF" stroke="#333" stroke-width="1"/><text x="30" y="55" font-size="10" text-anchor="middle" fill="#333" font-weight="bold">鹽酸</text></svg></div>', 200);
   
-  var opt104A = '<b>(A)</b> <div style="display:inline-flex; gap:20px; margin-left:15px; vertical-align:middle; text-align:center;"><div>甲<br>' + svgDropper + '</div><div>乙<br>' + svgDropper + '</div></div>';
-  var opt104B = '<b>(B)</b> <div style="display:inline-flex; gap:20px; margin-left:15px; vertical-align:middle; text-align:center;"><div>甲<br>' + svgSpatula + '</div><div>乙<br>' + svgSpatula + '</div></div>';
-  var opt104C = '<b>(C)</b> <div style="display:inline-flex; gap:20px; margin-left:15px; vertical-align:middle; text-align:center;"><div>甲<br>' + svgSpatula + '</div><div>乙<br>' + svgDropper + '</div></div>';
-  var opt104D = '<b>(D)</b> <div style="display:inline-flex; gap:20px; margin-left:15px; vertical-align:middle; text-align:center;"><div>甲<br>' + svgDropper + '</div><div>乙<br>' + svgSpatula + '</div></div>';
+  var opt104A = '<b>(A)</b> <div style="display:flex; flex-wrap:wrap; gap:15px; margin-top:5px; align-items:center;"><div style="text-align:center; font-size:0.8rem;">甲<br>' + svgDropper + '</div><div style="text-align:center; font-size:0.8rem;">乙<br>' + svgDropper + '</div></div>';
+  var opt104B = '<b>(B)</b> <div style="display:flex; flex-wrap:wrap; gap:15px; margin-top:5px; align-items:center;"><div style="text-align:center; font-size:0.8rem;">甲<br>' + svgSpatula + '</div><div style="text-align:center; font-size:0.8rem;">乙<br>' + svgSpatula + '</div></div>';
+  var opt104C = '<b>(C)</b> <div style="display:flex; flex-wrap:wrap; gap:15px; margin-top:5px; align-items:center;"><div style="text-align:center; font-size:0.8rem;">甲<br>' + svgSpatula + '</div><div style="text-align:center; font-size:0.8rem;">乙<br>' + svgDropper + '</div></div>';
+  var opt104D = '<b>(D)</b> <div style="display:flex; flex-wrap:wrap; gap:15px; margin-top:5px; align-items:center;"><div style="text-align:center; font-size:0.8rem;">甲<br>' + svgDropper + '</div><div style="text-align:center; font-size:0.8rem;">乙<br>' + svgSpatula + '</div></div>';
 
   // 109會考
-  var img109Pour = imgBox('<svg viewBox="0 0 100 120" style="width:100%; max-width:80px; height:auto;"><rect x="45" y="40" width="10" height="70" fill="none" stroke="#5B778C" stroke-width="2"/><rect x="42" y="90" width="16" height="4" fill="#5B778C"/><path d="M20 10 L50 40 L50 10 Z" fill="none" stroke="#4A3F37" stroke-width="2"/><path d="M45 35 Q40 45 50 50 Q55 45 45 35" fill="rgba(164,185,200,.5)"/><text x="10" y="20" font-size="12" fill="#4A3F37">燒杯</text><text x="65" y="80" font-size="12" fill="#4A3F37">滴定管</text></svg>', 140);
-  var opt109A = '<b>(A)</b><div style="text-align:center; margin-top:5px;"><svg viewBox="0 0 50 40" style="width:100%; max-width:35px; height:auto;"><path d="M10 10 L40 10 L28 30 L28 40" fill="none" stroke="#C28C6E" stroke-width="2"/><ellipse cx="25" cy="10" rx="15" ry="4" fill="rgba(224,189,173,.6)" stroke="#C28C6E" stroke-width="1"/></svg></div>';
-  var opt109B = '<b>(B)</b><div style="text-align:center; margin-top:5px;"><svg viewBox="0 0 50 40" style="width:100%; max-width:35px; height:auto;"><line x1="15" y1="35" x2="35" y2="5" stroke="#7A8B76" stroke-width="3" stroke-linecap="round"/></svg></div>';
-  var opt109C = '<b>(C)</b><div style="text-align:center; margin-top:5px;"><svg viewBox="0 0 50 40" style="width:100%; max-width:35px; height:auto;"><rect x="15" y="5" width="20" height="30" fill="none" stroke="#5B778C" stroke-width="2"/><line x1="10" y1="35" x2="40" y2="35" stroke="#5B778C" stroke-width="2"/><line x1="15" y1="15" x2="22" y2="15" stroke="#5B778C" stroke-width="1"/><line x1="15" y1="25" x2="22" y2="25" stroke="#5B778C" stroke-width="1"/></svg></div>';
-  var opt109D = '<b>(D)</b><div style="text-align:center; margin-top:5px;"><svg viewBox="0 0 50 40" style="width:100%; max-width:35px; height:auto;"><path d="M5 20 Q25 40 45 20" fill="none" stroke="#847C96" stroke-width="2"/></svg></div>';
+  var img109Pour = imgBox('<svg viewBox="0 0 100 120" style="width:100%; max-width:80px; height:auto; display:block; margin:0 auto;"><rect x="45" y="40" width="10" height="70" fill="none" stroke="#5B778C" stroke-width="2"/><rect x="42" y="90" width="16" height="4" fill="#5B778C"/><path d="M20 10 L50 40 L50 10 Z" fill="none" stroke="#4A3F37" stroke-width="2"/><path d="M45 35 Q40 45 50 50 Q55 45 45 35" fill="rgba(164,185,200,.5)"/><text x="10" y="20" font-size="12" fill="#4A3F37">燒杯</text><text x="65" y="80" font-size="12" fill="#4A3F37">滴定管</text></svg>', 140);
+  var opt109A = '<b>(A)</b><div style="text-align:center; margin-top:5px;"><svg viewBox="0 0 50 40" style="width:100%; max-width:35px; height:auto; display:block; margin:0 auto;"><path d="M10 10 L40 10 L28 30 L28 40" fill="none" stroke="#C28C6E" stroke-width="2"/><ellipse cx="25" cy="10" rx="15" ry="4" fill="rgba(224,189,173,.6)" stroke="#C28C6E" stroke-width="1"/></svg></div>';
+  var opt109B = '<b>(B)</b><div style="text-align:center; margin-top:5px;"><svg viewBox="0 0 50 40" style="width:100%; max-width:35px; height:auto; display:block; margin:0 auto;"><line x1="15" y1="35" x2="35" y2="5" stroke="#7A8B76" stroke-width="3" stroke-linecap="round"/></svg></div>';
+  var opt109C = '<b>(C)</b><div style="text-align:center; margin-top:5px;"><svg viewBox="0 0 50 40" style="width:100%; max-width:35px; height:auto; display:block; margin:0 auto;"><rect x="15" y="5" width="20" height="30" fill="none" stroke="#5B778C" stroke-width="2"/><line x1="10" y1="35" x2="40" y2="35" stroke="#5B778C" stroke-width="2"/><line x1="15" y1="15" x2="22" y2="15" stroke="#5B778C" stroke-width="1"/><line x1="15" y1="25" x2="22" y2="25" stroke="#5B778C" stroke-width="1"/></svg></div>';
+  var opt109D = '<b>(D)</b><div style="text-align:center; margin-top:5px;"><svg viewBox="0 0 50 40" style="width:100%; max-width:35px; height:auto; display:block; margin:0 auto;"><path d="M5 20 Q25 40 45 20" fill="none" stroke="#847C96" stroke-width="2"/></svg></div>';
 
   // 107會考 (放大鏡)
-  var img107Cyl = imgBox('<svg viewBox="0 0 160 140" style="width:100%; max-width:180px; height:auto;"><path d="M20 20 L20 120 L50 120 L50 20" fill="none" stroke="#333" stroke-width="2"/><line x1="10" y1="120" x2="60" y2="120" stroke="#333" stroke-width="2"/><line x1="20" y1="40" x2="25" y2="40" stroke="#333" stroke-width="1"/><text x="28" y="44" font-size="10" fill="#333">40</text><line x1="20" y1="70" x2="25" y2="70" stroke="#333" stroke-width="1"/><text x="28" y="74" font-size="10" fill="#333">30</text><line x1="20" y1="100" x2="25" y2="100" stroke="#333" stroke-width="1"/><text x="28" y="104" font-size="10" fill="#333">20</text><rect x="22" y="70" width="26" height="50" fill="#ccc"/><path d="M35 5 L35 15 L30 15 L35 25 L40 15 L35 15 Z" fill="#333"/><text x="22" y="5" font-size="12" fill="#333">再加入</text><circle cx="110" cy="70" r="35" fill="none" stroke="#333" stroke-width="1.5"/><line x1="20" y1="70" x2="75" y2="70" stroke="#333" stroke-width="1" stroke-dasharray="2 2"/><path d="M80 60 Q110 80 140 60" fill="none" stroke="#333" stroke-width="2"/><line x1="75" y1="70" x2="145" y2="70" stroke="#333" stroke-width="1" stroke-dasharray="2 2"/><text x="85" y="65" font-size="14" fill="#333">30.</text></svg>', 200);
+  var img107Cyl = imgBox('<svg viewBox="0 0 160 140" style="width:100%; max-width:180px; height:auto; display:block; margin:0 auto;"><path d="M20 20 L20 120 L50 120 L50 20" fill="none" stroke="#333" stroke-width="2"/><line x1="10" y1="120" x2="60" y2="120" stroke="#333" stroke-width="2"/><line x1="20" y1="40" x2="25" y2="40" stroke="#333" stroke-width="1"/><text x="28" y="44" font-size="10" fill="#333">40</text><line x1="20" y1="70" x2="25" y2="70" stroke="#333" stroke-width="1"/><text x="28" y="74" font-size="10" fill="#333">30</text><line x1="20" y1="100" x2="25" y2="100" stroke="#333" stroke-width="1"/><text x="28" y="104" font-size="10" fill="#333">20</text><rect x="22" y="70" width="26" height="50" fill="#ccc"/><path d="M35 5 L35 15 L30 15 L35 25 L40 15 L35 15 Z" fill="#333"/><text x="22" y="5" font-size="12" fill="#333">再加入</text><circle cx="110" cy="70" r="35" fill="none" stroke="#333" stroke-width="1.5"/><line x1="20" y1="70" x2="75" y2="70" stroke="#333" stroke-width="1" stroke-dasharray="2 2"/><path d="M80 60 Q110 80 140 60" fill="none" stroke="#333" stroke-width="2"/><line x1="75" y1="70" x2="145" y2="70" stroke="#333" stroke-width="1" stroke-dasharray="2 2"/><text x="85" y="65" font-size="14" fill="#333">30.</text></svg>', 200);
   
   var opt107A = '<b>(A)</b><div style="text-align:center; margin-top:5px;">' + svgDropper + '</div>';
-  var opt107B = '<b>(B)</b><div style="text-align:center; margin-top:5px;"><svg viewBox="0 0 30 100" style="width:100%; max-width:18px; height:auto;"><path d="M10 10 L10 80 A 5 5 0 0 0 20 80 L20 10" fill="none" stroke="#333" stroke-width="2"/></svg></div>';
-  var opt107C = '<b>(C)</b><div style="text-align:center; margin-top:5px;"><svg viewBox="0 0 50 100" style="width:100%; max-width:30px; height:auto;"><path d="M20 10 L20 40 L5 90 L45 90 L30 40 L30 10" fill="none" stroke="#333" stroke-width="2"/></svg></div>';
-  var opt107D = '<b>(D)</b><div style="text-align:center; margin-top:5px;"><svg viewBox="0 0 50 100" style="width:100%; max-width:30px; height:auto;"><path d="M5 30 L5 90 L45 90 L45 30" fill="none" stroke="#333" stroke-width="2"/><path d="M5 30 L0 25 L5 25" fill="none" stroke="#333" stroke-width="2"/></svg></div>';
+  var opt107B = '<b>(B)</b><div style="text-align:center; margin-top:5px;"><svg viewBox="0 0 30 100" style="width:100%; max-width:18px; height:auto; display:block; margin:0 auto;"><path d="M10 10 L10 80 A 5 5 0 0 0 20 80 L20 10" fill="none" stroke="#333" stroke-width="2"/></svg></div>';
+  var opt107C = '<b>(C)</b><div style="text-align:center; margin-top:5px;"><svg viewBox="0 0 50 100" style="width:100%; max-width:30px; height:auto; display:block; margin:0 auto;"><path d="M20 10 L20 40 L5 90 L45 90 L30 40 L30 10" fill="none" stroke="#333" stroke-width="2"/></svg></div>';
+  var opt107D = '<b>(D)</b><div style="text-align:center; margin-top:5px;"><svg viewBox="0 0 50 100" style="width:100%; max-width:30px; height:auto; display:block; margin:0 auto;"><path d="M5 30 L5 90 L45 90 L45 30" fill="none" stroke="#333" stroke-width="2"/><path d="M5 30 L0 25 L5 25" fill="none" stroke="#333" stroke-width="2"/></svg></div>';
 
   // 111會考 (山崩)
-  var img111Slope = imgBox('<svg viewBox="0 0 200 100" style="width:100%; height:auto;"><path d="M20 80 L180 80" stroke="#333" stroke-width="2"/><path d="M20 80 L140 20" stroke="#333" stroke-width="2"/><text x="145" y="85" font-size="12" fill="#333">水平面</text><text x="70" y="35" font-size="12" fill="#333" transform="rotate(-26 70 35)">斜面</text><path d="M40 80 A 40 40 0 0 0 45 68" fill="none" stroke="#333" stroke-width="1"/><text x="48" y="76" font-size="12" fill="#333">θ</text><rect x="100" y="30" width="15" height="15" fill="#333" transform="rotate(-26 100 30)"/><text x="110" y="25" font-size="12" fill="#333">石塊</text><rect x="10" y="60" width="15" height="20" fill="#999"/><text x="0" y="55" font-size="10" fill="#333">模型房屋</text></svg>', 220);
+  var img111Slope = imgBox('<svg viewBox="0 0 200 100" style="width:100%; height:auto; display:block; margin:0 auto;"><path d="M20 80 L180 80" stroke="#333" stroke-width="2"/><path d="M20 80 L140 20" stroke="#333" stroke-width="2"/><text x="145" y="85" font-size="12" fill="#333">水平面</text><text x="70" y="35" font-size="12" fill="#333" transform="rotate(-26 70 35)">斜面</text><path d="M40 80 A 40 40 0 0 0 45 68" fill="none" stroke="#333" stroke-width="1"/><text x="48" y="76" font-size="12" fill="#333">θ</text><rect x="100" y="30" width="15" height="15" fill="#333" transform="rotate(-26 100 30)"/><text x="110" y="25" font-size="12" fill="#333">石塊</text><rect x="10" y="60" width="15" height="20" fill="#999"/><text x="0" y="55" font-size="10" fill="#333">模型房屋</text></svg>', 220);
 
   // 106會考 (精細重繪甲乙丙)
-  var img106Method = imgBox('<div style="display:flex; justify-content:space-around; align-items:flex-end; gap:5px; margin-top:10px;">' +
-    '<div style="text-align:center;"><svg viewBox="0 0 100 120" style="width:100%; max-width:65px; height:auto;"><path d="M35 110 L65 110 L65 95 C 65 90 35 90 35 95 Z" fill="#ccc" stroke="#333" stroke-width="1.5"/><path d="M48 95 L52 95 L52 85 L48 85 Z" fill="#333"/><path d="M45 85 Q50 70 55 85 Z" fill="#E86A33"/><g transform="rotate(30 50 50)"><rect x="40" y="10" width="20" height="70" rx="8" fill="none" stroke="#5B778C" stroke-width="2"/><rect x="42" y="45" width="16" height="30" fill="rgba(164,185,200,.5)"/><path d="M 25 35 L 75 35 L 75 45 L 25 45 Z" fill="#C28C6E" stroke="#333" stroke-width="1.5"/><path d="M 5 37 L 25 37 L 25 43 L 5 43 Z" fill="#C28C6E" stroke="#333" stroke-width="1.5"/></g></svg><br><b style="font-size:0.75rem">方法甲</b></div>' +
-    '<div style="text-align:center;"><svg viewBox="0 0 100 120" style="width:100%; max-width:65px; height:auto;"><rect x="40" y="30" width="20" height="80" fill="none" stroke="#333" stroke-width="2"/><line x1="30" y1="110" x2="70" y2="110" stroke="#333" stroke-width="2"/><rect x="42" y="60" width="16" height="50" fill="rgba(164,185,200,.3)"/><line x1="65" y1="10" x2="45" y2="90" stroke="#333" stroke-width="3" stroke-linecap="round"/><text x="65" y="15" font-size="10" fill="#333">小蘇打</text><circle cx="53" cy="20" r="1.5" fill="#333"/><circle cx="50" cy="25" r="1.5" fill="#333"/><circle cx="48" cy="30" r="1.5" fill="#333"/></svg><br><b style="font-size:0.75rem">方法乙</b></div>' +
-    '<div style="text-align:center;"><svg viewBox="0 0 100 120" style="width:100%; max-width:65px; height:auto;"><rect x="40" y="30" width="20" height="80" fill="none" stroke="#333" stroke-width="2"/><line x1="30" y1="110" x2="70" y2="110" stroke="#333" stroke-width="2"/><rect x="42" y="70" width="16" height="40" fill="rgba(164,185,200,.3)"/><line x1="50" y1="10" x2="50" y2="80" stroke="#333" stroke-width="1" stroke-dasharray="2 2"/><circle cx="50" cy="85" r="6" fill="#333"/></svg><br><b style="font-size:0.75rem">方法丙</b></div>' +
-    '</div>', 320);
+  var img106Method = imgBox('<div style="text-align:center; min-width:80px;"><svg viewBox="0 0 100 120" style="width:100%; max-width:65px; height:auto; display:block; margin:0 auto;"><path d="M35 110 L65 110 L65 95 C 65 90 35 90 35 95 Z" fill="#ccc" stroke="#333" stroke-width="1.5"/><path d="M48 95 L52 95 L52 85 L48 85 Z" fill="#333"/><path d="M45 85 Q50 70 55 85 Z" fill="#E86A33"/><g transform="rotate(30 40 50)"><rect x="30" y="10" width="20" height="70" rx="5" fill="none" stroke="#5B778C" stroke-width="2"/><rect x="32" y="40" width="16" height="30" fill="rgba(164,185,200,.5)"/><path d="M 25 35 L 75 35 L 75 45 L 25 45 Z" fill="#C28C6E" stroke="#333" stroke-width="1.5"/><path d="M 5 37 L 25 37 L 25 43 L 5 43 Z" fill="#C28C6E" stroke="#333" stroke-width="1.5"/></g></svg><br><b style="font-size:0.75rem">方法甲</b></div><div style="text-align:center; min-width:80px;"><svg viewBox="0 0 100 120" style="width:100%; max-width:65px; height:auto; display:block; margin:0 auto;"><rect x="40" y="30" width="20" height="80" fill="none" stroke="#333" stroke-width="2"/><line x1="30" y1="110" x2="70" y2="110" stroke="#333" stroke-width="2"/><rect x="42" y="60" width="16" height="50" fill="rgba(164,185,200,.3)"/><line x1="65" y1="10" x2="45" y2="90" stroke="#333" stroke-width="3" stroke-linecap="round"/><text x="65" y="15" font-size="10" fill="#333">小蘇打</text><circle cx="53" cy="20" r="1.5" fill="#333"/><circle cx="50" cy="25" r="1.5" fill="#333"/><circle cx="48" cy="30" r="1.5" fill="#333"/></svg><br><b style="font-size:0.75rem">方法乙</b></div><div style="text-align:center; min-width:80px;"><svg viewBox="0 0 100 120" style="width:100%; max-width:65px; height:auto; display:block; margin:0 auto;"><rect x="40" y="30" width="20" height="80" fill="none" stroke="#333" stroke-width="2"/><line x1="30" y1="110" x2="70" y2="110" stroke="#333" stroke-width="2"/><rect x="42" y="70" width="16" height="40" fill="rgba(164,185,200,.3)"/><line x1="50" y1="10" x2="50" y2="80" stroke="#333" stroke-width="1" stroke-dasharray="2 2"/><circle cx="50" cy="85" r="6" fill="#333"/></svg><br><b style="font-size:0.75rem">方法丙</b></div>', 320);
 
-  // 經典常考 (濃硫酸) 依照選項重新精細繪製 A,B,C,D
+  // 經典常考 (濃硫酸)
   function genQ60(bottomText, topText, hasRod) {
     let rod = hasRod ? '<line x1="60" y1="30" x2="45" y2="90" stroke="#7A8B76" stroke-width="3" stroke-linecap="round"/>' : '';
     let drops = hasRod ? '' : '<circle cx="45" cy="50" r="2" fill="#5B778C"/><circle cx="45" cy="65" r="2" fill="#5B778C"/>';
     let flow = hasRod ? '<path d="M45 40 Q55 60 45 90" fill="none" stroke="rgba(164,185,200,.7)" stroke-width="3"/>' : '';
-    return '<div style="text-align:center; margin-top:5px;"><svg viewBox="0 0 100 120" style="width:100%; max-width:60px; height:auto;">' +
+    return '<div style="text-align:center; margin-top:5px;"><svg viewBox="0 0 100 120" style="width:100%; max-width:60px; height:auto; display:block; margin:0 auto;">' +
            '<rect x="25" y="70" width="50" height="40" fill="none" stroke="#333" stroke-width="2"/>' +
            '<rect x="27" y="80" width="46" height="30" fill="rgba(164,185,200,.3)"/>' +
            '<text x="50" y="100" font-size="12" text-anchor="middle" fill="#333">' + bottomText + '</text>' +
@@ -362,7 +380,7 @@
       },
       {
         lv: "113 教育會考",
-        q: "在自來水中加入氯氣雖然可以消毒，但氯氣可能會進一步反應產生致癌物。下列實驗，想知道將自來水靜置一段時間或加熱能否降低餘氯量，實驗結果如表(一)和表(二)：<br><b style='font-size:0.9rem; color:#7A8B76;'>表(一)</b>" + t_113_1 + "<b style='font-size:0.9rem; color:#7A8B76;'>表(二)</b>" + t_113_2 + "依據表中結果判斷，下列說明何者最合理？" + genOpts(["(A) 僅由表(一)的結果，可以判斷溫度高低與能否降低餘氯量有關", "(B) 僅由表(二)的結果，可以判斷靜置時間長短與能否降低餘氯量有关", "(C) 由表(一)結果可以做出在 10°C 時，餘氯量也會隨靜置時間增加而下降的結論", "(D) 以表(一)數據做為參照，可使用表(二)的結果來判斷加熱能否降低餘氯量。"]),
+        q: "在自來水中加入氯氣雖然可以消毒，但氯氣可能會進一步反應產生致癌物。下列實驗，想知道將自來水靜置一段時間或加熱能否降低餘氯量，實驗結果如表(一)和表(二)：<br><b style='font-size:0.9rem; color:#7A8B76;'>表(一)</b>" + t_113_1 + "<b style='font-size:0.9rem; color:#7A8B76;'>表(二)</b>" + t_113_2 + "依據表中結果判斷，下列說明何者最合理？" + genOpts(["(A) 僅由表(一)的結果，可以判斷溫度高低與能否降低餘氯量有關", "(B) 僅由表(二)的結果，可以判斷靜置時間長短與能否降低餘氯量有關", "(C) 由表(一)結果可以做出在 10°C 時，餘氯量也會隨靜置時間增加而下降的結論", "(D) 以表(一)數據做為參照，可使用表(二)的結果來判斷加熱能否降低餘氯量。"]),
         idea: "【正確解答】 (D)<br>【詳細解析】 表(一)的溫度固定在 25°C (控制變因)，探討的是時間；表(二)則探討加熱(溫度上升)的影響。以表(一)不加熱的情況做為對照組參照，對比表(二)，即可判斷「加熱」能否降低餘氯量。"
       },
       {
