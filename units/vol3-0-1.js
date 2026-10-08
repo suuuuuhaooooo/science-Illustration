@@ -91,21 +91,44 @@
   "}" +
 
   ".q-img-box svg {" +
-    "display: block;" +
-    "width: auto;" +
-    "max-width: 100%;" +
-    "height: auto;" +
-    "margin: 0 auto;" +
+  "display: block;" +
+  "width: 100%;" +
+  "max-width: 100%;" +
+  "height: auto;" +
+  "margin: 0 auto;" +
+  "box-sizing: border-box;" +
   "}" +
 
-  /* ===== 圖片裡的 flex 排版 (強制允許換行防破出) ===== */
+  /* ===== 圖片裡的 flex 排版 ===== */
   ".q-img-box > div {" +
-    "max-width: 100%;" +
-    "box-sizing: border-box;" +
-    "display: flex;" +
-    "justify-content: center;" +
-    "flex-wrap: wrap;" + 
+  "width: 100%;" +
+  "max-width: 100%;" +
+  "min-width: 0;" +
+  "box-sizing: border-box;" +
+  "display: flex;" +
+  "justify-content: center;" +
+  "align-items: center;" +
+  "flex-wrap: wrap;" +
+  "gap: 10px;" +
   "}" +
+
+  ".q-img-box > div > div {" +
+  "min-width: 0 !important;" +
+  "max-width: 100%;" +
+  "box-sizing: border-box;" +
+  "}" +
+
+  "html, body {" +
+  "width: 100%;" +
+  "max-width: 100%;" +
+  "overflow-x: hidden;" +
+  "box-sizing: border-box;" +
+  "}" +
+  
+  "*, *::before, *::after {" +
+    "box-sizing: border-box;" +
+  "}" +
+    
 
   /* ===== 小螢幕 ===== */
   "@media (max-width: 600px) {" +
