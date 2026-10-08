@@ -23,7 +23,8 @@
           "<p style='color:#6F645A; font-size:1.15rem; line-height:1.7; margin-bottom:30px;'>「見微知著」是科學探究的本質。在這裡，微觀的粒子運動與隱形的物理受力，都被轉化為清晰可見的互動圖解。不需死背公式，親手拖曳變因，就能從微觀的畫面中，看透宏觀的理化法則。</p>" +
           "<div style='display:flex; gap:15px;'>" +
           "<a href='#catalog' class='btn' style='background:#E3D4AC; color:#4A3F37; border:2px solid #4A3F37; font-weight:bold;'>走進實驗室 " + SK.icon("arrow") + "</a>" +
-          "</div>";
+          "<a href='exams/index.html' class='btn' style='margin-left:10px; background:#B86B5C; color:#FFF8F0; border:2px solid #4A3F37; font-weight:bold;'>題本專區 " + SK.icon("arrow") + "</a>" +
+            "</div>";
         
         var heroVisual = SK.h("div", { style: "position:relative; width:400px; height:350px;" });
         heroVisual.innerHTML = SK.bouquet(); 
