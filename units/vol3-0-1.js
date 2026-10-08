@@ -5,8 +5,8 @@
   // ===== RWD 防溢出與互動點選特效 CSS =====
   var style = document.createElement("style");
   style.innerHTML =
-  /* ===== RWD 防溢出 ===== */
-  "body, #main, .unit-card, .card, .section, .content, article, section {" +
+  /* ===== 所有內容最基本的 RWD 防溢出 ===== */
+  ".unit-card, .card, .section, .content, article, section {" +
     "max-width: 100vw !important;" +
     "min-width: 0 !important;" +
     "box-sizing: border-box !important;" +
@@ -16,7 +16,7 @@
   ".table-scroll-box {" +
     "display: block;" +
     "width: 100%;" +
-    "max-width: calc(100vw - 40px) !important;" +
+    "max-width: 100%;" +
     "min-width: 0 !important;" +
     "overflow-x: auto !important;" +
     "-webkit-overflow-scrolling: touch;" +
@@ -38,7 +38,6 @@
     "gap: 8px;" +
     "margin-top: 12px;" +
     "width: 100%;" +
-    "max-width: calc(100vw - 40px) !important;" +
     "min-width: 0 !important;" +
     "box-sizing: border-box;" +
   "}" +
@@ -54,11 +53,11 @@
     "width: 100%;" +
     "box-sizing: border-box;" +
     "text-align: left;" +
-    "overflow-wrap: anywhere;" +
+    "overflow-wrap: break-word;" +
     "word-break: break-word;" +
   "}" +
 
-  /* -- 新增：互動點選特效 -- */
+  /* -- 互動點選特效 -- */
   ".interactive-opt {" +
     "cursor: pointer;" +
     "transition: all 0.2s ease;" +
@@ -92,7 +91,6 @@
     "border-radius: 6px;" +
     "border: 1px solid #EFE6D5;" +
     "width: 100%;" +
-    "max-width: calc(100vw - 40px) !important;" +
     "min-width: 0 !important;" +
     "box-sizing: border-box;" +
     "overflow-x: auto;" +
@@ -178,6 +176,13 @@
     return { show: draw };
   }
 
+  // ============================================
+  // 【終極防護網】強制中斷 Flexbox 撐開效應
+  // ============================================
+  function wrapSafe(html) {
+    return '<div style="display: grid; grid-template-columns: minmax(0, 1fr); width: 100%; max-width: 100%; box-sizing: border-box;">' + html + '</div>';
+  }
+
   // ==== 輔助產生器 ====
   function genTb(headers, rows) {
     var h = '<div class="table-scroll-box"><table class="rwd-tb"><tr>';
@@ -188,21 +193,24 @@
       row.forEach(function(td){ h += '<td>' + td + '</td>'; });
       h += '</tr>';
     });
-    return h + '</table></div>';
+    h += '</table></div>';
+    return wrapSafe(h); // 強制包裝
   }
   
-  // 新增互動資料綁定 (correctIdx 傳入正確選項的索引值：0=A, 1=B, 2=C, 3=D)
+  // 互動選項產生器
   function genOpts(opts, correctIdx) {
     var h = '<div class="opt-list">';
     opts.forEach(function(o, i){ 
       var isCorrect = (i === correctIdx) ? 'true' : 'false';
       h += '<div class="opt-box interactive-opt" data-correct="' + isCorrect + '">' + o + '</div>'; 
     });
-    return h + '</div>';
+    h += '</div>';
+    return wrapSafe(h); // 強制包裝
   }
 
   var imgBox = function(svgContent, maxWidth) {
-    return '<div class="q-img-box"><div style="margin:0 auto; width:100%; max-width:' + (maxWidth || 300) + 'px;">' + svgContent + '</div></div>';
+    var h = '<div class="q-img-box"><div style="margin:0 auto; width:100%; max-width:' + (maxWidth || 300) + 'px;">' + svgContent + '</div></div>';
+    return wrapSafe(h); // 強制包裝
   };
 
   // ============================================
@@ -399,9 +407,9 @@
         idea: "【正確解答】 (B)<br>【詳細解析】 (B)乒乓球的價格不會影響物理蒸發現象；而(A)降雨、(C)落葉遮蔽、(D)建築物遮陽等皆可能影響水分蒸發速率，是必須考慮的變因。"
       },
       {
-        lv: "各校常考",
-        q: "在實驗室中想要稀釋濃硫酸，下列操作方法何者最安全？" + genOpts([opt60A, opt60B, opt60C, opt60D], 2), // (C)
-        idea: "【正確解答】 (C)<br>【詳細解析】 口訣：「流(硫)入水中」。稀釋濃硫酸時，須沿著玻璃棒將濃酸緩緩加入「水」中。若以水直接倒入濃硫酸中(如A或B)，會因為強烈放熱反應，使少量的水瞬間沸騰，導致酸液飛濺傷人。"
+        lv: "經典常考題",
+        q: "曉東在實驗室中想要稀釋濃硫酸，下列操作方法何者最安全？" + genOpts([opt60A, opt60B, opt60C, opt60D], 2), // (C)
+        idea: "【正確解答】 (C)<br>【詳細解析】 稀釋濃硫酸時，須沿著玻璃棒將濃酸緩緩加入「水」中。若以水直接倒入濃硫酸中(如A或B)，會因為強烈放熱反應，使少量的水瞬間沸騰，導致酸液飛濺傷人。"
       }
     ],
 
