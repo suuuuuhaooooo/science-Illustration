@@ -81,9 +81,10 @@ D.bg=function(){if(document.querySelector(".bgdeco"))return;var v=NB.s("svg",{vi
 D.bg();
 
 /* ---- 數學式（KaTeX）：寫法同數光島（$...$ 或自動轉換含 × ÷ ＝ 的算式） ---- */
-var RUN=/[0-9A-Za-zπΔ.,()+\-−×÷＝=<>≤≥≈²³°\/／ ]+/g,OPS=/[×÷＝=+−<>≤≥≈²³π]|\d\s*\/\s*\d/;
+var RUN=/[0-9A-Za-zπΔ.,()+\-−×÷＝=<>≤≥≈²³⁰¹⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉°\/／ ]+/g,OPS=/[×÷＝=+−<>≤≥≈²³π]|\d\s*\/\s*\d/;
 function kx(t,d){if(!window.katex)return t;try{return katex.renderToString(t,{displayMode:!!d,throwOnError:false,strict:false})}catch(e){return t}}
-function toTex(r){return r.replace(/(\d\s*)?([A-Za-z]+)/g,function(m,d,w){return d||w.length>1?(d?d.trim()+"\\,":"")+"\\text{"+w+"}":w}).replace(/×/g,"\\times ").replace(/÷/g,"\\div ").replace(/＝/g,"=").replace(/−/g,"-").replace(/≤/g,"\\le ").replace(/≥/g,"\\ge ").replace(/≈/g,"\\approx ").replace(/π/g,"\\pi ").replace(/Δ/g,"\\Delta ").replace(/°/g,"^\\circ ").replace(/（/g,"(").replace(/）/g,")").replace(/²/g,"^2").replace(/³/g,"^3").replace(/(\d+(?:\.\d+)?)\s*\/\s*(\d+(?:\.\d+)?)/g,"\\frac{$1}{$2}")}
+var SUP="⁰¹²³⁴⁵⁶⁷⁸⁹",SUB="₀₁₂₃₄₅₆₇₈₉";
+function toTex(r){var chem=/[₀-₉]/.test(r);return r.replace(/(\d\s*)?([A-Za-z]+)/g,function(m,d,w){return d||w.length>1||chem?(d?d.trim()+"\\,":"")+"\\text{"+w+"}":w}).replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹]+/g,function(x){return"^{"+x.split("").map(function(c){return SUP.indexOf(c)}).join("")+"}"}).replace(/[₀-₉]+/g,function(x){return"_{"+x.split("").map(function(c){return SUB.indexOf(c)}).join("")+"}"}).replace(/×/g,"\\times ").replace(/÷/g,"\\div ").replace(/＝/g,"=").replace(/−/g,"-").replace(/≤/g,"\\le ").replace(/≥/g,"\\ge ").replace(/≈/g,"\\approx ").replace(/π/g,"\\pi ").replace(/Δ/g,"\\Delta ").replace(/°/g,"^\\circ ").replace(/（/g,"(").replace(/）/g,")").replace(/(\d+(?:\.\d+)?)\s*\/\s*(\d+(?:\.\d+)?)/g,"\\frac{$1}{$2}")}
 NB.tx=function(html){return String(html).split(/(<[^>]*>|&[#\w]+;)/).map(function(p,i){return i%2?p:p.split(/(\$\$[^$]+\$\$|\$[^$]+\$)/).map(function(q,j){
  if(j%2)return q.slice(0,2)==="$$"?kx(q.slice(2,-2),1):kx(q.slice(1,-1));
  return q.replace(RUN,function(m){var t=m.trim();return OPS.test(t)&&/[0-9A-Za-z]/.test(t)?m.replace(t,function(){return kx(toTex(t))}):m})}).join("")}).join("")};
