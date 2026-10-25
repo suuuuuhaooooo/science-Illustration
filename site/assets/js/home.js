@@ -24,7 +24,9 @@ function render3d(){
    '<button type="button" class="pen on i3-b-folk" aria-pressed="true">島民</button>'+
    '<button type="button" class="pen i3-b-pause" aria-pressed="false">暫停</button>'+
    '<button type="button" class="pen i3-b-bird" aria-pressed="false">鳥瞰</button>'+
-   '<button type="button" class="pen on i3-b-log" aria-pressed="true">日誌</button></div></div>'+
+   '<button type="button" class="pen on i3-b-log" aria-pressed="true">日誌</button>'+
+   '<a class="pen i3-b-map" href="map.html" title="領域、課綱學習內容、認知層次、知識類型、主題線">學習地圖</a>'+
+   '<button type="button" class="pen i3-b-tools" title="週期表、公式卡、單位換算" onclick="window.SciTools&&SciTools.open()">小工具</button></div></div>'+
   '<aside class="i3-idx" hidden aria-label="主題索引"></aside>'+
   '<aside class="i3-panel" hidden aria-live="polite"></aside>'+
   '<div class="i3-clock"><span class="i3-ck-t">00:00</span><input type="range" min="0" max="24" step="0.25" aria-label="時間 00:00～24:00"><span class="i3-ck-e">24:00</span><button type="button" class="pen on i3-ck-auto" aria-pressed="true">自動</button></div>'+
@@ -127,10 +129,11 @@ function render3d(){
   groups.forEach(function(G){
    var d=NB.h('<div class="i3-ch i3-chg"><p class="i3-cht"><span class="i3-g" style="background:rgb('+NB.isle3d.GRADE_COL[G.grade].join(",")+')">'+VL[G.grade]+'</span><b></b></p><div class="secs"></div></div>');
    d.querySelector("b").textContent=NB.chName(G.ch)+" "+G.ch.name;
-   var ul=d.querySelector(".secs");G.items.forEach(function(c){var o=c.secs[0],x=tr[o.id],rd=isReady(o.id),a=NB.h('<a class="'+(rd?"lnk":"todo")+(x&&x.d?" fin":x&&x.v?" seen":"")+(c.id===cid?" here":"")+'" href="'+NB.link(o)+'"'+(rd?"":' title="建置中"')+'></a>');a.textContent=o.num+" "+o.title;ul.appendChild(a);if(c.id===cid)setTimeout(function(){a.scrollIntoView({block:"nearest"});a.focus({preventScroll:true})},60)});
+   var ul=d.querySelector(".secs");G.items.forEach(function(c){var o=c.secs[0],x=tr[o.id],rd=isReady(o.id),a=NB.h('<a class="'+(rd?"lnk":"todo")+(x&&x.d?" fin":x&&x.v?" seen":"")+(c.id===cid?" here":"")+'" href="'+NB.link(o)+'"'+(rd?"":' title="建置中"')+'></a>');a.textContent=o.num+" "+o.title;var sm=NB_MAP.sec&&NB_MAP.sec[o.id],cc=(NB_MAP.ch[o.id]&&NB_MAP.ch[o.id].c||[]);if(sm){var tg=NB.h('<small class="i3-tag"></small>');tg.textContent=sm[0]+"・"+sm[1];a.appendChild(tg);a.title=(rd?"":"建置中・")+"認知層次："+sm[0]+"・知識類型："+sm[1]+(cc.length?"・學習內容："+cc.map(function(x){return x.replace("-IV-","-Ⅳ-")}).join("、"):"")}ul.appendChild(a);if(c.id===cid)setTimeout(function(){a.scrollIntoView({block:"nearest"});a.focus({preventScroll:true})},60)});
    box.appendChild(d)});
   if(!box.children.length)box.appendChild(NB.h('<p class="meta">這座島沒有這一冊的小節。</p>'));
   var nbx=panel.querySelector(".i3-nb");
+  nbx.appendChild(NB.h('<p class="meta"><a class="lnk" href="map.html">在學習地圖上看前後關係、課綱對照 →</a></p>'));
   function chips(title,list,key){if(!list.length)return;var w=NB.h('<div><p class="i3-nbt">'+title+'</p></div>');list.slice(0,6).forEach(function(e){var b=NB.h('<button type="button" class="i3-chip"></button>');b.textContent=e[key]+"島";b.title="有 "+e.n+" 組小節的先後關係";b.onclick=function(){ISLE.select(e[key])};w.appendChild(b)});nbx.appendChild(w)}
   chips("先學這些島（藍色光弧）",nb.pre,"a");chips("接著可以去（黃色光弧）",nb.post,"b");
   panel.scrollTop=0}
@@ -155,7 +158,7 @@ function render(){
 function renderList(){
  app.innerHTML="";app.classList.remove("i3page");
  app.appendChild(topBar());app.appendChild(NB.h('<div class="ruler"></div>'));
- app.appendChild(NB.h('<h1 class="title"><mark>單元目錄</mark></h1>'));app.appendChild(NB.h('<p class="meta">這台裝置畫不出 3D 群島，先用清單瀏覽。</p>'));
+ app.appendChild(NB.h('<h1 class="title"><mark>單元目錄</mark></h1>'));app.appendChild(NB.h('<p class="meta">這台裝置畫不出 3D 群島，先用清單瀏覽。<a class="lnk" href="map.html">看學習地圖</a></p>'));if(window.SciTools)SciTools.button();
  var lt=NB.trail.last();
  if(lt){var li=NB.info(lt),rs=NB.h('<div class="resume"><b>繼續上次</b><a class="lnk"></a></div>');rs.querySelector("a").href=NB.link(NB.flat.filter(function(o){return o.id===lt})[0]);rs.querySelector("a").textContent=li.title;app.appendChild(rs)}
  var tabs=NB.h('<div class="tabs"></div>');

@@ -102,6 +102,7 @@ function challenge(list,onAll){var box=h('<div class="chs"></div>'),done=list.ma
    r.querySelector("button").onclick=function(){if(inp.value==="")return;var tol=c.tol===undefined?Math.max(1e-6,Math.abs(c.a)*1e-3):c.tol;res(Math.abs(+inp.value-c.a)<=tol)};inp.onkeydown=function(e){if(e.key==="Enter")r.querySelector("button").click()};w.insertBefore(r,fb)}
   if(c.h){var hb=h('<button type="button" class="pen hint">提示</button>');hb.onclick=function(){fb.className="fb";fb.innerHTML=NB.tx("提示："+c.h)};(w.querySelector(".ctl")||w.querySelector(".opts")).appendChild(hb)}
   box.appendChild(w)});return box}
+var LAB3D=["v3-4.2","v3-4.3","v3-4.4","v5-4.2","v5-4.4","v6-2.2","v6-2.3","v6-2.4"];
 function mount(c){
  var app=document.getElementById("app"),I=NB.info(NB.cur)||{};c.title=c.title||I.title||"單元";c.ref=c.ref||I.ref||"";document.title=c.title+"｜見微理畫";
  var bar=h('<nav class="bar"><a class="back" href="'+root+'island.html">← 回到群島</a></nav>');bar.appendChild(NB.themeBar());app.appendChild(bar);
@@ -109,17 +110,26 @@ function mount(c){
  app.appendChild(sheet("情境","",h('<div class="q">'+NB.tx(c.q)+'</div>')));
  var box=h('<div class="lab"></div>'),eq=h('<div class="eq"></div>');var d0=Object.getOwnPropertyDescriptor(Element.prototype,"innerHTML");Object.defineProperty(eq,"innerHTML",{configurable:true,get:function(){return d0.get.call(eq)},set:function(x){d0.set.call(eq,NB.tx(x))}});
  c.tool(box,eq);box.appendChild(eq);app.appendChild(sheet("動手做",c.sub||"調整條件，觀察變化",box));
+ /* 3D 實驗室（光學、電學）：只在有 3D 模擬的小節出現；three.js 用到時才載入 */
+ if(LAB3D.indexOf(NB.cur)>=0){var b3=h('<div class="lab3d"><p class="meta">3D 實驗室載入中…</p></div>');app.appendChild(sheet("3D 實驗室","立體模擬：拖曳轉動視角，數值依物理公式計算",b3));
+  import(new URL(root+"assets/js/lab3d.js",location.href).href).then(function(){b3.innerHTML="";NB.lab3d.mount(b3,NB.cur)}).catch(function(){b3.innerHTML='<p class="meta">3D 實驗室載入失敗（瀏覽器可能太舊），請用上面的「動手做」。</p>'})}
  var pr=h('<div><ol class="steps">'+c.steps.map(function(x){return"<li>"+NB.tx(x)+"</li>"}).join("")+"</ol></div>");
  if(c.key&&c.key.length)pr.appendChild(h('<div class="keyb"><b>'+D.icon("重點")+'重點</b><ul>'+c.key.map(function(x){return"<li>"+NB.tx(x)+"</li>"}).join("")+'</ul></div>'));
  app.appendChild(sheet("原理","一步一步想",pr));
  app.appendChild(sheet("挑戰","換你試試",challenge([].concat(c.ch),function(){NB.trail.done(NB.cur)})));
+ if(NB.examCard){var ec=NB.examCard(NB.cur);if(ec)app.appendChild(ec)}
+ if(NB.exam){var ex=NB.exam.card(NB.cur);if(ex)app.appendChild(ex)}
+ app.appendChild(NB.memberCard(app,NB.cur));
  NB.trail.visit(NB.cur);if(NB.map&&NB.map.card)NB.map.card(app,NB.cur);
  if(NB.tour){function sh(t){return function(){return[].filter.call(app.querySelectorAll(".sheet"),function(e){var g=e.querySelector("h2 .tag");return g&&g.textContent===t})[0]||null}}
-  NB.tour.setup("unit",[{title:"這一頁怎麼玩",text:"每個小節都是四步：情境、動手做、原理、挑戰。想再看一次，按左下角的 i。"},
+  NB.tour.setup("unit-v2",[{title:"這一頁怎麼玩",text:"每個小節都是四步：情境、動手做、原理、挑戰。想再看一次，按左下角的 i。"},
   {sel:sh("情境"),title:"情境",text:"先讀生活裡的一個問題，想想看你會怎麼回答。"},
   {sel:sh("動手做"),title:"動手做",text:"這是一個小小的模擬實驗：拖拉滑桿、按按鈕，或直接拖圖上的東西，看結果怎麼變。"},
   {sel:sh("原理"),title:"原理",text:"把剛剛看到的現象整理成觀念與公式，最下面的「重點」是考前要記的。"},
-  {sel:sh("挑戰"),title:"挑戰",text:"選擇題直接點選項；計算題輸入答案按「檢查」。卡住了可以按「提示」。"}])}
+  {sel:sh("挑戰"),title:"挑戰",text:"選擇題直接點選項；計算題輸入答案按「檢查」。卡住了可以按「提示」。"},
+  {sel:sh("鑑往知來"),title:"鑑往知來",text:"看這一節在歷屆會考怎麼考：熱度、出現年度、常考題型、易錯陷阱，最後有一題仿題可以練。"},
+  {sel:sh("學員專區"),title:"學員專區",text:"登入後可以做這一節的小測驗，成績、錯題本和勳章都會記下來。"},
+  {sel:".lmap",title:"學習地圖",text:"看這一節之前該先學什麼、接著學什麼，還有課綱對照。"}])}
  var nv=h('<nav class="bar"></nav>');if(I.prev)nv.appendChild(h('<a class="back" href="'+NB.link(I.prev)+'">← '+I.prev.title+'</a>'));else nv.appendChild(h("<span></span>"));if(I.next)nv.appendChild(h('<a class="back" href="'+NB.link(I.next)+'">'+I.next.title+' →</a>'));app.appendChild(nv);
 }
 NB.mount=mount;
@@ -145,7 +155,25 @@ NB.boot=function(){var id=new URLSearchParams(location.search).get("u");NB.cur=i
  NB.load(id,null,function(){var I=NB.info(id),bar=h('<nav class="bar"><a class="back" href="'+root+'island.html">← 回到群島</a></nav>');bar.appendChild(NB.themeBar());app.appendChild(bar);
   app.appendChild(h('<h1 class="title"><mark>'+(I?I.title:"找不到單元")+'</mark></h1>'));if(I)app.appendChild(h('<p class="meta">'+I.ref+'</p>'));
   app.appendChild(sheet("情境","",h('<p>這一節還在實驗室裡準備中，先回群島看看其他小節吧。</p>')))})};
-/* 學員專區：登入、測驗都在數光島筆記本（同一個網域，登入狀態共用） */
-NB.memberURL="https://suuuuuhaooooo.github.io/math-Illustration/site/member.html";
-NB.memberChip=function(){return h('<a class="chip" href="'+NB.memberURL+'" title="學員專區在數光島筆記本登入">學員專區・登入</a>')};
+/* 學員專區：登入、測驗、錯題本都在數光島筆記本的學員專區（同一個網域，登入狀態共用），用「國中理化」身分進入（?s=sci）。
+   數光島那邊登入後會在這個瀏覽器記一張小卡（nb-chip-sci），這裡只拿來顯示名字與等級；成績都在伺服器 */
+NB.memberURL=(window.NB_MEMBER_URL||"https://suuuuuhaooooo.github.io/math-Illustration/site/member.html")+"?s=sci";
+function esc(x){return String(x==null?"":x).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function chipOf(){try{return JSON.parse(localStorage.getItem("nb-chip-sci")||"null")}catch(e){return null}}
+NB.memberChip=function(){var u=chipOf(),a=h('<a class="chip" href="'+NB.memberURL+'" title="學員專區（在數光島筆記本登入，用國中理化身分）"></a>');a.textContent=u?u.n+"・Lv."+u.lv+"・"+u.pts+" 分":"學員專區・登入";return a};
+/* 問題回報：登入過（有學員小卡）才顯示右下角按鈕，按了到學員專區（國中理化）開回報視窗，並帶上目前的頁面 */
+function rpMount(){if(!chipOf()||document.querySelector(".rpbtn"))return;var cur=NB.cur?(NB.info(NB.cur)||{}).title||NB.cur:document.title.replace(/｜.*$/,""),b=h('<a class="rpbtn" href="'+NB.memberURL+"&rp=1&from="+encodeURIComponent(cur)+'">回報問題</a>');document.body.appendChild(b)}
+if(document.body)setTimeout(rpMount,0);else addEventListener("DOMContentLoaded",rpMount);
+/* 閒置自動登出：和學員專區共用「最後操作時間」（nb-act）。這裡閒置超過 20 分鐘，就收起學員小卡並留下登出記號，
+   下次進學員專區會先登出（登入狀態本身在數光島筆記本那邊，這裡不載入登入程式） */
+(function(){var LIM=20*60e3,last=Date.now();function mark(){var n=Date.now();if(n-last<1500)return;last=n;try{localStorage.setItem("nb-act",String(n))}catch(e){}}
+ ["pointerdown","keydown","scroll","touchstart"].forEach(function(e){addEventListener(e,mark,{passive:true})});
+ setInterval(function(){if(!chipOf())return;var a=last;try{a=Math.max(a,+localStorage.getItem("nb-act")||0)}catch(e){}if(Date.now()-a<LIM)return;
+  try{localStorage.removeItem("nb-chip-sci");localStorage.setItem("nb-force-out","1")}catch(e){}var c=document.querySelector(".chip");if(c)c.textContent="學員專區・登入";var r=document.querySelector(".rpbtn");if(r)r.remove();var m=document.querySelector(".mcard");if(m)m.replaceWith(NB.memberCard(document.getElementById("app"),NB.cur))},15000)})();
+/* 單元頁：學員卡（登入過＝這一節的小測驗、錯題本、每日一題；沒登入＝登入按鈕）。看過的小節記下來，下次登入時回報（解鎖「看過」相關勳章） */
+NB.memberCard=function(app,id){var u=chipOf(),U=NB.memberURL,el;
+ if(u){try{var s=JSON.parse(localStorage.getItem("nb-seen-sci")||"[]");if(s.indexOf(id)<0){s.push(id);localStorage.setItem("nb-seen-sci",JSON.stringify(s.slice(-60)))}}catch(e){}
+  el=h('<section class="sheet mcard"><h2><span class="tag">學員專區</span>學完了，來考考自己</h2><p class="meta">'+esc(u.n)+"・Lv."+u.lv+"・"+u.pts+' 分（成績記在學員專區的「國中理化」）</p><div class="ctl"><a class="pen go" href="'+U+'#quiz/'+id+'">這一節的小測驗</a><a class="pen" href="'+U+'#wrong">錯題本</a><a class="pen" href="'+U+'#daily">每日一題</a><a class="pen" href="'+U+'#mock">模擬卷</a></div></section>')}
+ else el=h('<section class="sheet mcard"><h2><span class="tag">學員專區</span>小測驗・錯題本・勳章・排行榜</h2><p>此功能僅開放給班內學員使用。登入後，題目、判分、積分都由伺服器處理，和數光島筆記本共用同一個帳號（理化、數學的成績分開記）。</p><a class="pen go" href="'+U+'#login">同學登入</a></section>');
+ return el};
 })();
