@@ -9,7 +9,9 @@ var ISLE=null;
 function isReady(id){return(window.READY||[]).some(function(p){return id.indexOf(p)===0})}
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 var VN={3:"第三冊",4:"第四冊",5:"第五冊",6:"第六冊"},VL={3:"八上",4:"八下",5:"九上",6:"九下"},DM=NB_MAP&&NB_MAP.dom||{};
-function topBar(){var bar=NB.h('<nav class="bar"><a class="brand" href="../" title="回到導覽頁" style="text-decoration:none;color:inherit">'+NB.deco.logo()+'見微理畫</a></nav>');bar.appendChild(NB.memberChip());bar.appendChild(NB.themeBar());return bar}
+function topBar(){var bar=NB.h('<nav class="bar"><a class="brand" href="../" title="回到導覽頁" style="text-decoration:none;color:inherit">'+NB.deco.logo()+'見微理畫</a></nav>');
+ if(NB.barR)NB.barR(bar,{chip:true,cur:"island",noFocus:true});else{bar.appendChild(NB.memberChip());bar.appendChild(NB.themeBar())}
+ return bar}
 function render3d(){
  app.innerHTML="";app.classList.add("i3page");app.appendChild(topBar());
  var NI=Object.keys(NB_MAP.th).length,st=NB.h('<section class="i3" aria-label="見微群島：'+NI+' 座主題島">'+

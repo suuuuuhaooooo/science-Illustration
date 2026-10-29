@@ -48,7 +48,7 @@ function closure(k,dir){var seen={},q=[k];while(q.length){var x=q.pop();(dir<0?c
 function trailOf(k){var u=NB.trail.all(),c=chInfo[k].c.secs,seen=0,done=0;c.forEach(function(o){var x=u[o.id];if(x){if(x.v)seen++;if(x.d)done++}});return{seen:seen,done:done,n:c.length}}
 function page(){
  var app=document.getElementById("app");app.innerHTML="";
- var bar=NB.h('<nav class="bar"><a class="back" href="'+root+'island.html">← 回到群島</a></nav>');bar.appendChild(NB.themeBar());app.appendChild(bar);
+ var bar=NB.h('<nav class="bar"><a class="back" href="'+root+'island.html">← 回到群島</a></nav>');NB.barR?NB.barR(bar,{cur:"map",noFocus:true}):bar.appendChild(NB.themeBar());app.appendChild(bar);
  app.appendChild(NB.h('<h1 class="title"><mark>學習地圖</mark></h1>'));
  app.appendChild(NB.h('<p class="lead">一座島是一章，弧線是「先學這個，才學得會那個」。點一個領域，整片島群就會亮起那個領域；點一座島，會亮出它前後的整條路，小島民還會跳著帶你走一遍。</p>'));
  app.appendChild(NB.deco.rule());

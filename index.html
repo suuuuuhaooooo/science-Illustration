@@ -30,9 +30,9 @@
 <link rel="stylesheet" href="site/assets/vendor/katex/katex.min.css">
 <link rel="stylesheet" href="site/assets/css/notebook.css">
 </head>
-<body data-root="site/" data-page="landing" class="landing">
+<body data-root="site/" data-page="landing" class="landing" oncontextmenu="return false;" oncopy="return false;" onselectstart="return false;">
 <main class="wrap" id="app">
-<nav class="bar"><a class="brand" href="./" style="text-decoration:none;color:inherit"><span id="lg"></span>見微理畫</a><span id="tb"></span></nav>
+<nav class="bar" id="topbar"><a class="brand" href="./" style="text-decoration:none;color:inherit"><span id="lg"></span>見微理畫</a></nav>
 <div class="ruler"></div>
 <section class="hero"><div><p class="eyebrow">國中理化・圖解與模擬實驗</p><h1 class="title">見微知著，<mark>把看不見的畫出來</mark></h1>
 <p class="lead">光怎麼轉彎、熱怎麼流動、原子怎麼重新排列——每一節都從生活情境出發，用能拖、能調的模擬實驗，把看不見的道理畫成看得見的圖。</p>
@@ -41,11 +41,24 @@
 <section class="feats" aria-label="更多特色"><div class="feat"><b>04</b><h3>3D 實驗室</h3><p>透鏡與面鏡光學台、電流磁效應、電磁感應、串並聯電路：拖曳轉動，數值照物理公式算。</p></div><div class="feat"><b>05</b><h3>鑑往知來</h3><p>每一節整理歷屆會考怎麼考、常見的易錯陷阱，再附一題仿題試試身手。</p></div><div class="feat"><b>06</b><h3>學習地圖與小工具</h3><p>先學什麼、接著學什麼，對照 108 課綱；週期表、公式卡、單位換算隨時叫出來。</p></div></section>
 <section class="sheet"><h2><span class="tag">學員專區</span>小測驗・模擬卷・錯題本・老師派卷</h2><p>上面這些都免費、不用登入。正式學員與老師在學員專區（和數光島筆記本共用帳號，國小數學、國中理化分開開通、分開記錄）還有：單元小測驗、每日一題、模擬卷、錯題本、勳章；老師可以派卷、出卷、看班級分析。作答可以寫單位、科學記號和化學式，由伺服器判分。</p><p class="ctas"><a class="pen go" id="mem2" href="#">學員專區登入</a> <a class="pen" href="https://suuuuuhaooooo.github.io/math-Illustration/site/plans.html#sci">方案與價格</a> <a class="pen" href="site/map.html">學習地圖</a></p></section>
 <p class="meta" style="text-align:center">第三冊～第六冊・依主題分成見微群島・與「數光島筆記本」同系列</p>
+<p class="ctas" id="dn-row" hidden style="justify-content:center"><a class="pen dn-btn" id="dn-fin" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8h12l-1.5 12a2 2 0 0 1-2 2h-5a2 2 0 0 1-2-2z"/><path d="M5 8h14M14 3l-2 5"/><circle cx="10" cy="17" r="1"/><circle cx="13.5" cy="15.5" r="1"/></svg><span>贊助島民</span></a></p>
+<p class="meta" id="dn-note" hidden style="text-align:center">您的一杯珍奶，會變成島民持續更新的動力。</p>
 </main>
 <footer class="foot"></footer>
+<script src="site/assets/data/config.js"></script>
 <script src="site/assets/js/catalog.js"></script>
 <script src="site/assets/js/core.js"></script>
-<script>document.getElementById("lg").innerHTML=NB.deco.logo();document.getElementById("tb").appendChild(NB.themeBar());document.getElementById("art").appendChild(NB.deco.hero());document.getElementById("mem").href=NB.memberURL;document.getElementById("mem2").href=NB.memberURL;</script>
+<script src="site/assets/js/guard.js"></script>
+<script src="site/assets/js/navmenu.js"></script>
+<script>(function(){
+document.getElementById("lg").innerHTML=NB.deco.logo();
+NB.barR(document.getElementById("topbar"),{cur:"intro",noFocus:true});
+document.getElementById("art").appendChild(NB.deco.hero());
+document.getElementById("mem").href=NB.memberURL;document.getElementById("mem2").href=NB.memberURL;
+var d=(window.NB_CONFIG||{}).donate||{};if(!d.url)return;
+var a=document.getElementById("dn-fin");a.href=d.url;if(d.label)a.querySelector("span").textContent=d.label;
+document.getElementById("dn-row").hidden=false;document.getElementById("dn-note").hidden=false;
+})();</script>
 <script src="site/assets/js/footer.js"></script>
 </body>
 </html>

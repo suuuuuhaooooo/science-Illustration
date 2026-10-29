@@ -105,7 +105,7 @@ function challenge(list,onAll){var box=h('<div class="chs"></div>'),done=list.ma
 var LAB3D=["v3-4.2","v3-4.3","v3-4.4","v5-4.2","v5-4.4","v6-2.2","v6-2.3","v6-2.4"];
 function mount(c){
  var app=document.getElementById("app"),I=NB.info(NB.cur)||{};c.title=c.title||I.title||"單元";c.ref=c.ref||I.ref||"";document.title=c.title+"｜見微理畫";
- var bar=h('<nav class="bar"><a class="back" href="'+root+'island.html">← 回到群島</a></nav>');bar.appendChild(NB.themeBar());app.appendChild(bar);
+ var bar=h('<nav class="bar"><a class="back" href="'+root+'island.html">← 回到群島</a></nav>');NB.barR?NB.barR(bar,{cur:"island",noFocus:true}):bar.appendChild(NB.themeBar());app.appendChild(bar);
  app.appendChild(h('<h1 class="title"><mark>'+c.title+'</mark></h1>'));app.appendChild(h('<p class="meta">'+c.ref+'</p>'));app.appendChild(D.rule());
  app.appendChild(sheet("情境","",h('<div class="q">'+NB.tx(c.q)+'</div>')));
  var box=h('<div class="lab"></div>'),eq=h('<div class="eq"></div>');var d0=Object.getOwnPropertyDescriptor(Element.prototype,"innerHTML");Object.defineProperty(eq,"innerHTML",{configurable:true,get:function(){return d0.get.call(eq)},set:function(x){d0.set.call(eq,NB.tx(x))}});
@@ -152,7 +152,7 @@ NB.page=document.body.getAttribute("data-page")||"unit";NB.cur=null;NB.built={};
 NB.unit=function(c){var sc=document.currentScript,id=sc&&sc.dataset.id;if(NB.page==="home"){NB.built[id]=true;if(NB.onProbe)NB.onProbe(id);return}mount(c)};
 NB.load=function(id,ok,no){var e=document.createElement("script");e.src=root+"units/"+id+".js";e.dataset.id=id;e.onload=function(){e.remove();ok&&ok()};e.onerror=function(){e.remove();no&&no()};document.head.appendChild(e)};
 NB.boot=function(){var id=new URLSearchParams(location.search).get("u");NB.cur=id;var app=document.getElementById("app");
- NB.load(id,null,function(){var I=NB.info(id),bar=h('<nav class="bar"><a class="back" href="'+root+'island.html">← 回到群島</a></nav>');bar.appendChild(NB.themeBar());app.appendChild(bar);
+ NB.load(id,null,function(){var I=NB.info(id),bar=h('<nav class="bar"><a class="back" href="'+root+'island.html">← 回到群島</a></nav>');NB.barR?NB.barR(bar,{cur:"island",noFocus:true}):bar.appendChild(NB.themeBar());app.appendChild(bar);
   app.appendChild(h('<h1 class="title"><mark>'+(I?I.title:"找不到單元")+'</mark></h1>'));if(I)app.appendChild(h('<p class="meta">'+I.ref+'</p>'));
   app.appendChild(sheet("情境","",h('<p>這一節還在實驗室裡準備中，先回群島看看其他小節吧。</p>')))})};
 /* 學員專區：登入、測驗、錯題本都在數光島筆記本的學員專區（同一個網域，登入狀態共用），用「國中理化」身分進入（?s=sci）。
